@@ -29,7 +29,6 @@ Early. Very early. Don't use yet.
 
 ## License
 
-MPL 2.0 in full force
+Mozilla Public License 2.0
 
-I found including boilerplate header litters source code, but treat all files in this repo
-as if they had such header.
+In case there are missing headers in source code files, post an issue. 
