@@ -1,0 +1,24 @@
+{
+    "name": "m8b/ether-binder",
+    "description": "Set of utilities for ethereum interactions with php, with similar utility as ethers.js",
+    "type": "library",
+    "license": "MPL-2.0",
+    "autoload": {
+        "psr-4": {
+            "M8B\\EtherBinder\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "DubbaThony"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "ext-curl": "*",
+        "ext-ctype": "*",
+        "kornrunner/secp256k1": "^0.2.0",
+        "ext-gmp": "*",
+        "kornrunner/keccak": "^1.1"
+    }
+}
