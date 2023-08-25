@@ -20,10 +20,10 @@ enum TransactionType
 	public static function numericToEnum(string|int $type): static
 	{
 		return match ($type) {
-			0, "0x0", "0x00" => self::LEGACY,
-			1, "0x1", "0x01" => self::ACCESS_LIST,
-			2, "0x2", "0x02" => self::DYNAMIC_FEE,
-			3, "0x3", "0x03" => self::BLOB,
+			0, "0x0", "0x00", chr(0x00) => self::LEGACY,
+			1, "0x1", "0x01", chr(0x01) => self::ACCESS_LIST,
+			2, "0x2", "0x02", chr(0x02) => self::DYNAMIC_FEE,
+			3, "0x3", "0x03", chr(0x03) => self::BLOB,
 			default => throw new NotSupportedException("transaction type '$type' is not supported")
 		};
 	}
@@ -35,6 +35,16 @@ enum TransactionType
 			self::ACCESS_LIST => throw new NotSupportedException("transaction access list type is not supported yet"),
 			self::DYNAMIC_FEE => new LondonTransaction(),
 			self::BLOB        => throw new NotSupportedException("transaction blob type is not supported yet"),
+		};
+	}
+
+	public function toTypeByte(): string
+	{
+		return match ($this) {
+			self::LEGACY      => chr(0x00),
+			self::ACCESS_LIST => chr(0x01),
+			self::DYNAMIC_FEE => chr(0x02),
+			self::BLOB        => chr(0x03),
 		};
 	}
 }

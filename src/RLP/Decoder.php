@@ -64,12 +64,12 @@ class Decoder
 	protected function decodeEntry(): array|string
 	{
 		$byte = $this->getByte();
-		if($byte == 0x80) {
+		/*if($byte == 0x80) {
 			return "0x";
 		}
 		if($byte == 0xc0) {
 			return [];
-		}
+		}*/
 
 		if($byte <= 0x7f) {
 			return "0x".dechex($byte);

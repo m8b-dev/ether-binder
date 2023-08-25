@@ -8,7 +8,6 @@
 
 namespace M8B\EtherBinder\RLP;
 
-use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Utils\Functions;
 use M8B\EtherBinder\Utils\OOGmp;
@@ -74,24 +73,42 @@ class Encoder
 
 	private static function encodeArray(array $input): string
 	{
-		if(count($input) == 0) return hex2bin("c0");
+		if(count($input) == 0)
+			return pack("C", 0xc0);
+		$encoded = static::encodeBin($input);
+		$len = strlen($encoded);
+		if($len < 56)
+			return pack("C", 0xc0+$len).$encoded;
+		return self::encodeLength($len, 0xf7).$encoded;
 	}
 
 	private static function encodeString(string $input): string
-	{}
+	{
+		if(str_starts_with($input, "0x") && (ctype_xdigit(substr($input, 2)) || $input === "0x")) {
+			$input = hex2bin(substr(Functions::lPadHex($input, 2), 2));
+		}
+		return static::encodeBinaryVal($input);
+	}
 
 	private static function encodeBinaryVal(string $input): string
 	{
-		if(strlen($input) == 0) {
+		$len = strlen($input);
+		if($len == 0) {
 			return pack("C", 0x80);
 		}
-		if(strlen($input) == 1 && ord($input[0]) <= 0x7f) {
+		if($len == 1 && ord($input[0]) <= 0x7f) {
 			return $input;
 		}
-		if(strlen($input) <= 55) {
+		if($len <= 55) {
 			return pack("C", strlen($input) + 0x80) . $input;
 		}
+		return static::encodeLength($len, 0xb7) . $input;
+	}
 
+	private static function encodeLength(int $length, int $base): string
+	{
+		$encodedLen = ltrim(pack("J", $length), "\0");
+		return pack("C", strlen($encodedLen) + $base).$encodedLen;
 	}
 
 	// Hash is also Bloom, Address, etc.

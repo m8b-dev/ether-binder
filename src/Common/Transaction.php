@@ -10,26 +10,27 @@ namespace M8B\EtherBinder\Common;
 
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
+use M8B\EtherBinder\Exceptions\NotSupportedException;
+use M8B\EtherBinder\RLP\Decoder;
 use M8B\EtherBinder\Utils\OOGmp;
 
 abstract class Transaction
 {
 	protected bool $signed = false;
 
-	protected int $nonce;
-	protected int $gas;
-	protected OOGmp $gasPriceOrBaseFee;
-	protected ?OOGmp $gasFeeTipCap = null;
+	protected int $nonce = 0;
+	protected int $gas   = 0;
+	protected OOGmp $gasPrice;
 	protected OOGmp $value;
-	protected ?Address $to = null;
-	protected string $dataBin;
+	protected ?Address $to    = null;
+	protected string $dataBin = "";
 	protected OOGmp $v;
 	protected OOGmp $r;
 	protected OOGmp $s;
 
 	public function __construct()
 	{
-		$this->gasPriceOrBaseFee = new OOGmp();
+		$this->gasPrice = new OOGmp();
 		$this->value = new OOGmp();
 		$this->v = new OOGmp();
 		$this->r = new OOGmp();
@@ -37,20 +38,48 @@ abstract class Transaction
 	}
 
 	// fixme: in hex, we should decide type from hex value, not rely on caller to know it for us.
-	abstract public static function decodeHex(string $rlp): static;
-	abstract public static function decodeBin(string $rlp): static;
+	public static function decodeHex(string $rlp): static
+	{
+		if(str_starts_with($rlp, "0x"))
+			$rlp = substr($rlp, 2);
+		return static::decodeBin(hex2bin($rlp));
+	}
 
-	abstract public function encodeHex(): string;
+	public static function decodeBin(string $rlp): static
+	{
+		$txDataRaw = Decoder::decodeRLPBin($rlp);
+		if(is_array($txDataRaw[0])) {
+			// untyped transaction, is legacy.
+			$txData = $txDataRaw[0];
+			$type = TransactionType::LEGACY;
+		} else {
+			// 0xTYPE || [transaction rlp] for typed transaction envelope
+			$txData = $txDataRaw[1];
+			$type = TransactionType::numericToEnum($rlp[0]);
+		}
+
+		$tx = $type->spawnSuchTransaction();
+		$tx->setInnerFromRLPValues($txData);
+		return $tx;
+	}
+
+	public function encodeHex(): string
+	{
+		$bin = $this->encodeBin();
+		return "0x".bin2hex($bin);
+	}
+
 	abstract public function encodeBin(): string;
 	abstract public function transactionType(): TransactionType;
-	abstract protected function blanksFromRPCArr(array $rpcArr):void;
+	abstract protected function blanksFromRPCArr(array $rpcArr): void;
+	abstract protected function setInnerFromRLPValues(array $rlpValues): void;
 
 	public static function fromRPCArr(array $rpcArr): static
 	{
 		$static = TransactionType::numericToEnum($rpcArr["type"] ?? 0)->spawnSuchTransaction();
 		$static->nonce             = hexdec($rpcArr["nonce"]);
 		$static->gas               = hexdec($rpcArr["gas"]);
-		$static->gasPriceOrBaseFee = new OOGmp($rpcArr["gasPrice"]);
+		$static->gasPrice = new OOGmp($rpcArr["gasPrice"]);
 		$static->value             = new OOGmp($rpcArr["value"]);
 		$static->to                = Address::fromHex($rpcArr["to"]);
 
@@ -97,25 +126,18 @@ abstract class Transaction
 	}
 
 	// to be used by inherited class with correct name: for post-london transactions base fee, or for pre-london / legacy gas price
-	protected function setGasPriceOrBaseFee(OOGmp $fee): self
+	protected function setGasPrice(OOGmp $fee): self
 	{
-		if($fee->raw() != $this->gasPriceOrBaseFee->raw()) {
-			$this->gasPriceOrBaseFee = $fee;
+		if($fee->raw() != $this->gasPrice->raw()) {
+			$this->gasPrice = $fee;
 			$this->signed = false;
 		}
 		return $this;
 	}
 
-	protected function gasPriceOrBaseFee(): OOGmp
-	{
-		return $this->gasPriceOrBaseFee;
-	}
-
 	public function totalGasPrice(): OOGmp
 	{
-		$a = $this->gasPriceOrBaseFee->raw();
-		$b = $this->gasFeeTipCap === null ? gmp_init(0) : $this->gasFeeTipCap->raw();
-		return $a + $b;
+		return $this->gasPrice;
 	}
 
 	public function setValue(OOGmp $valueWEI): self

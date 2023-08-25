@@ -13,6 +13,9 @@ class OOGmp
 	private \GMP $gmp;
 	public function __construct(?string $number = null, ?int $base = null)
 	{
+		if($number === null)
+			return;
+
 		if($base !== null) {
 			$this->gmp = gmp_init($number, $base);
 		} else {
@@ -21,6 +24,20 @@ class OOGmp
 			else
 				$this->gmp = gmp_init($number, 16);
 		}
+	}
+
+	public static function wrap(\GMP $raw): static
+	{
+		$static = new static();
+		$static->gmp = $raw;
+		return $static;
+	}
+
+	public function add(self $b): static
+	{
+		$static = new static();
+		$static->gmp = gmp_add($this->gmp, $b);
+		return $static;
 	}
 
 	public function toInt(): int

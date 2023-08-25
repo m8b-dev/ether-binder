@@ -9,6 +9,4 @@
 namespace M8B\EtherBinder\Exceptions;
 
 class UnexpectedUnsignedException extends \InvalidArgumentException
-{
-
-}
+{}
