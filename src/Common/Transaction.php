@@ -9,9 +9,8 @@
 namespace M8B\EtherBinder\Common;
 
 use kornrunner\Keccak;
+use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
-use M8B\EtherBinder\Exceptions\InvalidLengthException;
-use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\RLP\Decoder;
 use M8B\EtherBinder\Utils\OOGmp;
 
@@ -28,6 +27,7 @@ abstract class Transaction
 	protected OOGmp $v;
 	protected OOGmp $r;
 	protected OOGmp $s;
+	protected ?int $chainId = null;
 
 	public function __construct()
 	{
@@ -135,9 +135,9 @@ abstract class Transaction
 	}
 
 	// to be used by inherited class with correct name: for post-london transactions base fee, or for pre-london / legacy gas price
-	protected function setGasPrice(OOGmp $fee): self
+	protected function setGasPriceOrBaseFee(OOGmp $fee): self
 	{
-		if($fee->raw() != $this->gasPrice->raw()) {
+		if(!$fee->eq($this->gasPrice)) {
 			$this->gasPrice = $fee;
 			$this->signed = false;
 		}
@@ -239,5 +239,22 @@ abstract class Transaction
 	public function getSigningHash(?int $chainId): Hash
 	{
 		return Hash::fromBin(Keccak::hash($this->encodeBinForSigning($chainId), 256, true));
+	}
+
+	public function sign(Key $key, ?int $chainId): void
+	{
+		$this->chainId = $chainId;
+		$sig = $key->sign($this->getSigningHash($chainId));
+		$this->r = $sig->r;
+		$this->s = $sig->s;
+		$this->v = $this->calculateV($sig->v);
+		$this->signed = true;
+	}
+
+	public function calculateV(OOGmp $recovery): OOGmp
+	{
+		if($this->chainId === null)
+			return $recovery->add(27);
+		return $recovery->add($this->chainId * 2)->add(35);
 	}
 }

@@ -69,11 +69,6 @@ class LegacyTransaction extends Transaction
 		$this->signed            = true;
 	}
 
-	public function isReplayProtected(): bool
-	{
-		return !($this->v->eq(27) || $this->v->eq(28) || $this->v->eq(0) || $this->v->eq(1));
-	}
-
 	public function ecRecover(): Address
 	{
 		if(!$this->isSigned())
@@ -90,5 +85,18 @@ class LegacyTransaction extends Transaction
 		// this is weird - specs subtract 27 or 35, keeping it that way, that it requires getting "flipped"
 		$parity = new OOGmp($this->v->mod(2)->toInt() == 0 ? 1 : 0);
 		return EC::Recover($hash, $this->r, $this->s, $parity);
+	}
+
+	//todo:
+	// if supporting signing new antique transactions would be required, add calculateV override
+
+	public function isReplayProtected(): bool
+	{
+		return !($this->v->eq(27) || $this->v->eq(28) || $this->v->eq(0) || $this->v->eq(1));
+	}
+
+	public function setGasPrice(OOGmp $gasPrice): static
+	{
+		return parent::setGasPriceOrBaseFee($gasPrice);
 	}
 }

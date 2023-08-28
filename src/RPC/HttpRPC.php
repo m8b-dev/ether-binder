@@ -8,16 +8,16 @@
 
 namespace M8B\EtherBinder\RPC;
 
+use CurlHandle;
+use JsonException;
 use M8B\EtherBinder\Exceptions\InvalidURLException;
 use M8B\EtherBinder\Exceptions\RPCGeneralException;
-use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
-use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 
 class HttpRPC extends AbstractRPC
 {
 	private int $id = 1;
 	private array $headers = [];
-	private \CurlHandle $ch;
+	private CurlHandle $ch;
 
 	public function __construct(string $url, array $extraHeaders = [])
 	{
@@ -56,12 +56,12 @@ class HttpRPC extends AbstractRPC
 		if(!$resp)
 			throw new RPCGeneralException("didn't receive response");
 		try {
-			$d = json_decode($resp, true, JSON_THROW_ON_ERROR);
+			$d = json_decode($resp, true, 512,JSON_THROW_ON_ERROR);
 			if(!is_array($d)) { // can happen if RPC responds with error as "pure" string. The json_decode will just return string.
 				throw new RPCGeneralException("failed to parse json: did not receive json object, got " . $resp);
 			}
 			return $d;
-		} catch(\JsonException $e) {
+		} catch(JsonException $e) {
 			throw new RPCGeneralException("failed to parse json", 0, $e);
 		}
 	}

@@ -47,7 +47,7 @@ abstract class Eth extends Debug
 
 	public function ethChainID(): int
 	{
-		return (new OOGmp($this->runRpc("eth_chainId")[0]))->toInt();
+		return hexdec($this->runRpc("eth_chainId")[0]);
 	}
 
 	public function ethMining(): bool
@@ -153,7 +153,7 @@ abstract class Eth extends Debug
 		return $this->runRpc("eth_signTransaction", [$this->transactionToRPCArr($txn, $from)])[0];
 	}
 
-	public function eth_sendTransaction(Transaction $txn, Address $from): Hash
+	public function ethSendTransaction(Transaction $txn, Address $from): Hash
 	{
 		return Hash::fromHex($this->runRpc("eth_sendTransaction", [$this->transactionToRPCArr($txn, $from)])[0]);
 	}
@@ -177,9 +177,9 @@ abstract class Eth extends Debug
 		return $this->runRpc("eth_call", [$this->transactionToRPCArr($message, $from, true)])[0];
 	}
 
-	public function ethEstimateGas(Transaction $txn, ?Address $from): OOGmp
+	public function ethEstimateGas(Transaction $txn, ?Address $from): int
 	{
-		return new OOGmp($this->runRpc("eth_estimateGas")[0]);
+		return hexdec($this->runRpc("eth_estimateGas", [$this->transactionToRPCArr($txn, $from, true)])[0]);
 	}
 
 	public function ethGetBlockByHash(Hash $hash, bool $fullBlock = false): Block
@@ -215,12 +215,12 @@ abstract class Eth extends Debug
 		return Receipt::fromRPCArr($this->runRpc("eth_getTransactionReceipt", [$hash->toHex()]));
 	}
 
-	public function eth_getUncleByBlockHashAndIndex(Hash $hash, int $unclePos): Block
+	public function ethGetUncleByBlockHashAndIndex(Hash $hash, int $unclePos): Block
 	{
 		return Block::fromRPCArr($this->runRpc("eth_getUncleByBlockHashAndIndex", [$hash->toHex(), "0x".dechex($unclePos)]));
 	}
 
-	public function eth_getUncleByBlockNumberAndIndex(int|BlockParam $blockParam, int $unclePos):Block
+	public function ethGetUncleByBlockNumberAndIndex(int|BlockParam $blockParam, int $unclePos):Block
 	{
 		return Block::fromRPCArr(
 			$this->runRpc("eth_getUncleByBlockNumberAndIndex", [$this->blockParam($blockParam), "0x".dechex($unclePos)])

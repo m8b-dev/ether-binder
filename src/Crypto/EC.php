@@ -6,9 +6,9 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-
 namespace M8B\EtherBinder\Crypto;
 
+use Elliptic\EC\KeyPair;
 use kornrunner\Keccak;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Hash;
@@ -41,5 +41,11 @@ class EC
 		$pubKBin = substr($pubKBin, 1);
 		$hash = Keccak::hash($pubKBin, 256, true);
 		return Address::fromBin(substr($hash, 32 - 20));
+	}
+
+	public static function keyFromPrivate(#[\SensitiveParameter] string $key, string $encoding): KeyPair
+	{
+		self::init();
+		return self::$ec->keyFromPrivate($key, $encoding);
 	}
 }

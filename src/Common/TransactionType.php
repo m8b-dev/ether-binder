@@ -17,7 +17,7 @@ enum TransactionType
 	case DYNAMIC_FEE;
 	case BLOB;
 
-	public static function numericToEnum(string|int $type): static
+	public static function numericToEnum(string|int $type): TransactionType
 	{
 		return match ($type) {
 			0, "0x0", "0x00", chr(0x00) => self::LEGACY,

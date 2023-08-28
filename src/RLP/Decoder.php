@@ -8,6 +8,8 @@
 
 namespace M8B\EtherBinder\RLP;
 
+use LogicException;
+
 class Decoder
 {
 	private string $dataBin;
@@ -42,7 +44,7 @@ class Decoder
 
 	protected function getByteStr(int $len): string
 	{
-		if($len < 0) throw new \LogicException("impossible read");
+		if($len < 0) throw new LogicException("impossible read");
 		if($len == 0) return "0x";
 		$data = substr($this->dataBin, $this->pointer, $len);
 		$this->pointer += $len;
@@ -51,7 +53,7 @@ class Decoder
 
 	protected function getByte(int $len = 1): int
 	{
-		if($len <= 0 || $len > 8) throw new \LogicException("0 size read");
+		if($len <= 0 || $len > 8) throw new LogicException("0 size read");
 		if($len == 1) {
 			$this->pointer++;
 			return unpack("C", $this->dataBin[$this->pointer - 1])[1];
@@ -88,7 +90,7 @@ class Decoder
 			$len = $this->getByte($byte-0xf7);
 			return $this->decodeArray($len);
 		}
-		throw new \LogicException("unreachable reached");
+		throw new LogicException("unreachable reached");
 	}
 
 	protected function decodeArray(int $size): array

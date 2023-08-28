@@ -14,13 +14,13 @@ Early. Very early. Don't use yet.
 | Transactions, serializing / deserializing | done        |
 | RLP encoder / decoder                     | done        |
 | RPC Eth_                                  | done        |
+| Signing txn                               | done        |
 | RPC Net_                                  | in progress |
 | RPC Shh_                                  | planned     |
 | RPC Web3_                                 | planned     |
 | Wallet (pk raw)                           | planned     |
 | Wallet (pk .json)                         | planned     |
 | Wallet (pk mnemonic)                      | planned     |
-| Signing txn                               | planned     |
 | Signing msg                               | planned     |
 | Contract bindings (akin to abigen)        | planned     |
 | RPC Net_ filters                          | planned     |

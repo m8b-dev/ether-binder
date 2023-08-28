@@ -9,14 +9,12 @@
 namespace M8B\EtherBinder\Common;
 
 use M8B\EtherBinder\Crypto\EC;
-use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\Utils\OOGmp;
 
 class LondonTransaction extends Transaction
 {
 	protected array $accessList = [];
-	protected int $chainId      = 0;
 	protected OOGmp $gasFeeTip;
 
 	public function __construct()
@@ -25,7 +23,7 @@ class LondonTransaction extends Transaction
 		parent::__construct();
 	}
 
-	private function internalEncodeBin(bool $signing, ?int $signingChainID)
+	private function internalEncodeBin(bool $signing, ?int $signingChainID): string
 	{
 		$nonce      = "0x".dechex($this->nonce);
 		$gasPrice   = $this->gasPrice->toString(true);
@@ -100,6 +98,13 @@ class LondonTransaction extends Transaction
 		return $this->gasPrice->add($this->gasFeeTip);
 	}
 
+	public function ecRecover(): Address
+	{
+		if(!$this->isSigned())
+			return Address::NULL();
+		$hash = $this->getSigningHash(null);
+		return EC::Recover($hash, $this->r, $this->s, $this->v->mod(2));
+	}
 
 	public function accessList(): array
 	{
@@ -123,6 +128,16 @@ class LondonTransaction extends Transaction
 		$this->chainId = $chainId;
 	}
 
+	public function getBaseFeeCap(): OOGmp
+	{
+		return $this->gasPrice;
+	}
+
+	public function setBaseFeeCap(OOGmp $fee): static
+	{
+		return parent::setGasPriceOrBaseFee($fee);
+	}
+
 	public function getGasFeeTip(): OOGmp
 	{
 		return $this->gasFeeTip;
@@ -134,11 +149,4 @@ class LondonTransaction extends Transaction
 		$this->gasFeeTip = $gasFeeTip;
 	}
 
-	public function ecRecover(): Address
-	{
-		if(!$this->isSigned())
-			return Address::NULL();
-		$hash = $this->getSigningHash(null);
-		return EC::Recover($hash, $this->r, $this->s, $this->v->mod(2));
-	}
 }
