@@ -8,13 +8,15 @@
 
 namespace M8B\EtherBinder\Common;
 
+use M8B\EtherBinder\Crypto\EC;
+use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\Utils\OOGmp;
 
 class LondonTransaction extends Transaction
 {
-	protected array $accessList;
-	protected int $chainId;
+	protected array $accessList = [];
+	protected int $chainId      = 0;
 	protected OOGmp $gasFeeTip;
 
 	public function __construct()
@@ -23,7 +25,7 @@ class LondonTransaction extends Transaction
 		parent::__construct();
 	}
 
-	public function encodeBin(): string
+	private function internalEncodeBin(bool $signing, ?int $signingChainID)
 	{
 		$nonce      = "0x".dechex($this->nonce);
 		$gasPrice   = $this->gasPrice->toString(true);
@@ -38,9 +40,27 @@ class LondonTransaction extends Transaction
 		$r          = $this->r()->toString(true);
 		$s          = $this->s()->toString(true);
 
+		if($signingChainID !== null) {
+			$this->chainId = $signingChainID;
+			$chainId = $signingChainID;
+		}
+		if($signing)
+			return Encoder::encodeBin([TransactionType::DYNAMIC_FEE->toTypeByte(), [
+				$chainId, $nonce, $gasFeeTip, $gasPrice, $gasLimit, $to, $value, $data, $accessList
+			]]);
 		return Encoder::encodeBin([TransactionType::DYNAMIC_FEE->toTypeByte(), [
 			$chainId, $nonce, $gasFeeTip, $gasPrice, $gasLimit, $to, $value, $data, $accessList, $v, $r, $s
 		]]);
+	}
+
+	public function encodeBinForSigning(?int $chainId): string
+	{
+		return $this->internalEncodeBin(true, $chainId);
+	}
+
+	public function encodeBin(): string
+	{
+		return $this->internalEncodeBin(false, null);
 	}
 
 	public function transactionType(): TransactionType
@@ -78,5 +98,47 @@ class LondonTransaction extends Transaction
 	public function totalGasPrice(): OOGmp
 	{
 		return $this->gasPrice->add($this->gasFeeTip);
+	}
+
+
+	public function accessList(): array
+	{
+		return $this->accessList;
+	}
+
+	public function setAccessList(array $accessList): void
+	{
+		$this->signed = false;
+		$this->accessList = $accessList;
+	}
+
+	public function chainId(): int
+	{
+		return $this->chainId;
+	}
+
+	public function setChainId(int $chainId): void
+	{
+		$this->signed = false;
+		$this->chainId = $chainId;
+	}
+
+	public function getGasFeeTip(): OOGmp
+	{
+		return $this->gasFeeTip;
+	}
+
+	public function setGasFeeTip(OOGmp $gasFeeTip): void
+	{
+		$this->signed = false;
+		$this->gasFeeTip = $gasFeeTip;
+	}
+
+	public function ecRecover(): Address
+	{
+		if(!$this->isSigned())
+			return Address::NULL();
+		$hash = $this->getSigningHash(null);
+		return EC::Recover($hash, $this->r, $this->s, $this->v->mod(2));
 	}
 }

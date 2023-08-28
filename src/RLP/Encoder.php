@@ -93,7 +93,7 @@ class Encoder
 	private static function encodeBinaryVal(string $input): string
 	{
 		$len = strlen($input);
-		if($len == 0) {
+		if($len == 0 || $len == 1 && ord($input[0]) == 0) {
 			return pack("C", 0x80);
 		}
 		if($len == 1 && ord($input[0]) <= 0x7f) {
@@ -124,6 +124,6 @@ class Encoder
 
 	private static function encodeInt(int $input): string
 	{
-		return self::encodeString(Functions::lPadHex(dechex($input), 2));
+		return self::encodeString("0x".Functions::lPadHex(dechex($input), 2));
 	}
 }

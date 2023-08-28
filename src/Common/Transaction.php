@@ -8,6 +8,7 @@
 
 namespace M8B\EtherBinder\Common;
 
+use kornrunner\Keccak;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
@@ -63,16 +64,22 @@ abstract class Transaction
 		return $tx;
 	}
 
+	public function encodeHexForSigning(?int $chainId): string
+	{
+		return "0x".bin2hex($this->encodeBinForSigning($chainId));
+	}
+
 	public function encodeHex(): string
 	{
-		$bin = $this->encodeBin();
-		return "0x".bin2hex($bin);
+		return "0x".bin2hex($this->encodeBin());
 	}
 
 	abstract public function encodeBin(): string;
+	abstract public function encodeBinForSigning(?int $chainId): string;
 	abstract public function transactionType(): TransactionType;
 	abstract protected function blanksFromRPCArr(array $rpcArr): void;
 	abstract protected function setInnerFromRLPValues(array $rlpValues): void;
+	abstract public function ecRecover(): Address;
 
 	public static function fromRPCArr(array $rpcArr): static
 	{
@@ -84,7 +91,9 @@ abstract class Transaction
 		$static->to                = Address::fromHex($rpcArr["to"]);
 
 		if(!empty($rpcArr["data"]))
-			$static->setDataBin($rpcArr["data"]);
+			$static->setDataHex($rpcArr["data"]);
+		elseif(!empty($rpcArr["input"]))
+			$static->setDataHex($rpcArr["input"]);
 
 		$static->blanksFromRPCArr($rpcArr);
 
@@ -220,5 +229,15 @@ abstract class Transaction
 	public function isSigned(): bool
 	{
 		return $this->signed;
+	}
+
+	public function hash(): Hash
+	{
+		return Hash::fromBin(Keccak::hash($this->encodeBin(), 256, true));
+	}
+
+	public function getSigningHash(?int $chainId): Hash
+	{
+		return Hash::fromBin(Keccak::hash($this->encodeBinForSigning($chainId), 256, true));
 	}
 }

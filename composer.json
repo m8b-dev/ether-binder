@@ -19,6 +19,7 @@
         "ext-ctype": "*",
         "kornrunner/secp256k1": "^0.2.0",
         "ext-gmp": "*",
-        "kornrunner/keccak": "^1.1"
+        "kornrunner/keccak": "^1.1",
+        "simplito/elliptic-php": "^1.0"
     }
 }

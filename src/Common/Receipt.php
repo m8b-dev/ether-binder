@@ -26,7 +26,6 @@ class Receipt
 	public array $logs = [];
 	public Bloom $logsBloom;
 	public TransactionType $type;
-	// wishlist: support for pre-byzantium chains
 	public bool $status;
 
 	public static function fromRPCArr(array $rpcArr): static
@@ -42,8 +41,7 @@ class Receipt
 		$static->gasUsed           = hexdec($rpcArr["gasUsed"]);
 		$static->logsBloom         = Bloom::fromHex($rpcArr["logsBloom"]);
 		$static->type              = TransactionType::numericToEnum($rpcArr["type"]);
-		if(!isset($rpcArr["status"]) && isset($rpcArr["root"]))
-			throw new NotSupportedException("pre-byzantium underlying blockchain is not supported");
+		if(!isset($rpcArr["status"])) throw new NotSupportedException("inferring status from root is not supported. Try different RPC server.");
 		$static->status            = hexdec($rpcArr["status"]) == 1;
 
 		foreach($rpcArr["logs"] AS $rpcLog)

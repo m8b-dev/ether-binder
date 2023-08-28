@@ -11,10 +11,14 @@ namespace M8B\EtherBinder\Utils;
 class OOGmp
 {
 	private \GMP $gmp;
-	public function __construct(?string $number = null, ?int $base = null)
+	public function __construct(null|string|\GMP $number = null, ?int $base = null)
 	{
 		if($number === null)
 			return;
+		if($number instanceof \GMP) {
+			$this->gmp = $number;
+			return;
+		}
 
 		if($base !== null) {
 			$this->gmp = gmp_init($number, $base);
@@ -64,5 +68,24 @@ class OOGmp
 	{
 		// php breaks own OO rules with GMP object, it emulates behaviour of primitive, so no need to copy it manually.
 		return $this->gmp;
+	}
+
+	public function eq(OOGmp|int|\GMP $b): bool
+	{
+		return gmp_cmp($this->gmp, $this->inNormalize($b)->gmp) == 0;
+	}
+
+	private function inNormalize(OOGmp|int|\GMP $b): OOGmp
+	{
+		if($b instanceof OOGmp)
+			$b = $b->gmp;
+		if(is_int($b))
+			$b = gmp_init($b);
+		return new static($b);
+	}
+
+	public function mod(OOGmp|int|\GMP $b): static
+	{
+		return new static(gmp_mod($this->gmp, $this->inNormalize($b)->gmp));
 	}
 }

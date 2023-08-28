@@ -34,7 +34,7 @@ class Decoder
 	protected function decode(): array
 	{
 		$return = [];
-		while($this->pointer < strlen($this->dataBin) - 1) {
+		while($this->pointer < strlen($this->dataBin)) {
 			$return[] = $this->decodeEntry();
 		}
 		return $return;
@@ -79,7 +79,7 @@ class Decoder
 		}
 		if($byte <= 0xbf) {
 			$len = $this->getByte($byte-0xb7);
-			return $this->getByteStr(unpack("n", $len));
+			return $this->getByteStr($len);
 		}
 		if($byte <= 0xf7) {
 			return $this->decodeArray($byte - 0xc0);
