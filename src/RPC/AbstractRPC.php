@@ -13,7 +13,7 @@ use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
 use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\RPC\Modules\Web3;
 
-abstract class AbstractRPC extends Web3
+abstract class AbstractRPC extends Compound
 {
 	abstract public function raw(string $method, ?array $params = null): array;
 

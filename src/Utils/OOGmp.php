@@ -50,11 +50,24 @@ class OOGmp
 		return gmp_intval($this->gmp);
 	}
 
-	public function toString(bool $hex = false, bool $no0xHex = false): string
+	public function toString(bool $hex = false, bool $no0xHex = false, ?int $lpad0 = null): string
 	{
 		if(!$hex)
 			return gmp_strval($this->gmp, 10);
-		return ($no0xHex ? "" : "0x").gmp_strval($this->gmp, 16);
+		if($lpad0 === null)
+			return ($no0xHex ? "" : "0x").gmp_strval($this->gmp, 16);
+
+		return ($no0xHex ? "" : "0x").str_pad(gmp_strval($this->gmp, 16), $lpad0, "0", STR_PAD_LEFT);
+	}
+
+	public function toBin(?int $lpad0 = null): string
+	{
+		$hex = $this->toString(true, true);
+		if(strlen($hex) % 2 != 0)
+			$hex = "0".$hex;
+		$bin = hex2bin($hex);
+		return $lpad0 === null ? $bin
+			: str_pad($bin, $lpad0, chr(0), STR_PAD_LEFT);
 	}
 
 	public function __toString(): string
@@ -72,11 +85,93 @@ class OOGmp
 		return gmp_cmp($this->gmp, $this->inNormalize($b)->gmp) == 0;
 	}
 
+	public function gt(OOGmp|int|GMP $b): bool
+	{
+		return gmp_cmp($this->gmp, $this->inNormalize($b)->gmp) > 0;
+	}
+
+	public function lt(OOGmp|int|GMP $b): bool
+	{
+		return gmp_cmp($this->gmp, $this->inNormalize($b)->gmp) < 0;
+	}
+
+	public function ge(OOGmp|int|GMP $b): bool
+	{
+		return gmp_cmp($this->gmp, $this->inNormalize($b)->gmp) >= 0;
+	}
+
+	public function le(OOGmp|int|GMP $b): bool
+	{
+		return gmp_cmp($this->gmp, $this->inNormalize($b)->gmp) <= 0;
+	}
+
+	public function greaterThan(OOGmp|int|GMP $b): bool
+	{
+		return $this->gt($b);
+	}
+
+	public function lessThan(OOGmp|int|GMP $b): bool
+	{
+		return $this->lt($b);
+	}
+
+	public function lessOrEqual(OOGmp|int|GMP $b): bool
+	{
+		return $this->le($b);
+	}
+
+	public function greaterOrEqual(OOGmp|int|GMP $b): bool
+	{
+		return $this->ge($b);
+	}
+
+	public function equal(OOGmp|int|GMP $b): bool
+	{
+		return $this->eq($b);
+	}
+
 	public function add(OOGmp|int|GMP $b): static
 	{
 		$static = new static();
 		$static->gmp = gmp_add($this->gmp, $this->inNormalize($b)->gmp);
 		return $static;
+	}
+
+	public function sub(OOGmp|int|GMP $b): static
+	{
+		$static = new static();
+		$static->gmp = gmp_sub($this->gmp, $this->inNormalize($b)->gmp);
+		return $static;
+	}
+
+	public function mul(OOGmp|int|GMP $b): static
+	{
+		$static = new static();
+		$static->gmp = gmp_mul($this->gmp, $this->inNormalize($b)->gmp);
+		return $static;
+	}
+
+	public function div(OOGmp|int|GMP $b): static
+	{
+		$static = new static();
+		$static->gmp = gmp_div($this->gmp, $this->inNormalize($b)->gmp);
+		return $static;
+	}
+
+	public function max(OOGmp|int|GMP $b): static
+	{
+		$b = $this->inNormalize($b);
+		if($this->ge($b))
+			return $this->inNormalize($this);
+		return $b;
+	}
+
+	public function min(OOGmp|int|GMP $b): static
+	{
+		$b = $this->inNormalize($b);
+		if($this->le($b))
+			return $this->inNormalize($this);
+		return $b;
 	}
 
 	public function mod(OOGmp|int|GMP $b): static

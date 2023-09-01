@@ -48,4 +48,10 @@ class EC
 		self::init();
 		return self::$ec->keyFromPrivate($key, $encoding);
 	}
+
+	public static function EC(): \Elliptic\EC
+	{
+		self::init();
+		return self::$ec;
+	}
 }

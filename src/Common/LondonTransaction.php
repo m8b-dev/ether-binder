@@ -9,7 +9,10 @@
 namespace M8B\EtherBinder\Common;
 
 use M8B\EtherBinder\Crypto\EC;
+use M8B\EtherBinder\Misc\EIP1559Config;
 use M8B\EtherBinder\RLP\Encoder;
+use M8B\EtherBinder\RPC\AbstractRPC;
+use M8B\EtherBinder\Utils\Functions;
 use M8B\EtherBinder\Utils\OOGmp;
 
 class LondonTransaction extends Transaction
@@ -149,4 +152,17 @@ class LondonTransaction extends Transaction
 		$this->gasFeeTip = $gasFeeTip;
 	}
 
+	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage)
+	{
+		$gas   = ($rpc->ethEstimateGas($this, $from) * ($bumpFeePercentage + 100)) / 100;
+		$base  = Functions::GetNextBlockBaseFee($rpc->ethGetBlockByNumber(), EIP1559Config::sepolia() /* using sepolia as only difference
+ 				 for this config is start block, which is 0. This function is expected to be called on London transaction
+                 for London-enabled chains, regardless of starting block */)
+			->mul($bumpFeePercentage + 100)->div(100);
+		$tip = $rpc->calcAvgTip()->mul($bumpFeePercentage + 100)->div(100);
+
+		$this->setGasLimit($gas);
+		$this->setBaseFeeCap($base);
+		$this->setGasFeeTip($tip);
+	}
 }

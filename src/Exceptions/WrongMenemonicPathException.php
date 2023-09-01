@@ -6,9 +6,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-namespace M8B\EtherBinder\RPC\Modules;
+namespace M8B\EtherBinder\Exceptions;
 
-abstract class Shh extends Net
-{
-
-}
+class WrongMenemonicPathException extends \InvalidArgumentException
+{}

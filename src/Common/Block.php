@@ -26,6 +26,7 @@ class Block
 	public OOGmp $totalDifficulty;
 	public string $extraData;
 	public int $size;
+	public ?OOGMP $baseFeePerGas;
 	public int $gasLimit;
 	public int $gasUsed;
 	public int $timestamp;
@@ -33,6 +34,8 @@ class Block
 	public array $transactions;
 	/** @var Hash[] */
 	public array $uncles;
+	/** @var ValidatorWithdrawal[] */
+	public array $validatorWithdrawals;
 
 	public static function fromRPCArr(array $rpcArr): static
 	{
@@ -65,7 +68,22 @@ class Block
 				$block->transactions[] = Transaction::fromRPCArr($transaction);
 			}
 		}
+		$block->validatorWithdrawals = [];
+		if(!empty($rpcArr["withdrawals"])) {
+			foreach($rpcArr["withdrawals"] AS $withdrawal)
+				$block->validatorWithdrawals[] = ValidatorWithdrawal::fromRPCArr($withdrawal);
+		}
+		if(!empty($rpcArr["baseFeePerGas"])) {
+			$block->baseFeePerGas = new OOGmp($rpcArr["baseFeePerGas"]);
+		} else {
+			$block->baseFeePerGas = null;
+		}
 		$block->uncles           = $rpcArr["uncles"];
 		return $block;
+	}
+
+	public function isEIP1559(): bool
+	{
+		return $this->baseFeePerGas !== null;
 	}
 }

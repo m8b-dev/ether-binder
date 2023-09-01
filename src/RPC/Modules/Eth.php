@@ -78,9 +78,9 @@ abstract class Eth extends Debug
 		return $return;
 	}
 
-	public function ethBlockNumber(): OOGmp
+	public function ethBlockNumber(): int
 	{
-		return new OOGmp($this->runRpc("eth_blockNumber")[0]);
+		return (new OOGmp($this->runRpc("eth_blockNumber")[0]))->toInt();
 	}
 
 	public function ethGetBalance(Address $address, int|BlockParam $blockParam = BlockParam::LATEST): OOGmp

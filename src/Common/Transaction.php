@@ -12,7 +12,10 @@ use kornrunner\Keccak;
 use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
 use M8B\EtherBinder\RLP\Decoder;
+use M8B\EtherBinder\RPC\AbstractRPC;
+use M8B\EtherBinder\Utils\EtherFormats;
 use M8B\EtherBinder\Utils\OOGmp;
+use M8B\EtherBinder\Utils\WeiFormatter;
 
 abstract class Transaction
 {
@@ -80,6 +83,7 @@ abstract class Transaction
 	abstract protected function blanksFromRPCArr(array $rpcArr): void;
 	abstract protected function setInnerFromRLPValues(array $rlpValues): void;
 	abstract public function ecRecover(): Address;
+	abstract public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage);
 
 	public static function fromRPCArr(array $rpcArr): static
 	{
@@ -88,7 +92,7 @@ abstract class Transaction
 		$static->gas               = hexdec($rpcArr["gas"]);
 		$static->gasPrice = new OOGmp($rpcArr["gasPrice"]);
 		$static->value             = new OOGmp($rpcArr["value"]);
-		$static->to                = Address::fromHex($rpcArr["to"]);
+		$static->to                = $rpcArr["to"] === null ? null : Address::fromHex($rpcArr["to"]);
 
 		if(!empty($rpcArr["data"]))
 			$static->setDataHex($rpcArr["data"]);
@@ -135,7 +139,7 @@ abstract class Transaction
 	}
 
 	// to be used by inherited class with correct name: for post-london transactions base fee, or for pre-london / legacy gas price
-	protected function setGasPriceOrBaseFee(OOGmp $fee): self
+	protected function setGasPriceOrBaseFee(OOGmp $fee): static
 	{
 		if(!$fee->eq($this->gasPrice)) {
 			$this->gasPrice = $fee;
@@ -149,7 +153,12 @@ abstract class Transaction
 		return $this->gasPrice;
 	}
 
-	public function setValue(OOGmp $valueWEI): self
+	public function setValueFmt(float|int|string|OOGmp $human, int|string|EtherFormats $format = EtherFormats::ETHER): static
+	{
+		return $this->setValue(WeiFormatter::toWei($human, $format));
+	}
+
+	public function setValue(OOGmp $valueWEI): static
 	{
 		if($this->value != $valueWEI) {
 			$this->value = $valueWEI;
@@ -161,6 +170,11 @@ abstract class Transaction
 	public function value(): OOGmp
 	{
 		return $this->value;
+	}
+
+	public function valueFmt(int $finalDecimals, int|string|EtherFormats $format = EtherFormats::ETHER): string
+	{
+		return WeiFormatter::fromWei($this->value, $finalDecimals, $format);
 	}
 
 	public function setTo(?Address $address): static
@@ -256,5 +270,10 @@ abstract class Transaction
 		if($this->chainId === null)
 			return $recovery->add(27);
 		return $recovery->add($this->chainId * 2)->add(35);
+	}
+
+	public function useRpcEstimates(AbstractRPC $rpc, Address $from)
+	{
+		return $this->useRpcEstimatesWithBump($rpc, $from, 0, 0);
 	}
 }

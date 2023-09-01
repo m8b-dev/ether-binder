@@ -10,6 +10,7 @@ namespace M8B\EtherBinder\Common;
 
 use M8B\EtherBinder\Crypto\EC;
 use M8B\EtherBinder\RLP\Encoder;
+use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\OOGmp;
 
 class LegacyTransaction extends Transaction
@@ -99,4 +100,13 @@ class LegacyTransaction extends Transaction
 	{
 		return parent::setGasPriceOrBaseFee($gasPrice);
 	}
+
+	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage)
+	{
+		$gas      = ($rpc->ethEstimateGas($this, $from) * ($bumpFeePercentage + 100)) / 100;
+		$gasPrice = $rpc->ethGasPrice()->mul($bumpFeePercentage + 100)->div(100);
+		$this->setGasLimit($gas);
+		$this->setGasPrice($gasPrice);
+	}
+
 }

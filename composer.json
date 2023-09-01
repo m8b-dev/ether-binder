@@ -15,11 +15,14 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "php": ">=8.2",
         "ext-curl": "*",
         "ext-ctype": "*",
         "kornrunner/secp256k1": "^0.2.0",
         "ext-gmp": "*",
         "kornrunner/keccak": "^1.1",
-        "simplito/elliptic-php": "^1.0"
+        "simplito/elliptic-php": "^1.0",
+        "ext-openssl": "*",
+        "furqansiddiqui/bip39-mnemonic-php": "^0.1.7"
     }
 }
