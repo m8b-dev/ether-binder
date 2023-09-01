@@ -17,8 +17,8 @@ Early. Very early. Don't use yet.
 | Signing txn                               | done        |
 | RPC Net_                                  | in progress |
 | RPC Web3_                                 | done        |
-| Wallet (pk raw)                           | planned     |
-| Wallet (pk mnemonic)                      | planned     |
+| Wallet (pk raw)                           | done        |
+| Wallet (pk mnemonic)                      | done        |
 | Signing msg                               | planned     |
 | Contract bindings (akin to abigen)        | planned     |
 | RPC Net_ filters                          | planned     |
