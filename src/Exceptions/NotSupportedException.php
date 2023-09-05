@@ -8,5 +8,5 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-class NotSupportedException extends \LogicException
+class NotSupportedException extends EthBinderLogicException
 {}

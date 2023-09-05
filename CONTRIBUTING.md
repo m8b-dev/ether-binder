@@ -33,6 +33,7 @@ Try to stick to code style:
 - Functions and methods use `camelCase`
 - Constants may use `camelCase` if not public (private / protected), otherwise `CAPSLOCK_CASE`
 - Enum values use `CAPSLOCK_CASE`
+- In general `static` is preferred compared to `self`. This enables easier inheritance and extending classes.
 
 ### Boilerplate
 

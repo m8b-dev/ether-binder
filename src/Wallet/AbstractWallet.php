@@ -17,7 +17,7 @@ abstract class AbstractWallet
 {
 	protected Key $key;
 
-	public function Key(): Key
+	public function key(): Key
 	{
 		return $this->key;
 	}

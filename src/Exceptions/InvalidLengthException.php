@@ -8,7 +8,7 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-class InvalidLengthException extends \InvalidArgumentException
+class InvalidLengthException extends EthBinderArgumentException
 {
 	public function __construct(int $wantLen, int $gotLen)
 	{

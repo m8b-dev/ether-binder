@@ -33,7 +33,6 @@ class Address extends Hash
 		return $this->checksummed();
 	}
 
-
 	public static function testChecksum(string $hexAddr): bool
 	{
 		if(strtolower($hexAddr) == $hexAddr || strtoupper($hexAddr) == $hexAddr)

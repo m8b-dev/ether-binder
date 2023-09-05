@@ -8,7 +8,5 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-class InvalidHexException extends \InvalidArgumentException
-{
-
-}
+class InvalidHexException extends EthBinderArgumentException
+{}

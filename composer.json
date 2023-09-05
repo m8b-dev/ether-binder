@@ -23,6 +23,7 @@
         "kornrunner/keccak": "^1.1",
         "simplito/elliptic-php": "^1.0",
         "ext-openssl": "*",
-        "furqansiddiqui/bip39-mnemonic-php": "^0.1.7"
+        "furqansiddiqui/bip39-mnemonic-php": "^0.1.7",
+        "nikic/php-parser": "^4.17"
     }
 }

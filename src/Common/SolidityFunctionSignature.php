@@ -6,7 +6,9 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-namespace M8B\EtherBinder\Exceptions;
+namespace M8B\EtherBinder\Common;
 
-class InvalidURLException extends EthBinderArgumentException
-{}
+class SolidityFunctionSignature
+{
+
+}

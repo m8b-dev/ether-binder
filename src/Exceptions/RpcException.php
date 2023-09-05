@@ -8,5 +8,5 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-class RpcException extends \RuntimeException
+class RpcException extends EthBinderRuntimeException
 {}

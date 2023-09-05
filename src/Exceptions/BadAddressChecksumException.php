@@ -8,7 +8,7 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-class BadAddressChecksumException extends \InvalidArgumentException
+class BadAddressChecksumException extends EthBinderArgumentException
 {
 	public function __construct(string $badSum, string $goodSum)
 	{

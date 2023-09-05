@@ -15,4 +15,16 @@ class Signature
 	public OOGmp $v;
 	public OOGmp $r;
 	public OOGmp $s;
+
+	public function toHex(): string
+	{
+		return $this->r->toString(true, true, 32)
+			 . $this->s->toString(true, true, 32)
+			 . $this->v->toString(true, true, 2);
+	}
+
+	public function toBin(): string
+	{
+		return hex2bin($this->toHex());
+	}
 }

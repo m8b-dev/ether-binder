@@ -6,7 +6,12 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-namespace M8B\EtherBinder\Exceptions;
+namespace M8B\EtherBinder\Misc;
 
-class InvalidURLException extends EthBinderArgumentException
-{}
+class UnFormattedMessage extends AbstractMessage
+{
+	protected function preProcessMessage(): string
+	{
+		return $this->message;
+	}
+}

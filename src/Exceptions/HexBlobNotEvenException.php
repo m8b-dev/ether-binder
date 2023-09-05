@@ -8,7 +8,5 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-class HexBlobNotEvenException extends \Exception
-{
-
-}
+class HexBlobNotEvenException extends EthBinderException
+{}
