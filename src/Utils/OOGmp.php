@@ -28,7 +28,7 @@ class OOGmp
 		if($base !== null) {
 			$this->gmp = gmp_init($number, $base);
 		} else {
-			if(ctype_digit($number))
+			if(ctype_digit(ltrim($number, "-")))
 				$this->gmp = gmp_init($number, 10);
 			else
 				$this->gmp = gmp_init($number, 16);
@@ -54,10 +54,20 @@ class OOGmp
 	{
 		if(!$hex)
 			return gmp_strval($this->gmp, 10);
-		if($lpad0 === null)
-			return ($no0xHex ? "" : "0x").gmp_strval($this->gmp, 16);
+		if($this->ge(0)) {
+			if($lpad0 === null)
+				return ($no0xHex ? "" : "0x").gmp_strval($this->gmp, 16);
 
-		return ($no0xHex ? "" : "0x").str_pad(gmp_strval($this->gmp, 16), $lpad0, "0", STR_PAD_LEFT);
+			return ($no0xHex ? "" : "0x").str_pad(gmp_strval($this->gmp, 16), $lpad0, "0", STR_PAD_LEFT);
+		} else {
+			// we are < 0, so instead of for example 10 = 0x0a, we need to output 0xf6
+			if($lpad0 === null)
+				$bitSize = (strlen(gmp_strval($this->gmp, 16)) + 1) * 4;
+			else
+				$bitSize = $lpad0 * 4;
+			$twosComplement = gmp_add(gmp_pow(2, $bitSize), $this->gmp);
+			return ($no0xHex ? "" : "0x").gmp_strval($twosComplement, 16);
+		}
 	}
 
 	public function toBin(?int $lpad0 = null): string

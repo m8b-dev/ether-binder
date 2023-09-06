@@ -2,83 +2,126 @@
 
 namespace M8B\EtherBinder\Contract;
 
-use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
+use kornrunner\Keccak;
+use M8B\EtherBinder\Contract\AbiTypes\AbiArrayKnownLength;
+use M8B\EtherBinder\Contract\AbiTypes\AbiArrayUnknownLength;
+use M8B\EtherBinder\Contract\AbiTypes\AbiTuple;
+use M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 
 class ABIEncoder
 {
-	protected array $types = [];
-	protected string $buff = "";
+	/**
+	 * @param string $signature
+	 * @param array $data
+	 * @return string
+	 * @throws EthBinderLogicException
+	 */
+	public static function encode(string $signature, array $data): string {
+		self::validateSignature($signature);
+		$mainFn = new AbiTuple();
 
-	public function __construct(string $functionSignature)
-	{
-		$this->types = $this->parseSignature($functionSignature);
+		$types = explode(",", substr($signature, strpos($signature, "(") + 1, -1));
+
+		if (count($types) !== count($data)) {
+			throw new EthBinderLogicException("Mismatch between signature and data array");
+		}
+
+		foreach ($types as $index => $type) {
+			$mainFn[] = self::createFromType($type, $data[$index]);
+		}
+
+		$signatureHash = Keccak::hash($signature, 256, true);
+		return substr($signatureHash, 0, 4).$mainFn->encodeBin();
 	}
 
-	public static function encodeWithSig(string $functionSignature, array $data): string
+	/**
+	 * @param string $type
+	 * @param $data
+	 * @return AbstractABIValue
+	 */
+	private static function createFromType(string $type, $data): AbstractABIValue
 	{
-		$s = new static($functionSignature);
-		return $s->encode($data);
+		if(str_ends_with($type, "[]")) {
+			$elementType = substr($type, 0, -2);
+			$arrayObj = new AbiArrayUnknownLength();
+			foreach ($data as $element) {
+				$arrayObj[] = self::createFromType($elementType, $element);
+			}
+			return $arrayObj;
+		} elseif (str_contains($type, "[") && str_contains($type, "]")) {
+			$openBracketPos = strpos($type, "[");
+			$closeBracketPos = strpos($type, "]");
+			$elementType = substr($type, 0, $openBracketPos);
+			$length = (int) substr($type, $openBracketPos + 1, $closeBracketPos - $openBracketPos - 1);
+
+			// If length is zero, it means it's an array with unknown length
+			if ($length === 0) {
+				$arrayObj = new AbiArrayUnknownLength();
+			} else {
+				$arrayObj = new AbiArrayKnownLength($length);
+			}
+
+			foreach ($data as $element) {
+				$arrayObj[] = self::createFromType($elementType, $element);
+			}
+			return $arrayObj;
+		} elseif (str_starts_with($type, "(")) {
+			$tupleObj = new AbiTuple();
+			$elementTypes = explode(",", rtrim(ltrim($type, "("), ")"));
+			foreach ($elementTypes as $index => $elementType) {
+				$tupleObj[] = self::createFromType($elementType, $data[$index]);
+			}
+			return $tupleObj;
+		} else {
+			return AbstractABIValue::parseValue($type, $data);
+		}
 	}
 
-	protected function parseSignature(string $signature): array
-	{
-		$start = strpos($signature, "(");
-		$end = strpos($signature, ")");
-		if($start === false || $end === false)
-			throw new \InvalidArgumentException("function signature must have exactly one ( and exactly one )");
-		$start += 1;
-		$end -= $start;
-		if($end === 0)
-			return [];
-		return explode(",", substr($signature, $start, $end));
-	}
+	/**
+	 * @param string $signature
+	 * @return void
+	 * @throws EthBinderLogicException
+	 */
+	private static function validateSignature(string $signature): void {
+		$stack = [];
+		$numStack = [];
+		$passedFunctionName = false;
 
-	public function typeGetArrayDetails(string $type): array
-	{
-		$result = [];
-		$start = false;
-		$temp = '';
-		$bracketCount = 0;
+		for ($i = 0, $len = strlen($signature); $i < $len; $i++) {
+			$char = $signature[$i];
 
-		for($i = 0; $i < strlen($type); $i++) {
-			if($type[$i] === '[') {
-				$bracketCount++;
-				if ($start) {
-					throw new EthBinderArgumentException("ABI encoder: got invalid type: found opening bracket without closing previous bracket");
+			if ($char === "(") {
+				$passedFunctionName = true;
+				$stack[] = $char;
+			} elseif ($char === ")") {
+				if (end($stack) !== "(") {
+					throw new EthBinderLogicException("Mismatched brackets in the signature");
 				}
-				$start = true;
-				continue;
-			}
-			if($type[$i] === ']') {
-				$bracketCount--;
-				if (!$start) {
-					throw new EthBinderArgumentException("ABI encoder: got invalid type: found closing bracket without opening bracket");
+				array_pop($stack);
+			} elseif ($char === "[") {
+				$stack[] = $char;
+				$numStack[] = "";
+			} elseif ($char === "]") {
+				if (end($stack) !== "[") {
+					throw new EthBinderLogicException("Mismatched brackets in the signature");
 				}
-				$start = false;
-				$result[] = ($temp === '') ? -1 : (int)$temp;
-				$temp = '';
-				continue;
+				array_pop($stack);
+				$num = array_pop($numStack);
+				if ($num !== "" && !ctype_digit($num)) {
+					throw new EthBinderLogicException("Invalid characters between brackets");
+				}
+			} elseif (end($stack) === "[") {
+				$numStack[count($numStack) - 1] .= $char;
 			}
-			if($start) {
-				$temp .= $type[$i];
-			}
 		}
 
-		if ($bracketCount !== 0) {
-			throw new EthBinderArgumentException("ABI encoder: got invalid type: ");
+		if (!empty($stack)) {
+			throw new EthBinderLogicException("Mismatched brackets in the signature");
 		}
 
-		return $result;
-	}
-
-	public function encode(array $data): string
-	{
-		if(count($data) != count($this->types)) {
-			throw new \InvalidArgumentException("data length does not match signature length");
-		}
-
-		foreach($data AS $k => $field) {
-
+		if (!$passedFunctionName) {
+			throw new EthBinderLogicException("No function name detected in the signature");
 		}
 	}
 }
