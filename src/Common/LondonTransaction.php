@@ -114,10 +114,13 @@ class LondonTransaction extends Transaction
 		return $this->accessList;
 	}
 
-	public function setAccessList(array $accessList): void
+	public function setAccessList(array $accessList): static
 	{
-		$this->signed = false;
-		$this->accessList = $accessList;
+		if($this->accessList == $accessList) {
+			$this->signed = false;
+			$this->accessList = $accessList;
+		}
+		return $this;
 	}
 
 	public function chainId(): int
@@ -125,10 +128,13 @@ class LondonTransaction extends Transaction
 		return $this->chainId;
 	}
 
-	public function setChainId(int $chainId): void
+	public function setChainId(int $chainId): static
 	{
-		$this->signed = false;
-		$this->chainId = $chainId;
+		if($this->chainId !== $chainId) {
+			$this->signed = false;
+			$this->chainId = $chainId;
+		}
+		return $this;
 	}
 
 	public function getBaseFeeCap(): OOGmp
@@ -146,13 +152,16 @@ class LondonTransaction extends Transaction
 		return $this->gasFeeTip;
 	}
 
-	public function setGasFeeTip(OOGmp $gasFeeTip): void
+	public function setGasFeeTip(OOGmp $gasFeeTip): static
 	{
-		$this->signed = false;
-		$this->gasFeeTip = $gasFeeTip;
+		if(!$gasFeeTip->eq($this->gasFeeTip)) {
+			$this->signed = false;
+			$this->gasFeeTip = $gasFeeTip;
+		}
+		return $this;
 	}
 
-	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage)
+	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static
 	{
 		$gas   = ($rpc->ethEstimateGas($this, $from) * ($bumpFeePercentage + 100)) / 100;
 		$base  = Functions::GetNextBlockBaseFee($rpc->ethGetBlockByNumber(), EIP1559Config::sepolia() /* using sepolia as only difference
@@ -163,6 +172,6 @@ class LondonTransaction extends Transaction
 
 		$this->setGasLimit($gas);
 		$this->setBaseFeeCap($base);
-		$this->setGasFeeTip($tip);
+		return $this->setGasFeeTip($tip);
 	}
 }

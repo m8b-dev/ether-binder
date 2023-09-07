@@ -8,8 +8,6 @@
 
 namespace M8B\EtherBinder\Misc;
 
-use M8B\EtherBinder\Utils\OOGmp;
-
 class EIP1559Config
 {
 	public const ELASTICITY_MULTIPLIER = 2;

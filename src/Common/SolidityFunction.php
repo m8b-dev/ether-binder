@@ -11,5 +11,10 @@ namespace M8B\EtherBinder\Common;
 class SolidityFunction
 {
 	public Address $address;
-	public SolidityFunctionSignature $signature;
+	public SolidityFunction4BytesSignature $signature;
+
+	public function toBin(): string
+	{
+		return $this->address->toBin() . $this->signature->toBin();
+	}
 }

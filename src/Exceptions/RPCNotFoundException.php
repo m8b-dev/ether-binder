@@ -8,7 +8,5 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-use M8B\EtherBinder\Exceptions\RpcException;
-
 class RPCNotFoundException extends RpcException
 {}

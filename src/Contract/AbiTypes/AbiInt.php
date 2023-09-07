@@ -11,34 +11,16 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Utils\OOGmp;
 
-class AbiUint extends AbstractABIValue
+class AbiInt extends AbiUint
 {
-	public OOGmp $value;
-
+	/** @noinspection PhpMissingParentConstructorInspection */
 	public function __construct(int|OOGmp $val, int $maxBits)
 	{
 		if(!($val instanceof OOGmp))
 			$val = new OOGmp($val);
-		if($val->lt(0))
-			throw new EthBinderArgumentException("value is lower than 0, cannot be unsigned int");
-		if(strlen(gmp_strval($val->raw(),2)) > $maxBits) {
+		if(strlen(gmp_strval($val->raw(),2)) > ($maxBits) - 1 /* first bit for denominating sign*/) {
 			throw new EthBinderArgumentException("value is too big for size of the variable");
 		}
 		$this->value = $val;
-	}
-
-	public function isDynamic(): bool
-	{
-		return false;
-	}
-
-	public function encodeBin(): string
-	{
-		return $this->value->toBin(32);
-	}
-
-	public function __toString(): string
-	{
-		return $this->value->toString();
 	}
 }

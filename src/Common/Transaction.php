@@ -83,7 +83,7 @@ abstract class Transaction
 	abstract protected function blanksFromRPCArr(array $rpcArr): void;
 	abstract protected function setInnerFromRLPValues(array $rlpValues): void;
 	abstract public function ecRecover(): Address;
-	abstract public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage);
+	abstract public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static;
 
 	public static function fromRPCArr(array $rpcArr): static
 	{
@@ -255,7 +255,7 @@ abstract class Transaction
 		return Hash::fromBin(Keccak::hash($this->encodeBinForSigning($chainId), 256, true));
 	}
 
-	public function sign(Key $key, ?int $chainId): void
+	public function sign(Key $key, ?int $chainId): static
 	{
 		$this->chainId = $chainId;
 		$sig = $key->sign($this->getSigningHash($chainId));
@@ -263,6 +263,7 @@ abstract class Transaction
 		$this->s = $sig->s;
 		$this->v = $this->calculateV($sig->v);
 		$this->signed = true;
+		return $this;
 	}
 
 	public function calculateV(OOGmp $recovery): OOGmp

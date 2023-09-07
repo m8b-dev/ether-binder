@@ -101,12 +101,12 @@ class LegacyTransaction extends Transaction
 		return parent::setGasPriceOrBaseFee($gasPrice);
 	}
 
-	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage)
+	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static
 	{
 		$gas      = ($rpc->ethEstimateGas($this, $from) * ($bumpFeePercentage + 100)) / 100;
 		$gasPrice = $rpc->ethGasPrice()->mul($bumpFeePercentage + 100)->div(100);
 		$this->setGasLimit($gas);
-		$this->setGasPrice($gasPrice);
+		return $this->setGasPrice($gasPrice);
 	}
 
 }

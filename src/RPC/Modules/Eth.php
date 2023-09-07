@@ -45,9 +45,12 @@ abstract class Eth extends Debug
 		return Address::fromHex($this->runRpc("eth_coinbase")[0]);
 	}
 
+	private ?int $cachedChainId = null;
 	public function ethChainID(): int
 	{
-		return hexdec($this->runRpc("eth_chainId")[0]);
+		if($this->cachedChainId === null)
+			$this->cachedChainId = (int)hexdec($this->runRpc("eth_chainId")[0]);
+		return $this->cachedChainId;
 	}
 
 	public function ethMining(): bool

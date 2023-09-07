@@ -8,8 +8,6 @@
 
 namespace M8B\EtherBinder\Misc;
 
-use kornrunner\Keccak;
-
 class GethLikeMessage extends AbstractMessage
 {
 	protected function preProcessMessage(): string

@@ -8,9 +8,13 @@
 
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
-class AbiBool extends AbstractABIValue
+use M8B\EtherBinder\Common\SolidityFunction;
+use M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue;
+
+class AbiFunction extends AbstractABIValue
 {
-	public function __construct(protected bool $val)
+
+	public function __construct(protected SolidityFunction $val)
 	{}
 
 	public function isDynamic(): bool
@@ -20,6 +24,6 @@ class AbiBool extends AbstractABIValue
 
 	public function encodeBin(): string
 	{
-		return str_repeat(chr(0), 31) . ($this->val ? chr(1) : chr(0));
+		return str_pad($this->val->toBin(), 32, chr(0), STR_PAD_LEFT);
 	}
 }

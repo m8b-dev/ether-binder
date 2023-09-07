@@ -21,6 +21,7 @@ use M8B\EtherBinder\Utils\WeiFormatter;
 abstract class Compound extends Web3
 {
 	const DEFAULT_TIP_GWEI = 1;
+	private ?bool $seemsLondon = null;
 
 	public function calcAvgTip(int $blockNumbers = 3): OOGmp
 	{
@@ -28,6 +29,9 @@ abstract class Compound extends Web3
 		$tips = [];
 		for($i = 0; $i < $blockNumbers; $i++) {
 			$block = $this->ethGetBlockByNumber($blockNum - $i, true);
+			if($this->seemsLondon === null) {
+				$this->seemsLondon = $block->isEIP1559();
+			}
 			foreach($block->transactions AS $transaction) {
 				if($transaction instanceof LondonTransaction)
 					$tips[] = $transaction->getGasFeeTip();
@@ -41,5 +45,13 @@ abstract class Compound extends Web3
 		}
 
 		return $tmp->div(count($tips));
+	}
+
+	public function isLookingLikeLondon(): bool
+	{
+		if($this->seemsLondon !== null)
+			return $this->seemsLondon;
+		$this->seemsLondon = $this->ethGetBlockByNumber()->isEIP1559();
+		return $this->seemsLondon;
 	}
 }

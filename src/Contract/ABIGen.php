@@ -1,16 +1,28 @@
 <?php
 
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 namespace M8B\EtherBinder\Contract;
 
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Common\SolidityFunction;
-use M8B\EtherBinder\Common\SolidityFunctionSignature;
+use M8B\EtherBinder\Common\SolidityFunction4BytesSignature;
 use M8B\EtherBinder\Common\Transaction;
+use M8B\EtherBinder\Crypto\Key;
+use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
+use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\OOGmp;
 use PhpParser\BuilderFactory;
+use PhpParser\Node\Attribute;
 use PhpParser\Node\Expr\Assign;
+use PhpParser\Node\Name;
+use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Return_;
 use PhpParser\PrettyPrinter\Standard;
 
@@ -19,6 +31,8 @@ class ABIGen
 	protected array $abiFunctions;
 	protected array $abiEvents;
 	protected array $abiConstructor;
+	protected string $className;
+	protected array $tuplesRegistry = [];
 
 	public function __construct(array $abi, protected ?string $compiledBlob = null)
 	{
@@ -32,15 +46,16 @@ class ABIGen
 				"event"       => "abiEvents",
 				"constructor" => "abiConstructor",
 				"function"    => "abiFunctions",
-				default       => throw new \InvalidArgumentException("abi element type '" . $abiItem["type"] . "' not recognized")
+				default       => throw new EthBinderArgumentException("abi element type '" . $abiItem["type"] . "' not recognized")
 			}}[] = $abiItem;
 		}
 	}
 
 	public function gen(string $fullyQualifiedClassName): array
 	{
+		$this->tuplesRegistry = [];
 		if(empty($fullyQualifiedClassName))
-			throw new \InvalidArgumentException();
+			throw new EthBinderArgumentException();
 		// split fqcn to namespace and class
 		$hasNamespace = str_contains(substr($fullyQualifiedClassName, 1), "\\");
 		if(!$hasNamespace) {
@@ -50,16 +65,18 @@ class ABIGen
 		} else {
 			if($fullyQualifiedClassName[0] !== "\\")
 				// prohibit namespace\class as someone might mistake it for \current\namespace\class etc.
-				throw new \InvalidArgumentException("first character of FQCN must be '\\', at least in this implementation");
+				throw new EthBinderArgumentException("first character of FQCN must be '\\', at least in this implementation");
 			$exploded = explode("\\", $fullyQualifiedClassName);
 			$className = array_pop($exploded);
 			$namespace = implode("\\", $exploded);
 		}
 
+		$this->className = $className;
+
 		$bld = new BuilderFactory();
 
-		$class = $bld->class($className)
-			->extend(AbstractContract::class)
+		$class = $bld->class($this->className)
+			->extend("\\".AbstractContract::class)
 			->addStmt($bld->method("abi")
 				->makePublic()
 				->makeStatic()
@@ -76,17 +93,24 @@ class ABIGen
 					new Return_($bld->val($this->compiledBlob))
 				)
 			);
-
 		$processedNames = [];
 
-		foreach($this->abiFunctions AS list(
-				"name" => $fname,
+		$abiArr = $this->abiFunctions;
+		if($this->compiledBlob !== null)
+			$abiArr = array_merge($this->abiConstructor, $this->abiFunctions);
+		foreach($abiArr AS $k => list(
 				"stateMutability" => $smut,
-				"outputs" => $outs,
-				"inputs" => $prms)
+				"inputs"          => $prms,
+				"type"            => $fType)
 		) {
+			$fname = $abiArr[$k]["name"] ?? ""; // not all elements of array have this key
+			$outs  = $abiArr[$k]["outputs"] ?? ""; // not all elements of array have this key
+			if($fType === "constructor") {
+				$outs = [];
+				$fname = "deployNew".ucfirst($this->className);
+			}
 			if(in_array($fname, $processedNames)) {
-				trigger_error("function $fname appears in abi file more than once. Some compilers produce such output. Skipping next occurrence.", E_USER_WARNING);
+				trigger_error("function $fname appears in abi file more than once. Compiler can produce such output, but it's not supported. Skipping next occurrence.", E_USER_WARNING);
 				continue;
 			}
 			$processedNames[] = $fname;
@@ -105,41 +129,161 @@ class ABIGen
 			if($abstractCall === "mkCall") {
 				$retType = $this->getPhpTypingFromOutputs($outs);
 			} else {
-				$retType = Transaction::class;
+				$retType = "\\".Transaction::class;
 			}
 
-			$paramRefs = [$fnSignature];
-			$idx = 1;
+			if($fType === "constructor") {
+				array_unshift($paramsBuilt, $bld
+					->param("privateKey")
+					->setType("\\" . Key::class)
+					->addAttribute(new Attribute(new Name("\\SensitiveParameter"))));
+				array_unshift($paramsBuilt, $bld->param("rpcToDeployWith")->setType("\\" . AbstractRPC::class));
+				$paramRefs = [
+					$bld->var("privateKey"),
+					$bld->var("rpcToDeployWith")
+				];
+				$idx = 2;
+			} else {
+				$paramRefs = [$fnSignature];
+				$idx = 1;
+			}
 			if($smut == "payable") {
-				array_unshift($paramsBuilt, $bld->param("transactionValue")->setType(OOGmp::class));
+				array_unshift($paramsBuilt, $bld->param("transactionValue")->setType("\\".OOGmp::class));
 				$paramRefs[] = $bld->var("transactionValue");
 				$idx++;
 			}
 			foreach($paramNames AS $paramName)
 				$paramRefs[$idx][] = $bld->var($paramName);
 
-			$class->addStmt($bld->method($fname)
+			if($fType === "constructor") {
+				$functionInternal = new Return_($bld->staticCall("static", $smut == "payable" ?
+					"runPayableDeploy" : "runNonPayableDeploy", $paramRefs));
+			} else {
+				if($retType != "\\".Transaction::class) {
+					$functionInternal = new Return_(
+						$bld->methodCall($bld->var("this"), "parseOutput", [
+							$bld->methodCall($bld->var("this"), $abstractCall, $paramRefs),
+							$bld->val($retType)
+						])
+					);
+				} else {
+					$functionInternal = new Return_(
+						$bld->methodCall($bld->var("this"), $abstractCall, $paramRefs)
+					);
+				}
+			}
+
+			$method = $bld->method($fname)
 				->makePublic()
 				->addParams($paramsBuilt)
 				->addStmts($validators)
 				->setReturnType($retType)
-				->addStmt(
-					new Return_($bld->methodCall($bld->var("this"), $abstractCall, $paramRefs))
-				)
-			);
+				->addStmt($functionInternal);
+			if($fType === "constructor")
+				$method = $method->makeStatic();
+			$class->addStmt($method);
 		}
 
 		$class->setDocComment("/// Autogenerated source code");
 		if($hasNamespace) {
 			$nodes = [
-				$bld->namespace($namespace)->addStmt($class)->getNode()];
+				$bld->namespace(ltrim($namespace, "\\"))->addStmt($class)->getNode()];
 		} else {
 			$nodes = [$class->getNode()];
 		}
 		return [
 			"contract" => (new Standard())->prettyPrintFile($nodes),
-			"events" => $this->generateEventClasses($namespace, $className)
+			"events" => $this->generateEventClasses($namespace),
+			"tuples" => $this->generateTuples($namespace)
 		];
+	}
+
+	protected function generateEventClasses(string $namespace): array
+	{
+		$o = [];
+		foreach($this->abiEvents AS $event) {
+			$className = $this->className . "Event" . ucfirst($event["name"]);
+			$bld = new BuilderFactory();
+
+
+			$class = $bld->class($className)
+				->extend("\\".AbstractEvent::class)
+				->addStmt($bld->method("getEventData")
+					->makePublic()
+					->makeStatic()
+					->setReturnType("array")
+					->addStmt(
+						new Return_($bld->val($event))
+					));
+			foreach($event["inputs"] AS list("indexed"=>$indexed, "internalType"=>$internalType, "name"=>$name, "type"=>$type)) {
+				$class->addStmt($bld->method("get".ucfirst($name))
+					->makePublic()
+					->setReturnType($this->getPhpTypingFromType($type, $internalType))
+					->addStmt(
+						new Return_($bld->methodCall($bld->var("this"), "getDataByName", [$name]))
+					)
+				);
+			}
+			if(!empty(ltrim($namespace, "\\"))) {
+				$nodes = [
+					$bld->namespace(ltrim($namespace, "\\"))->addStmt($class)->getNode()
+				];
+			} else {
+				$nodes = [$class->getNode()];
+			}
+			$o[$className] = (new Standard())->prettyPrintFile($nodes);
+		}
+		return $o;
+	}
+
+	protected function generateTuples(string $namespace): array
+	{
+		$o = [];
+
+		foreach($this->tuplesRegistry AS $className => $tupleData) {
+			$bld = new BuilderFactory();
+
+			$class = $bld->class($className)
+				->extend("\\".AbstractTuple::class)
+				->addStmt($bld->method("getTupleData")
+					->makePublic()
+					->makeStatic()
+					->setReturnType("array")
+					->addStmt(
+						new Return_($bld->val($tupleData))
+					));
+			foreach($tupleData AS $k => list("internalType" => $internalType, "name" => $name, "type" => $type)) {
+				if(empty($name)) {
+					$name = "unknownNameIndex_".$k;
+				}
+				$phpType = $this->getPhpTypingFromType($type, $internalType);
+
+				$class->addStmt($bld->method("get".ucfirst($name))
+					->makePublic()
+					->setReturnType($phpType)
+					->addStmt(
+						new Return_($bld->methodCall($bld->var("this"), "offsetGet", [$k]))
+					)
+				);
+				$class->addStmt($bld->method("set".ucfirst($name))
+					->makePublic()
+					->setReturnType("void")
+					->addParam($bld->param("val")->setType($phpType))
+					->addStmt(
+						$bld->methodCall($bld->var("this"), "offsetSet", [$bld->val($k), $bld->var("val")])
+					)
+				);
+			}
+			if(!empty(ltrim($namespace, "\\"))) {
+				$nodes = [
+					$bld->namespace(ltrim($namespace, "\\"))->addStmt($class)->getNode()
+				];
+			} else {
+				$nodes = [$class->getNode()];
+			}
+			$o[$className] = (new Standard())->prettyPrintFile($nodes);
+		}
+		return $o;
 	}
 
 	protected function buildMethodParams(string $fnName, array $inputs, BuilderFactory $bld)
@@ -151,13 +295,27 @@ class ABIGen
 		$params = [];
 		$firstIt = true;
 
-		foreach($inputs AS list("name" => $name, "type" => $type)) {
-			$signature .= $firstIt ? $type:",$type";
+		$fallbackNameMissingCounter = 0;
+
+		foreach($inputs AS $key => list("name" => $name, "type" => $type, "internalType" => $internalType)) {
+			if(empty($name)) {
+				$name = "unnamedSolidityArgument_".$fallbackNameMissingCounter;
+				$fallbackNameMissingCounter++;
+			}
+
 			if($firstIt)
 				$firstIt = false;
+			else
+				$signature .= ",";
+
+			if(str_starts_with($type, "tuple"))
+				$signature .= $this->buildTupleSignatureFromTuple($inputs[$key]);
+			else
+				$signature .= $type;
+
 			$param = $bld->param($name);
 			if($type === "uint" || $type == "int") {
-				$param->setType(OOGmp::class);
+				$param->setType("\\".OOGmp::class);
 			} elseif(str_starts_with($type, "uint") || str_starts_with($type, "int")) {
 				// remove characters, to get bits count
 				$bitsCount = (int)ltrim($type, "uint");
@@ -168,7 +326,7 @@ class ABIGen
 				} elseif($bitsCount <= 32) {
 					$param->setType("int");
 				} else {
-					$param->setType(OOGmp::class);
+					$param->setType("\\".OOGmp::class);
 				}
 				$validators [] = new Assign(
 					$bld->var($name),
@@ -178,7 +336,7 @@ class ABIGen
 						$bld->val($bitsCount)])
 				);
 			} elseif($type == "address") {
-				$param->setType(Address::class);
+				$param->setType("\\".Address::class);
 			} elseif($type == "bool" || $type == "boolean") {
 				$param->setType("bool");
 			} elseif(str_starts_with($type, "fixed") || str_starts_with($type, "ufixed")) {
@@ -190,9 +348,9 @@ class ABIGen
 			} elseif(str_contains($type, "[")) {
 				$param->setType("array");
 			} elseif($type == "function") {
-				$param->setType(SolidityFunctionSignature::class);
+				$param->setType("\\".SolidityFunction4BytesSignature::class);
 			} elseif($type == "bytes32") {
-				$param->setType(Hash::class);
+				$param->setType("\\".Hash::class);
 			} elseif(str_starts_with($type, "bytes")) {
 				$size = (int)ltrim($type, "bytes");
 				$validators [] = new Assign(
@@ -202,6 +360,9 @@ class ABIGen
 						$bld->val((int)$size)])
 				);
 				$param->setType("string");
+			} elseif($type == "tuple") {
+				$this->registerTuple($inputs[$key]);
+				$param->setType($this->tupleInternalTypeToType($internalType));
 			} else {
 				throw new NotSupportedException("type $type was not recognized abi type");
 			}
@@ -211,30 +372,78 @@ class ABIGen
 		return ["params" => $params, "names" => $names, "validators" => $validators, "signature" => $signature . ")"];
 	}
 
-	protected function getPhpTypingFromOutputs(array $outputs)
+	protected function buildTupleSignatureFromTuple(array $tupleAbiData): string
 	{
-		if(empty($outputs))
-			return "void";
-		if(count($outputs) > 1)
+		$type = $tupleAbiData["type"];
+		if($type == "tuple")
+			$suffix = "";
+		else
+			$suffix = substr($type, strlen("tuple"));
+		$o = "(";
+
+		$first = true;
+		foreach($tupleAbiData["components"] AS $k => list("type" => $type)) {
+			if($first)
+				$first = false;
+			else
+				$o .= ",";
+			if(str_starts_with($type, "tuple")) {
+				$o .= $this->buildTupleSignatureFromTuple($tupleAbiData["components"][$k]);
+				continue;
+			}
+			$o .= $type;
+		}
+
+		return $o.")$suffix";
+	}
+
+	protected function getPhpTypingFromType(string $type, string $internalType): string
+	{
+		if(str_contains($type, "[") && $type !== "byte[]")
 			return "array";
-		$outputT = $outputs[0]["type"];
-		if(str_contains($outputT, "[") && $outputT !== "byte[]")
-			return "array";
-		if(str_starts_with($outputT, "uint") || str_starts_with($outputT, "int"))
-			return OOGmp::class;
-		if(str_starts_with($outputT, "bytes") && $outputT !== "bytes32")
+
+		if(str_starts_with($type, "uint") || str_starts_with($type, "int"))
+			return "\\".OOGmp::class;
+
+		if(str_starts_with($type, "bytes") && $type !== "bytes32")
 			return "string";
 
-		return match($outputT) {
-			"bytes32"          => Hash::class,
+		return match($type) {
+			"bytes32"          => "\\".Hash::class,
 			"byte[]", "string" => "string",
-			"function"         => SolidityFunction::class,
+			"function"         => "\\".SolidityFunction::class,
 			"bool", "boolean"  => "bool",
-			"address"          => Address::class,
-			default            => throw new NotSupportedException("output type $outputT is not supported")
+			"address"          => "\\".Address::class,
+			"tuple"            => $this->tupleInternalTypeToType($internalType),
+			default            => throw new NotSupportedException("output type $type is not supported")
 		};
 	}
 
-	protected function generateEventClasses(string $namespace, string $classPrefix): array
-	{return [];/*fixme*/}
+	protected function getPhpTypingFromOutputs(array $outputs): string
+	{
+		foreach($outputs AS $o) {
+			if(ltrim($o["type"], "[1234567890]") == "tuple")
+				$this->registerTuple($o);
+		}
+
+		if(empty($outputs))
+			return "void";
+
+		if(count($outputs) > 1)
+			return "array";
+
+		return $this->getPhpTypingFromType($outputs[0]["type"], $outputs[0]["internalType"]);
+	}
+
+	protected function tupleInternalTypeToType(string $internalName): string
+	{
+		$internalName = rtrim($internalName, "[1234567890]");
+		return $this->className."Tuple".substr($internalName, strrpos($internalName, ".") +1);
+	}
+
+	protected function registerTuple(array $tupleData): void
+	{
+		list("internalType" => $internalType, "components" => $components)   = $tupleData;
+		$this->tuplesRegistry[$this->tupleInternalTypeToType($internalType)] = $components;
+	}
 }

@@ -1,15 +1,19 @@
 <?php
 
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
 use M8B\EtherBinder\Utils\OOGmp;
 
 class AbiArrayKnownLength extends AbiTuple
 {
-	public function __construct(/*public int $length*/) {
-
-	}
-
+	public function __construct(protected int $length)
+	{}
 
 	public function __toString(): string
 	{
@@ -20,17 +24,4 @@ class AbiArrayKnownLength extends AbiTuple
 		$ret .= "]";
 		return $ret;
 	}
-	/*
-	public function isDynamic(): bool
-	{
-		return false;
-	}
-
-	public function encodeBin(): string
-	{
-		foreach($this->inner AS $itm) {
-			$data .= $itm->encodeBin();
-		}
-		return $data;
-	}*/
 }

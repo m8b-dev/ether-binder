@@ -6,9 +6,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-namespace M8B\EtherBinder\Common;
+namespace M8B\EtherBinder\Contract\AbiTypes;
 
-class SolidityFunctionSignature
+use M8B\EtherBinder\Contract\AbiTypes\AbiBytes;
+
+class AbiString extends AbiBytes
 {
-
+	public function __construct(string $data)
+	{
+		parent::__construct($data, 0);
+	}
 }
