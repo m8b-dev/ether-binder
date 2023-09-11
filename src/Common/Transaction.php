@@ -180,13 +180,13 @@ abstract class Transaction
 	public function setTo(?Address $address): static
 	{
 		if(
-			   ($this->to === null && $address !== null)
-			|| ($this->to !== null && $address === null)
-			|| (!$this->to->eq($address))
-		) {
-			$this->to = $address;
-			$this->signed = false;
-		}
+			   $this->to === null && $address === null
+			|| ($this->to !== null && $address !== null && $this->to->eq($address))
+		) return $this;
+
+		$this->to = $address;
+		$this->signed = false;
+
 		return $this;
 	}
 

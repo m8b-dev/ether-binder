@@ -14,7 +14,7 @@ use M8B\EtherBinder\Utils\OOGmp;
 class AbiInt extends AbiUint
 {
 	/** @noinspection PhpMissingParentConstructorInspection */
-	public function __construct(int|OOGmp $val, int $maxBits)
+	public function __construct(null|int|OOGmp $val, int $maxBits)
 	{
 		if(!($val instanceof OOGmp))
 			$val = new OOGmp($val);

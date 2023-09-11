@@ -22,14 +22,7 @@ abstract class AbstractABIValue
 		if($type === "int")
 			$type = "int256";
 
-		$typeNoBits = match (true) {
-			str_starts_with($type, "uint") => "uint",
-			str_starts_with($type, "int") => "int",
-			str_starts_with($type, "bytes") => "bytes",
-			default => $type,
-		};
-		// empty string defaults to 0
-		$bits = (int) substr($type, strlen($typeNoBits));
+		list("type" => $typeNoBits, "bits" => $bits) = self::splitTypeBits($type);
 
 		switch($typeNoBits) {
 			case "uint":
@@ -50,6 +43,24 @@ abstract class AbstractABIValue
 		throw new NotSupportedException("type $type is not supported");
 	}
 
+	/**
+	 * @param string $type
+	 * @return array<"type"|"bits", string|int|null>
+	 */
+	public static function splitTypeBits(string $type): array
+	{
+		$typeNoBits = match (true) {
+			str_starts_with($type, "uint") => "uint",
+			str_starts_with($type, "int") => "int",
+			str_starts_with($type, "bytes") => "bytes",
+			default => $type,
+		};
+		// empty string defaults to 0
+		$bits = (int) substr($type, strlen($typeNoBits));
+		return ["type" => $typeNoBits, "bits" => $bits];
+	}
+
 	abstract public function isDynamic(): bool;
 	abstract public function encodeBin(): string;
+	abstract public function decodeBin(string $dataBin);
 }

@@ -53,6 +53,13 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 		return $heads . implode("", $tails);
 	}
 
+	public function decodeBin(string $dataBin)
+	{
+		//todo
+		throw new M8B\EtherBinder\Exceptions\NotSupportedException();
+	}
+
+
 	protected function tail(AbstractABIValue $val): string
 	{
 		if($val->isDynamic()) {

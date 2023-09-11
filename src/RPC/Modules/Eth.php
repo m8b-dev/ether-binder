@@ -175,9 +175,9 @@ abstract class Eth extends Debug
 		return Hash::fromHex($this->runRpc("eth_sendRawTransaction", [$rawTransactionHex])[0]);
 	}
 
-	public function ethCall(Transaction $message, ?Address $from = null): string
+	public function ethCall(Transaction $message, ?Address $from = null, int|BlockParam $blockParam = BlockParam::LATEST): string
 	{
-		return $this->runRpc("eth_call", [$this->transactionToRPCArr($message, $from, true)])[0];
+		return $this->runRpc("eth_call", [$this->transactionToRPCArr($message, $from, true), $this->blockParam($blockParam)])[0];
 	}
 
 	public function ethEstimateGas(Transaction $txn, ?Address $from): int

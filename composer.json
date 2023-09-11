@@ -14,7 +14,11 @@
         }
     ],
     "minimum-stability": "stable",
+    "bin": [
+        "bin/abigen"
+    ],
     "require": {
+        "composer-runtime-api": "^2.2",
         "php": ">=8.2",
         "ext-curl": "*",
         "ext-ctype": "*",
@@ -24,6 +28,7 @@
         "simplito/elliptic-php": "^1.0",
         "ext-openssl": "*",
         "furqansiddiqui/bip39-mnemonic-php": "^0.1.7",
-        "nikic/php-parser": "^4.17"
+        "nikic/php-parser": "^4.17",
+        "vanilla/garden-cli": "^4.0"
     }
 }

@@ -13,7 +13,7 @@ use M8B\EtherBinder\Utils\OOGmp;
 class AbiBytes extends AbstractABIValue
 {
 	protected bool $dynamic;
-	public function __construct(protected string $data, protected int $size)
+	public function __construct(protected ?string $data, protected int $size)
 	{
 		if($this->size == 0) {
 			$this->dynamic = true;
@@ -27,13 +27,19 @@ class AbiBytes extends AbstractABIValue
 		return $this->dynamic;
 	}
 
+	public function decodeBin(string $dataBin)
+	{
+		return $dataBin;
+	}
+
+
 	public function encodeBin(): string
 	{
 		if(!$this->dynamic)
-			return str_pad($this->data, 32, chr(0), STR_PAD_LEFT);
+			return str_pad($this->data, 32, chr(0), STR_PAD_RIGHT);
 		$slots = ceil(strlen($this->data) / 32);
 
 		return (new OOGmp(strlen($this->data)))->toBin(32)
-			.str_pad($this->data, 32 * $slots, chr(0), STR_PAD_LEFT);
+			.str_pad($this->data, 32 * $slots, chr(0), STR_PAD_RIGHT);
 	}
 }

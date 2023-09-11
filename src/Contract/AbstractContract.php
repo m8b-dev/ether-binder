@@ -54,19 +54,60 @@ abstract class AbstractContract
 		return $this->key?->toAddress() ?? $this->fallbackFrom ?? Address::NULL();
 	}
 
-	protected static function runNonPayableDeploy(#[\SensitiveParameter] Key $pk, AbstractRPC $rpc, array $params): Transaction
+	protected static function runNonPayableDeploy(
+		string $constructorParamsSig,
+		#[\SensitiveParameter] Key $pk,
+		AbstractRPC $rpc,
+		array $params
+	): Transaction
 	{
-
+		$tx = self::getDeployTransaction($constructorParamsSig, $pk, $rpc, $params, null);
+		$rpc->ethSendRawTransaction($tx);
+		return $tx;
 	}
 
-	protected static function runPayableDeploy(#[\SensitiveParameter] Key $pk, AbstractRPC $rpc, OOGmp $value, array $params): Transaction
+	protected static function runPayableDeploy(
+		string $constructorParamsSig,
+		#[\SensitiveParameter] Key $pk,
+		AbstractRPC $rpc,
+		OOGmp $value,
+		array $params
+	): Transaction
 	{
+		$tx = self::getDeployTransaction($constructorParamsSig, $pk, $rpc, $params, $value);
+		$rpc->ethSendRawTransaction($tx);
+		return $tx;
+	}
 
+	private static function getDeployTransaction(
+		string $constructorParamsSig,
+		#[\SensitiveParameter] Key $pk,
+		AbstractRPC $rpc,
+		array $params,
+		?OOGmp $value
+	): Transaction
+	{
+		$tx = $rpc->isLookingLikeLondon() ?
+			new LondonTransaction()
+			: new LegacyTransaction();
+		return $tx->setTo(null)
+			->setValue(new OOGmp(0))
+			->setDataBin(hex2bin(static::bytecode()).ABIEncoder::encode($constructorParamsSig, $params, false))
+			->setNonce($rpc->ethGetTransactionCount($pk->toAddress())->toInt())
+			->setValue($value ?? new OOGmp(0))
+			->useRpcEstimatesWithBump(
+				$rpc,
+				$pk->toAddress(),
+				self::$transactionFeesPercentageBump,
+				self::$transactionFeesPercentageBump
+			)->sign($pk, $rpc->ethChainID());
 	}
 
 	protected function parseOutput(string $output, string $type): mixed
 	{
-
+		var_dump($type);
+		var_dump($output);
+		die;
 	}
 
 	protected function mkCall(string $signature, array $params = []): string
@@ -113,7 +154,9 @@ abstract class AbstractContract
 
 	protected function expectBinarySizeNormalizeString(string $binOrHex, int $length): string
 	{
-		if(strlen($binOrHex) == $length)
+		if($length == 0 && str_starts_with($binOrHex, "0x") && ctype_xdigit(substr($binOrHex, 2)))
+			return hex2bin(substr($binOrHex, 2));
+		if(strlen($binOrHex) == $length || $length == 0)
 			return $binOrHex;
 		// if does not start with 0x, but is valid hex, and length is 2* bin length, accept and cast to bin
 		if(!str_starts_with($binOrHex, "0x") && ctype_xdigit($binOrHex) && strlen($binOrHex) == 2*$length)
@@ -158,6 +201,7 @@ abstract class AbstractContract
 		return $o;
 	}
 
-	abstract static function abi(): string;
-	abstract static function bytecode(): ?string;
+	abstract public static function abi(): string;
+	abstract public static function bytecode(): ?string;
+	abstract protected static function getEventsRegistry() : array;
 }

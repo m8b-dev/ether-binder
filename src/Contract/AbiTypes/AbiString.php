@@ -12,8 +12,13 @@ use M8B\EtherBinder\Contract\AbiTypes\AbiBytes;
 
 class AbiString extends AbiBytes
 {
-	public function __construct(string $data)
+	public function __construct(?string $data)
 	{
 		parent::__construct($data, 0);
+	}
+
+	public function decodeBin(string $dataBin)
+	{
+		return $dataBin;
 	}
 }

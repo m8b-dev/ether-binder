@@ -20,7 +20,7 @@ class LegacyTransaction extends Transaction
 		$nonce    = "0x".dechex($this->nonce);
 		$gasPrice = $this->gasPrice->toString(true);
 		$gasLimit = "0x".dechex($this->gas);
-		$to       = $this->to->toHex();
+		$to       = $this->to?->toHex();
 		$value    = $this->value->toString(true);
 		$data     = $this->dataHex();
 		$v        = $this->v()->toString(true);

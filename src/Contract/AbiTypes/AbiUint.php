@@ -15,7 +15,7 @@ class AbiUint extends AbstractABIValue
 {
 	public OOGmp $value;
 
-	public function __construct(int|OOGmp $val, int $maxBits)
+	public function __construct(null|int|OOGmp $val, int $maxBits)
 	{
 		if(!($val instanceof OOGmp))
 			$val = new OOGmp($val);
@@ -27,6 +27,16 @@ class AbiUint extends AbstractABIValue
 		$this->value = $val;
 	}
 
+	public function decodeBin(string $dataBin)
+	{
+		return new OOGmp(bin2hex($dataBin), 16);
+	}
+
+	public function __toString(): string
+	{
+		return $this->value->toString();
+	}
+
 	public function isDynamic(): bool
 	{
 		return false;
@@ -35,10 +45,5 @@ class AbiUint extends AbstractABIValue
 	public function encodeBin(): string
 	{
 		return $this->value->toBin(32);
-	}
-
-	public function __toString(): string
-	{
-		return $this->value->toString();
 	}
 }

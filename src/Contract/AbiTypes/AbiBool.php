@@ -10,13 +10,19 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 
 class AbiBool extends AbstractABIValue
 {
-	public function __construct(protected bool $val)
+	public function __construct(protected ?bool $val)
 	{}
 
 	public function isDynamic(): bool
 	{
 		return false;
 	}
+
+	public function decodeBin(string $dataBin)
+	{
+		return ord($dataBin[31]) > 0;
+	}
+
 
 	public function encodeBin(): string
 	{

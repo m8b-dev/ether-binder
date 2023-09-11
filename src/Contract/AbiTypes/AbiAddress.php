@@ -12,7 +12,7 @@ use M8B\EtherBinder\Common\Address;
 
 class AbiAddress extends AbstractABIValue
 {
-	public function __construct(protected Address $data)
+	public function __construct(protected ?Address $data)
 	{}
 
 	public function isDynamic(): bool
@@ -23,5 +23,10 @@ class AbiAddress extends AbstractABIValue
 	public function encodeBin(): string
 	{
 		return str_repeat(chr(0), 32 - 20) . $this->data->toBin();
+	}
+
+	public function decodeBin(string $dataBin)
+	{
+		// TODO: Implement decodeBin() method.
 	}
 }
