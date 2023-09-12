@@ -8,8 +8,16 @@
 
 namespace M8B\EtherBinder\Common;
 
+use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * ValidatorWithdrawal represents a withdrawal event from a validator, including the amount and related indexes.
+ *
+ * @author DubbaThony
+ */
 class ValidatorWithdrawal
 {
 	public Address $address;
@@ -17,6 +25,15 @@ class ValidatorWithdrawal
 	public OOGmp $validatorIndex;
 	public OOGmp $index;
 
+	/**
+	 * Constructs a ValidatorWithdrawal object from an array received through RPC.
+	 *
+	 * @param array $rpcArr The array containing withdrawal data.
+	 * @return static The ValidatorWithdrawal object.
+	 * @throws BadAddressChecksumException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 */
 	public static function fromRPCArr(array $rpcArr): static
 	{
 		$s = new static();

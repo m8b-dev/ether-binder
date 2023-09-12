@@ -11,9 +11,34 @@ namespace M8B\EtherBinder\Utils;
 use GMP;
 use RuntimeException;
 
+/**
+ * OOGmp is a utility class that wraps PHP's GMP library for working with arbitrary-size integers.
+ * It provides an easy-to-use, object-oriented API for Ethereum-related operations and offers a chainable
+ * arithmetic operations API.
+ *
+ * Arithmetic Functions:
+ * The class provides basic arithmetic operations like addition (`add`), subtraction (`sub`), multiplication (`mul`), and division (`div`).
+ * These methods support automatic type normalization, allowing you to pass in `OOGmp|int|GMP` as arguments.
+ *
+ * Comparison Functions:
+ * Standard comparison operations are included, such as `eq` (equals), `lt` (less than), `gt` (greater than), etc.
+ * Aliases are also available, like `eq` - `equal`. These functions also support automatic type normalization.
+ *
+ * @author DubbaThony
+ */
 class OOGmp
 {
 	private GMP $gmp;
+
+	/**
+	 * Initializes a new OOGmp object.
+	 *
+	 * @param null|string|GMP $number The initial number value as null, string, or GMP object.
+	 * @param int|null $base The base for string input. Defaults attempts to guess, if $number has 0x prefix, it defaults to 16,
+	 *                       otherwise if it has any of a-f characters, it defaults to 16, otherwise it defaults to 10.
+	 *                       Be very cautions when relying on that detection as non-0x-prefixed hex that happens to not
+	 *                       have any a-f will be mistreated as base = 10.
+	 */
 	public function __construct(null|string|GMP $number = null, ?int $base = null)
 	{
 		if($number === null) {
@@ -28,13 +53,23 @@ class OOGmp
 		if($base !== null) {
 			$this->gmp = gmp_init($number, $base);
 		} else {
-			if(ctype_digit(ltrim($number, "-")))
+			if(str_starts_with($number, "0x"))
+				$this->gmp = gmp_init(substr($number, 2), 16);
+
+			elseif(ctype_digit(ltrim($number, "-")))
 				$this->gmp = gmp_init($number, 10);
+
 			else
 				$this->gmp = gmp_init($number, 16);
 		}
 	}
 
+	/**
+	 * Wraps a raw GMP object into an OOGmp instance.
+	 *
+	 * @param GMP $raw The GMP object to be wrapped.
+	 * @return OOGmp The new OOGmp instance wrapping the given GMP object.
+	 */
 	public static function wrap(GMP $raw): static
 	{
 		$static = new static();
@@ -42,6 +77,12 @@ class OOGmp
 		return $static;
 	}
 
+	/**
+	 * Converts the internal GMP number to an integer.
+	 *
+	 * @return int The integer representation of the GMP number.
+	 * @throws RuntimeException If the GMP number is larger than PHP_INT_MAX.
+	 */
 	public function toInt(): int
 	{
 		if(gmp_cmp($this->gmp, PHP_INT_MAX) > 0) {
@@ -50,6 +91,14 @@ class OOGmp
 		return gmp_intval($this->gmp);
 	}
 
+	/**
+	 * Converts the internal GMP number to a string.
+	 *
+	 * @param bool $hex If true, returns a hexadecimal string. Otherwise, returns a decimal string.
+	 * @param bool $no0xHex If true and $hex is true, omits the "0x" prefix.
+	 * @param int|null $lpad0 Number of zeros to pad on the left.
+	 * @return string The string representation of the GMP number.
+	 */
 	public function toString(bool $hex = false, bool $no0xHex = false, ?int $lpad0 = null): string
 	{
 		if(!$hex)
@@ -70,6 +119,12 @@ class OOGmp
 		}
 	}
 
+	/**
+	 * Converts the internal GMP number to a binary string.
+	 *
+	 * @param int|null $lpad0 Number of zeros to pad on the left.
+	 * @return string The binary string representation of the GMP number.
+	 */
 	public function toBin(?int $lpad0 = null): string
 	{
 		$hex = $this->toString(true, true);
@@ -85,6 +140,11 @@ class OOGmp
 		return $this->toString();
 	}
 
+	/**
+	 * Returns the raw GMP object.
+	 *
+	 * @return GMP The internal GMP object.
+	 */
 	public function raw(): GMP
 	{
 		return $this->gmp;

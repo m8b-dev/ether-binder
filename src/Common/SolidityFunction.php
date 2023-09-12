@@ -8,6 +8,11 @@
 
 namespace M8B\EtherBinder\Common;
 
+/**
+ * SolidityFunction represents a Solidity function type, consisting with its address and 4-byte signature.
+ *
+ * @author DubbaThony
+ */
 class SolidityFunction
 {
 	public Address $address;

@@ -10,17 +10,37 @@ namespace M8B\EtherBinder\Wallet;
 
 use Elliptic\EC\KeyPair;
 use FurqanSiddiqui\BIP39\BIP39;
+use FurqanSiddiqui\BIP39\Exception\MnemonicException;
+use FurqanSiddiqui\BIP39\Exception\WordListException;
 use FurqanSiddiqui\BIP39\Mnemonic;
 use FurqanSiddiqui\BIP39\WordList;
 use M8B\EtherBinder\Crypto\EC;
 use M8B\EtherBinder\Crypto\Key;
+use M8B\EtherBinder\Exceptions\MnemonicWalletInternalException;
 use M8B\EtherBinder\Exceptions\WrongMenemonicPathException;
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * MnemonicWallet extends the AbstractWallet to create a wallet from a mnemonic phrase.
+ * It handles the derivation and management of keys using BIP39 and HD Wallet standards.
+ *
+ * @author DubbaThony
+ */
 class MnemonicWallet extends AbstractWallet
 {
 	private const offset = 0x80000000;
 
+	/**
+	 * Constructor to create a MnemonicWallet from words. While constructing, the words are processed into private key.
+	 *
+	 * @param string|array $words Mnemonic phrase words.
+	 * @param string $passPhrase Optional passphrase for seed generation. For any passphrase it will generate another key,
+	 *        and there is no way of knowing if passphrase matched other than checking returning address is what was expected
+	 * @param string $path HD Wallet derivation path.
+	 * @param MnemonicLanguage|string $language Language for the mnemonic words.
+	 * @throws WrongMenemonicPathException
+	 * @throws MnemonicWalletInternalException
+	 */
 	public function __construct(
 		#[\SensitiveParameter] string|array $words,
 		#[\SensitiveParameter] string $passPhrase = "",
@@ -32,9 +52,13 @@ class MnemonicWallet extends AbstractWallet
 		if($language instanceof MnemonicLanguage)
 			$language = $language->toString();
 
-		$words = BIP39::Words($words, $language);
-		$seed = (new Mnemonic(WordList::English(), $words->entropy, $words->binaryChunks))->generateSeed($passPhrase);
-		$key  = hex2bin(hash_hmac('sha512', $seed, "Bitcoin seed"));
+		try {
+			$words = BIP39::Words($words, $language);
+			$seed = (new Mnemonic(WordList::English(), $words->entropy, $words->binaryChunks))->generateSeed($passPhrase);
+			$key  = hex2bin(hash_hmac('sha512', $seed, "Bitcoin seed"));
+		} catch(WordListException|MnemonicException $e) {
+			throw new MnemonicWalletInternalException($e->getMessage(), $e->getCode(), $e);
+		}
 
 		$chainCode = substr($key, 32);;
 		$privK     = substr($key, 0, 32);
@@ -44,13 +68,28 @@ class MnemonicWallet extends AbstractWallet
 		$this->key = Key::fromBin($privK);
 	}
 
+	/**
+	 * Generates a new mnemonic phrase. If you don't have reason, use defaults.
+	 *
+	 * @param int $wordCount Number of words in the mnemonic phrase.
+	 * @param MnemonicLanguage|string $language Language for the mnemonic words. Defaults to english
+	 * @return array List of words for the mnemonic.
+	 * @throws MnemonicWalletInternalException
+	 */
 	public static function genNew(int $wordCount = 24, MnemonicLanguage|string $language = MnemonicLanguage::ENGLISH): array
 	{
 		if($language instanceof MnemonicLanguage)
 			$language = $language->toString();
-		return BIP39::Generate($wordCount, $language)->words;
+		try {
+			return BIP39::Generate($wordCount, $language)->words;
+		} catch(WordListException|MnemonicException $e) {
+			throw new MnemonicWalletInternalException($e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws WrongMenemonicPathException
+	 */
 	private	function parsePath(string $path): array
 	{
 		$path = explode("/", $path);

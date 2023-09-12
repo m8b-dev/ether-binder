@@ -8,6 +8,12 @@
 
 namespace M8B\EtherBinder\Wallet;
 
+/**
+ * MnemonicLanguage defines supported languages for mnemonic phrases. It is used for instantiating mnemonic wallet
+ * if language is different from default english.
+ *
+ * @author DubbaThony
+ */
 enum MnemonicLanguage
 {
 	case ENGLISH;
@@ -15,6 +21,11 @@ enum MnemonicLanguage
 	case ITALIAN;
 	case SPANISH;
 
+	/**
+	 * Returns the string representation of the language.
+	 *
+	 * @return string The language as a lowercase string.
+	 */
 	public function toString(): string
 	{
 		return match($this) {

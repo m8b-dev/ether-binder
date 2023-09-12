@@ -27,9 +27,10 @@ class AbiUint extends AbstractABIValue
 		$this->value = $val;
 	}
 
-	public function decodeBin(string $dataBin)
+	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
-		return new OOGmp(bin2hex($dataBin), 16);
+		$this->value = new OOGmp(bin2hex(substr($dataBin, $globalOffset, 32)), 16);
+		return 32;
 	}
 
 	public function __toString(): string

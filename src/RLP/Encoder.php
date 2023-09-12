@@ -19,9 +19,6 @@ use M8B\EtherBinder\Utils\OOGmp;
  */
 class Encoder
 {
-	private function __construct()
-	{}
-
 	/**
 	 * Converts data to RLP
 	 * Accepts array (recursively - can contain sub-arrays, sub-sub-arrays, etc.) of 0x-hex strings, ints, Hash (and children) types.

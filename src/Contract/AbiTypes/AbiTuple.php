@@ -9,6 +9,7 @@
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\Utils\OOGmp;
 
 class AbiTuple extends AbstractABIValue implements \ArrayAccess
@@ -53,10 +54,22 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 		return $heads . implode("", $tails);
 	}
 
-	public function decodeBin(string $dataBin)
+	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
-		//todo
-		throw new M8B\EtherBinder\Exceptions\NotSupportedException();
+		$tailSize = 0;
+		$headSize = 0;
+
+		foreach($this->inner AS $inner) {
+			if($inner->isDynamic()) {
+				$tailPointer = (new OOGmp(bin2hex(substr($dataBin, $headSize+$globalOffset, 32)), 16))->toInt();
+				$headSize += 32;
+				$tailSize += $inner->decodeBin($dataBin, $globalOffset + $tailPointer);
+			} else {
+				$headSize += $inner->decodeBin($dataBin, $headSize+$globalOffset);
+			}
+		}
+
+		return $tailSize + $headSize;
 	}
 
 
@@ -84,6 +97,11 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 		}
 		$ret .= ")";
 		return $ret;
+	}
+
+	public function __clone() {
+		for($i = 0; $i < count($this->inner); $i++)
+			$this->inner[$i] = clone $this->inner[$i];
 	}
 
 	public function offsetExists(mixed $offset): bool

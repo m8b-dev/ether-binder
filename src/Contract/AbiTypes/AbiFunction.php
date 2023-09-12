@@ -29,12 +29,12 @@ class AbiFunction extends AbstractABIValue
 		return str_pad($this->val->toBin(), 32, chr(0), STR_PAD_LEFT);
 	}
 
-	public function decodeBin(string $dataBin)
+	public function decodeBin(string &$dataBin, $globalOffset): int
 	{
-		$sf = new SolidityFunction();
+		$this->val = new SolidityFunction();
 		// padding + address (20b) + selector (4b)
-		$sf->address = Address::fromBin(substr($dataBin, 32-(20+4), 20));
-		$sf->signature = new SolidityFunction4BytesSignature(substr($dataBin, -4));
-		return $sf;
+		$this->val->address = Address::fromBin(substr($dataBin, $globalOffset+0, 20));
+		$this->val->signature = SolidityFunction4BytesSignature::fromBin(substr($dataBin, $globalOffset+20, 4));
+		return 32;
 	}
 }

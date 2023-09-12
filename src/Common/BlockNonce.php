@@ -8,8 +8,12 @@
 
 namespace M8B\EtherBinder\Common;
 
-use M8B\EtherBinder\Common\Hash;
-
+/**
+ * BlockNonce represents Ethereum block nonces.
+ * It consists of 8 bytes.
+ *
+ * @author DubbaThony
+ */
 class BlockNonce extends Hash
 {
 	protected const dataSizeBytes = 8;

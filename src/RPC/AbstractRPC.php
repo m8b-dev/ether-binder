@@ -12,14 +12,30 @@ use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
 use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\RPC\Modules\Web3;
-
+/**
+ * AbstractRPC provides the base functionality for communicating with Ethereum's JSON-RPC API.
+ *
+ * @author DubbaThony
+ */
 abstract class AbstractRPC extends Compound
 {
+	/**
+	 * Sends a raw RPC request using underlying protocol.
+	 *
+	 * @param string $method the RPC method to call
+	 * @param array|null $params optional parameters for the method
+	 * @return array full body of RPC response as an array
+	 */
 	abstract public function raw(string $method, ?array $params = null): array;
 
 	/**
-	 * Differs from raw as it doesn't return RPC stuff and returns just data.
-	 * @return array result part of output. If output isn't array, it's wrapped by array and sits on key 0.
+	 * Sends an RPC request and returns only the 'result' data.
+	 * @param string $method the RPC method to call
+	 * @param array|null $params optional parameters for the method
+	 * @return array 'result' field of the RPC response. If the result is not an array, it's wrapped in an array under key 0.
+	 * @throws RPCGeneralException if any unexpected error is present in RPC response
+	 * @throws RPCInvalidResponseParamException if the 'result' field is missing in the response
+	 * @throws RPCNotFoundException if the method is not found
 	 */
 	public function runRpc(string $method, ?array $params = null): array
 	{

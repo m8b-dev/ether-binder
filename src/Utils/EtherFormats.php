@@ -8,6 +8,11 @@
 
 namespace M8B\EtherBinder\Utils;
 
+/**
+ * EtherFormats enum represents different formats of Ether for conversions.
+ *
+ * @author DubbaThony
+ */
 enum EtherFormats
 {
 	case WEI;
@@ -22,6 +27,12 @@ enum EtherFormats
 	case GETHER;
 	case TETHER;
 
+	/**
+	 * Creates an EtherFormats enum from a string of common names of these formats, including common aliases like shannon for gwei.
+	 *
+	 * @param string $in The input string.
+	 * @return ?EtherFormats The corresponding EtherFormats enum or null.
+	 */
 	public static function fromString(string $in): ?EtherFormats
 	{
 		return match(strtolower(trim($in))) {
@@ -40,7 +51,13 @@ enum EtherFormats
 		};
 	}
 
-	public static function fromFactor(int $in)
+	/**
+	 * Creates an EtherFormats enum from an integer factor.
+	 *
+	 * @param int $in The input factor.
+	 * @return ?EtherFormats The corresponding EtherFormats enum or null.
+	 */
+	public static function fromFactor(int $in): ?EtherFormats
 	{
 		return match($in) {
 			0       => EtherFormats::WEI,
@@ -58,6 +75,13 @@ enum EtherFormats
 		};
 	}
 
+	/**
+	 * Creates an EtherFormats enum from string or integer factor input type, with a default value.
+	 *
+	 * @param int|string|self $in The input.
+	 * @param self $default The default EtherFormats enum.
+	 * @return self The corresponding EtherFormats enum.
+	 */
 	public static function fromAny(int|string|self $in, self $default = self::ETHER): self
 	{
 		if(is_int($in))
@@ -71,6 +95,11 @@ enum EtherFormats
 		return $r;
 	}
 
+	/**
+	 * Gets the integer factor of the EtherFormats enum.
+	 *
+	 * @return int The factor.
+	 */
 	public function factor(): int
 	{
 		return match($this) {

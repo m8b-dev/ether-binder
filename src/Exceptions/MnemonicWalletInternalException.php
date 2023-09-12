@@ -6,12 +6,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-namespace M8B\EtherBinder\Misc;
+namespace M8B\EtherBinder\Exceptions;
 
-class UnFormattedMessage extends AbstractMessage
-{
-	protected function preProcessMessage(): string
-	{
-		return $this->message;
-	}
-}
+class MnemonicWalletInternalException extends EthBinderRuntimeException
+{}

@@ -8,9 +8,23 @@
 
 namespace M8B\EtherBinder\Utils;
 
+/**
+ * WeiFormatter class for parsing back and forth human-readable format with specific denominations of ether,
+ * most commonly used for WEI.
+ *
+ * @author DubbaThony
+ */
 class WeiFormatter
 {
-	public static function toWei(float|int|string|OOGmp $human, int|string|EtherFormats $format = EtherFormats::ETHER): OOGmp
+
+	/**
+	 * Converts a value from human format.
+	 *
+	 * @param float|int|string|OOGmp $human The input human value.
+	 * @param int|string|EtherFormats $format The input format.
+	 * @return OOGmp The value in Wei.
+	 */
+	public static function fromHuman(float|int|string|OOGmp $human, int|string|EtherFormats $format = EtherFormats::ETHER): OOGmp
 	{
 		return new OOGmp(
 			str_replace(".", "",
@@ -18,6 +32,14 @@ class WeiFormatter
 			));
 	}
 
+	/**
+	 * Converts Wei to another format.
+	 *
+	 * @param int|string|OOGmp $wei The input value in Wei.
+	 * @param int $finalDecimals The final decimal places to keep.
+	 * @param int|string|EtherFormats $format The output format.
+	 * @return string The converted value.
+	 */
 	public static function fromWei(int|string|OOGmp $wei, int $finalDecimals, int|string|EtherFormats $format = EtherFormats::ETHER): string
 	{
 		$dec = EtherFormats::fromAny($format)->factor();

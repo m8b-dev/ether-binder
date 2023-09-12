@@ -13,20 +13,42 @@ use M8B\EtherBinder\Crypto\Key;
 
 /* todo: implement wallet and wallet+rpc object */
 
+/**
+ * AbstractWallet serves as the base class for wallet implementations.
+ * It provides basic type for wallet usage. Any new form of wallet needs to extend this class.
+ *
+ * @author DubbaThony
+ */
 abstract class AbstractWallet
 {
 	protected Key $key;
 
+	/**
+	 * Returns the underlying private key object stored in the wallet.
+	 *
+	 * @return Key The Key object.
+	 */
 	public function key(): Key
 	{
 		return $this->key;
 	}
 
+	/**
+	 * Returns the raw private key in binary or hexadecimal format.
+	 *
+	 * @param bool $bin If true, returns in binary. Otherwise, returns in hexadecimal.
+	 * @return string The raw key.
+	 */
 	public function getKeyRaw(bool $bin = false): string
 	{
 		return $bin ? $this->key->toBin() : $this->key->toHex();
 	}
 
+	/**
+	 * Returns the wallet's associated Ethereum address.
+	 *
+	 * @return Address The Ethereum address.
+	 */
 	public function getAddress(): Address
 	{
 		return $this->key->toAddress();

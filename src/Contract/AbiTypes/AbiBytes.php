@@ -27,9 +27,16 @@ class AbiBytes extends AbstractABIValue
 		return $this->dynamic;
 	}
 
-	public function decodeBin(string $dataBin)
+	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
-		return $dataBin;
+		if(!$this->isDynamic()) {
+			$this->data = substr($globalOffset, $this->size);
+			return 32;
+		}
+		$length = (new OOGmp(bin2hex(substr($dataBin, $globalOffset, 32)), 16))->toInt();
+		$this->data = substr($dataBin, $globalOffset+32, $length);
+		$actualDataRead = (int)(ceil($length/32)*32);
+		return $actualDataRead + 32;
 	}
 
 

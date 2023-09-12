@@ -41,7 +41,6 @@ abstract class Transaction
 		$this->s = new OOGmp();
 	}
 
-	// fixme: in hex, we should decide type from hex value, not rely on caller to know it for us.
 	public static function decodeHex(string $rlp): static
 	{
 		if(str_starts_with($rlp, "0x"))
@@ -155,7 +154,7 @@ abstract class Transaction
 
 	public function setValueFmt(float|int|string|OOGmp $human, int|string|EtherFormats $format = EtherFormats::ETHER): static
 	{
-		return $this->setValue(WeiFormatter::toWei($human, $format));
+		return $this->setValue(WeiFormatter::fromHuman($human, $format));
 	}
 
 	public function setValue(OOGmp $valueWEI): static

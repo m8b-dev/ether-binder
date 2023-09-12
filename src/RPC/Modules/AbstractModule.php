@@ -14,12 +14,28 @@ use M8B\EtherBinder\RPC\BlockParam;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**
- * Abstract module allows specific modules to access runRpc() method.
- * Only first module will inherit it since PHP supports only one inheritance per class.
+ * AbstractModule serves as the base class for specific modules, enabling them to access the runRpc() method.
+ * Note that only the first module in the inheritance chain will inherit this, as PHP allows single inheritance only.
+ *
+ * @author DubbaThony
  */
 abstract class AbstractModule
 {
+	/**
+	 *  Executes an RPC call with the given method and parameters.
+	 *
+	 *  @param string $method the RPC method name
+	 *  @param array|null $params optional array of parameters for the RPC call
+	 *  @return array result of the RPC call
+	 */
 	abstract public function runRpc(string $method, ?array $params = null): array;
+
+	/**
+	 *  Normalizes a block number parameter for RPC calls.
+	 *
+	 *  @param int|BlockParam $blockNumber the block number or a BlockParam object
+	 *  @return string hexadecimal representation of the block number or RPC alias string, such as "latest"
+	 */
 	protected function blockParam(int|BlockParam $blockNumber): string
 	{
 		if(!is_int($blockNumber)) {
@@ -29,6 +45,13 @@ abstract class AbstractModule
 		}
 	}
 
+	/**
+	 *  Either extracts block hash from block and returns it as hex string, or returns hash hex string. Used for
+	 *    parameter normalization in RPC calls, for convenience of API.
+	 *
+	 *  @param Hash|Block $block the block object or a Hash object
+	 *  @return string hexadecimal representation of the block hash
+	 */
 	protected function blockHash(Hash|Block $block): string
 	{
 		if($block::class == Block::class) {

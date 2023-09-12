@@ -10,22 +10,31 @@ namespace M8B\EtherBinder\Common;
 
 use kornrunner\Keccak;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 
-class SolidityFunction4BytesSignature
+/**
+ * SolidityFunction4BytesSignature is container class for a 4-byte function signature in Solidity.
+ *
+ * @author DubbaThony
+ */
+class SolidityFunction4BytesSignature extends Hash
 {
-	public function __construct(protected string $fourBytes)
-	{
-		if(strlen($this->fourBytes) != 4)
-			throw new EthBinderArgumentException("function signature is exactly 4 bytes");
-	}
+	const dataSizeBytes = 4;
 
+	/**
+	 * Creates a new SolidityFunction4BytesSignature instance from a full function signature.
+	 *
+	 * @param string $functionSignature The complete function signature.
+	 * @return static A new instance of SolidityFunction4BytesSignature.
+	 * @throws EthBinderLogicException
+	 */
 	public static function fromSignature(string $functionSignature): static
 	{
-		return new static(substr(Keccak::hash($functionSignature, 256, true), 0, 4));
-	}
-
-	public function toBin(): string
-	{
-		return $this->fourBytes;
+		try {
+			return new static(substr(Keccak::hash($functionSignature, 256, true), 0, 4));
+		} catch(\Exception $e) {
+			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+		}
 	}
 }

@@ -110,7 +110,7 @@ abstract class AbstractContract
 		die;
 	}
 
-	protected function mkCall(string $signature, array $params = []): string
+	public function mkCall(string $signature, array $params = []): string
 	{
 		$tx = $this->_mkTxn($signature, $params, false);
 		return $this->rpc->ethCall($tx, $this->getFromAddress());

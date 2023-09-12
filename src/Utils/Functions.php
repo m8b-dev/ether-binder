@@ -13,7 +13,21 @@ use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Misc\EIP1559Config;
 
+/**
+ * Functions is an abstract utility class that holds static utility methods.
+ *
+ * @author DubbaThony
+ */
 abstract class Functions {
+
+	/**
+	 * Validates the length of a hexadecimal string. In case the length is invalid, exception is risen.
+	 *
+	 * @param string $hex The hex string.
+	 * @param int $len The expected length.
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 */
 	public static function mustHexLen(string $hex, int $len): void
 	{
 		if(str_starts_with($hex, "0x")){
@@ -26,6 +40,14 @@ abstract class Functions {
 			throw new InvalidHexLengthException($len, strlen($hex));
 	}
 
+	/**
+	 * Left-pads a hex string to a specific length.
+	 *
+	 * @param string $hex The hex string.
+	 * @param int $padTo The length to pad to.
+	 * @param bool $closestMultiplier Whether to pad to the closest multiple of $padTo, instead of just to $padTo
+	 * @return string The padded hex string.
+	 */
 	public static function lPadHex(string $hex, int $padTo, bool $closestMultiplier = true): string
 	{
 		$has0x = false;
@@ -49,11 +71,25 @@ abstract class Functions {
 		return ($has0x ? "0x" : "") . $paddedHex;
 	}
 
+	/**
+	 * Converts an integer to a hex string.
+	 *
+	 * @param int $val The integer value.
+	 * @param bool $with0x Whether to include the "0x" prefix.
+	 * @return string The hex string.
+	 */
 	public static function int2hex(int $val, bool $with0x = true): string
 	{
 		return ($with0x ? "0x" : "").dechex($val);
 	}
 
+	/**
+	 * Calculates the base fee for the next block in an EIP1559 compatible chain.
+	 *
+	 * @param Block $previous The previous block.
+	 * @param EIP1559Config $config The EIP1559 configuration. Only required field is $config->activationBlockNumber
+	 * @return OOGmp The calculated base fee.
+	 */
 	public static function GetNextBlockBaseFee(Block $previous, EIP1559Config $config): OOGmp
 	{
 		if($previous->number <= $config->activationBlockNumber) {

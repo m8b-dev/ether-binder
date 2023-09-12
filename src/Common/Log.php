@@ -9,7 +9,18 @@
 namespace M8B\EtherBinder\Common;
 
 use kornrunner\Keccak;
+use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
+use M8B\EtherBinder\Exceptions\InvalidLengthException;
 
+/**
+ * Log represents an Ethereum log entry, emitted by smart contracts.
+ *
+ * @author DubbaThony
+ */
 class Log
 {
 	public Address $address;
@@ -25,6 +36,16 @@ class Log
 	public int $logIndex;
 	public bool $removed;
 
+	/**
+	 * Constructs a Log object from an array received through RPC.
+	 *
+	 * @param array $rpcArr The array containing log data.
+	 * @return static The Log object.
+	 * @throws BadAddressChecksumException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 * @throws InvalidLengthException
+	 */
 	public static function fromRPCArr(array $rpcArr): static
 	{
 		$static = new static();
@@ -58,9 +79,22 @@ class Log
 		return $static;
 	}
 
+	/**
+	 * Checks if the log matches the given event signature.
+	 *
+	 * @param string $eventSignature The event signature to compare.
+	 * @return bool True if matching, otherwise false.
+	 * @throws EthBinderRuntimeException when topics array is empty.
+	 * @throws EthBinderLogicException
+	 */
 	public function isSignature(string $eventSignature): bool
 	{
-		if(empty($this->topics)) throw new \RuntimeException("cannot test log signature on empty object");
-		return strtolower($this->topics[0]->toHex(false)) == strtolower(Keccak::hash($eventSignature, 256));
+		if(empty($this->topics))
+			throw new EthBinderRuntimeException("cannot test log signature on empty object");
+		try {
+			return strtolower($this->topics[0]->toHex(false)) == strtolower(Keccak::hash($eventSignature, 256));
+		} catch(\Exception $e) {
+			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+		}
 	}
 }

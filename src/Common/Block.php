@@ -8,8 +8,16 @@
 
 namespace M8B\EtherBinder\Common;
 
+use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * Block is a container for Ethereum block and contains various attributes related to it.
+ *
+ * @author DubbaThony
+ */
 class Block
 {
 	public int $number;
@@ -37,6 +45,15 @@ class Block
 	/** @var ValidatorWithdrawal[] */
 	public array $validatorWithdrawals;
 
+	/**
+	 * Constructs a Block object from an array received through RPC.
+	 *
+	 * @param array $rpcArr The array containing block data.
+	 * @return static The Block object.
+	 * @throws BadAddressChecksumException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 */
 	public static function fromRPCArr(array $rpcArr): static
 	{
 		$block = new static();
@@ -82,6 +99,11 @@ class Block
 		return $block;
 	}
 
+	/**
+	 * Checks if the block looks like coming from EIP-1559 enabled chain by looking if base fee is defined.
+	 *
+	 * @return bool True if block is EIP-1559, otherwise false.
+	 */
 	public function isEIP1559(): bool
 	{
 		return $this->baseFeePerGas !== null;

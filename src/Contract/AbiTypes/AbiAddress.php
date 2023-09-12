@@ -25,8 +25,9 @@ class AbiAddress extends AbstractABIValue
 		return str_repeat(chr(0), 32 - 20) . $this->data->toBin();
 	}
 
-	public function decodeBin(string $dataBin)
+	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
-		// TODO: Implement decodeBin() method.
+		$this->data = Address::fromBin(substr($dataBin, $globalOffset+12,20));
+		return 32;
 	}
 }

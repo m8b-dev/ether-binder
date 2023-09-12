@@ -18,11 +18,11 @@ class AbiBool extends AbstractABIValue
 		return false;
 	}
 
-	public function decodeBin(string $dataBin)
+	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
-		return ord($dataBin[31]) > 0;
+		$this->val = ord($dataBin[$globalOffset+31]) > 0;
+		return 32;
 	}
-
 
 	public function encodeBin(): string
 	{

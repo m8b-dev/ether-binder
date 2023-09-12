@@ -8,19 +8,29 @@
 
 namespace M8B\EtherBinder\RPC;
 
+/**
+ * BlockParam defines constants to represent types of Ethereum blocks.
+ *
+ * @author DubbaThony
+ */
 enum BlockParam
 {
-	/** the latest mined block */
+	/** The latest mined block */
 	case LATEST;
-	/** the earliest/genesis block */
+	/** The earliest/genesis block */
 	case EARLIEST;
-	/** the pending state/transactions */
+	/** The pending state/transactions */
 	case PENDING;
-	/** the latest safe head block */
+	/** The latest safe head block */
 	case SAFE;
-	/** the latest finalized block */
+	/** The latest finalized block */
 	case FINALIZED;
 
+	/**
+	 * Converts enum case to string compatible with JSON RPC.
+	 *
+	 * @return string String representation of the enum case.
+	 */
 	public function toString(): string
 	{
 		return match($this){

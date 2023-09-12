@@ -10,8 +10,18 @@ namespace M8B\EtherBinder\Wallet;
 
 use M8B\EtherBinder\Crypto\Key;
 
+/**
+ * RawKeyWallet extends the AbstractWallet to allow wallet creation using raw keys.
+ *
+ * @author DubbaThony
+ */
 class RawKeyWallet extends AbstractWallet
 {
+	/**
+	 * Constructor to create a RawKeyWallet.
+	 *
+	 * @param string|Key $key Either a Key object or a raw key as a hex string.
+	 */
 	public function __construct(#[\SensitiveParameter] string|Key $key)
 	{
 		if($key instanceof Key)

@@ -8,9 +8,19 @@
 
 namespace M8B\EtherBinder\Common;
 
+use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
+use M8B\EtherBinder\Exceptions\InvalidLengthException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * Receipt represents the outcome of a transaction, including logs, hash, deployed contract address, gas information,
+ * and other information.
+ *
+ * @author DubbaThony
+ */
 class Receipt
 {
 	public Hash $transactionHash;
@@ -28,6 +38,17 @@ class Receipt
 	public TransactionType $type;
 	public bool $status;
 
+	/**
+	 * Constructs a Receipt object from an array received through RPC.
+	 *
+	 * @param array $rpcArr The array containing receipt data.
+	 * @return static The Receipt object.
+	 * @throws NotSupportedException when the RPC server doesn't support inferring status from the root.
+	 * @throws BadAddressChecksumException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 * @throws InvalidLengthException
+	 */
 	public static function fromRPCArr(array $rpcArr): static
 	{
 		$static = new static();

@@ -43,14 +43,17 @@ class ABIEncoder
 		return $mainFn->encodeBin();
 	}
 
-	public static function decode(string $signature, string $dataBin): array
+	public static function decode(string $signature, string $dataBin)
 	{
 		self::validateSignature($signature);
 		$fnNameEnd = strpos($signature, "(");
 		if($fnNameEnd === false)
 			throw new EthBinderLogicException("function name end not found");
+		$test = self::createEncodingFromType(substr($signature, $fnNameEnd), null);
 
-		return self::createEncodingFromType(substr($signature, $fnNameEnd), null)->decodeBin($dataBin);
+		$tupl = self::createEncodingFromType(substr($signature, $fnNameEnd), null);
+		$tupl->decodeBin($dataBin, 0);
+		return $tupl;
 	}
 
 	/**
@@ -62,7 +65,7 @@ class ABIEncoder
 	{
 		if(str_ends_with($type, "[]")) {
 			$elementType = substr($type, 0, -2);
-			$arrayObj = new AbiArrayUnknownLength();
+			$arrayObj = new AbiArrayUnknownLength(self::createEncodingFromType($elementType, null));
 			if($data === null)
 				return $arrayObj;
 			foreach($data as $element) {
@@ -77,23 +80,24 @@ class ABIEncoder
 			$elementType = substr($type, 0, $openBracketPos);
 			$length = (int) substr($type, $openBracketPos + 1, $closeBracketPos - $openBracketPos - 1);
 
-			// If length is zero, it means it's an array with unknown length
 			if($length === 0) {
-				$arrayObj = new AbiArrayUnknownLength();
-			} else {
-				$arrayObj = new AbiArrayKnownLength($length);
+				throw new EthBinderLogicException("this shouldnt happen");
+				// $arrayObj = new AbiArrayUnknownLength(self::createEncodingFromType($elementType, null));
+			}
 
-				// Verify that data length matches expected length for fixed-size arrays
-				if($data !== null && count($data) !== $length) {
-					throw new EthBinderLogicException("Data length doesn't match fixed array size");
-				}
+
+			$arrayObj = new AbiArrayKnownLength($length, self::createEncodingFromType($elementType, null));
+
+			// Verify that data length matches expected length for fixed-size arrays
+			if($data !== null && count($data) !== $length) {
+				throw new EthBinderLogicException("Data length doesn't match fixed array size");
 			}
 
 			if($data === null)
 				return $arrayObj;
 
-			foreach($data as $element) {
-				$arrayObj[] = self::createEncodingFromType($elementType, $element);
+			foreach($data as $i => $element) {
+				$arrayObj[$i] = self::createEncodingFromType($elementType, $element);
 			}
 			return $arrayObj;
 		} elseif(str_starts_with($type, "(")) {
@@ -147,6 +151,10 @@ class ABIEncoder
 	 * @throws EthBinderLogicException
 	 */
 	private static function validateSignature(string $signature): void {
+		$whitespace = strpos($signature, " ");
+		if($whitespace !== false)
+			throw new EthBinderArgumentException("signature contains white space, which renders it as invalid signature. Space was found in position $whitespace in signature '$signature'");
+
 		$stack = [];
 		$numStack = [];
 		$passedFunctionName = false;

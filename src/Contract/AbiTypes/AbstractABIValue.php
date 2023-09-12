@@ -11,6 +11,10 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
 
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
 abstract class AbstractABIValue
 {
 	public static function parseValue(string $type, mixed $value): AbstractABIValue
@@ -62,5 +66,5 @@ abstract class AbstractABIValue
 
 	abstract public function isDynamic(): bool;
 	abstract public function encodeBin(): string;
-	abstract public function decodeBin(string $dataBin);
+	abstract public function decodeBin(string &$dataBin, int $globalOffset): int;
 }

@@ -13,9 +13,9 @@ use M8B\EtherBinder\Utils\OOGmp;
 class AbiArrayUnknownLength extends AbiArrayKnownLength
 {
 
-	public function __construct()
+	public function __construct(?AbstractABIValue $children = null)
 	{
-		parent::__construct(-1);
+		parent::__construct(-1, $children);
 	}
 
 	public function isDynamic(): bool
@@ -37,5 +37,14 @@ class AbiArrayUnknownLength extends AbiArrayKnownLength
 		}
 		$ret .= "]";
 		return $ret;
+	}
+
+	public function decodeBin(string &$dataBin, int $globalOffset): int
+	{
+		$this->length = (new OOGmp(bin2hex(substr($dataBin, $globalOffset, 32)), 16))->toInt();
+		for($i = 0; $i < $this->length; $i++)
+			$this->inner[$i] = clone($this->emptyType);
+
+		return parent::decodeBin($dataBin, $globalOffset + 32) + 32;
 	}
 }

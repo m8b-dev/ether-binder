@@ -8,7 +8,14 @@
 
 namespace M8B\EtherBinder\Misc;
 
-class GethLikeMessage extends AbstractMessage
+/**
+ * GethLikeMessage is a subclass of AbstractSigningMessage that pre-processes messages in a way that Geth does.
+ * The message gets prepended with "\x19Ethereum Signed Message:\n" followed by the message length, to align with
+ * Geth's signing method.
+ *
+ * @author DubbaThony
+ */
+class GethLikeMessage extends AbstractSigningMessage
 {
 	protected function preProcessMessage(): string
 	{

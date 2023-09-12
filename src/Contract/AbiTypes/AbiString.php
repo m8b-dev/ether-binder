@@ -16,9 +16,4 @@ class AbiString extends AbiBytes
 	{
 		parent::__construct($data, 0);
 	}
-
-	public function decodeBin(string $dataBin)
-	{
-		return $dataBin;
-	}
 }

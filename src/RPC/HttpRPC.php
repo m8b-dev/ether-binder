@@ -13,12 +13,24 @@ use JsonException;
 use M8B\EtherBinder\Exceptions\InvalidURLException;
 use M8B\EtherBinder\Exceptions\RPCGeneralException;
 
+/**
+ * HttpRPC provides functionality to make JSON-RPC calls over HTTP / HTTPS via curl. Curl handle persist across calls.
+ *
+ * @author DubbaThony
+ */
 class HttpRPC extends AbstractRPC
 {
 	private int $id = 1;
 	private array $headers = [];
 	private CurlHandle $ch;
 
+	/**
+	 * Constructs a new HttpRPC object.
+	 *
+	 * @param string $url Endpoint URL for JSON-RPC calls.
+	 * @param array $extraHeaders Additional HTTP headers.
+	 * @throws InvalidURLException if the provided URL is not valid or uses unsupported protocols.
+	 */
 	public function __construct(string $url, array $extraHeaders = [])
 	{
 		if(str_starts_with($url, "ws"))
@@ -30,10 +42,17 @@ class HttpRPC extends AbstractRPC
 		$this->ch = curl_init($url);
 	}
 
+	/**
+	 * Closes the cURL handle on object destruction.
+	 */
 	public function __destruct() {
 		curl_close($this->ch);
 	}
 
+	/**
+	 * @inheritDoc
+	 * @throws RPCGeneralException if the request fails or response is invalid.
+	 */
 	public function raw(string $method, ?array $params = null): array
 	{
 		$headers = [];

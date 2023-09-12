@@ -8,8 +8,12 @@
 
 namespace M8B\EtherBinder\Common;
 
-use M8B\EtherBinder\Common\Hash;
-
+/**
+ * Bloom is a class for storing Ethereum block log bloom.
+ * It consists of 256 bytes.
+ *
+ * @author DubbaThony
+ */
 class Bloom extends Hash
 {
 	protected const dataSizeBytes = 256;
