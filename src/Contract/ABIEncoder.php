@@ -49,7 +49,6 @@ class ABIEncoder
 		$fnNameEnd = strpos($signature, "(");
 		if($fnNameEnd === false)
 			throw new EthBinderLogicException("function name end not found");
-		$test = self::createEncodingFromType(substr($signature, $fnNameEnd), null);
 
 		$tupl = self::createEncodingFromType(substr($signature, $fnNameEnd), null);
 		$tupl->decodeBin($dataBin, 0);
@@ -81,10 +80,8 @@ class ABIEncoder
 			$length = (int) substr($type, $openBracketPos + 1, $closeBracketPos - $openBracketPos - 1);
 
 			if($length === 0) {
-				throw new EthBinderLogicException("this shouldnt happen");
-				// $arrayObj = new AbiArrayUnknownLength(self::createEncodingFromType($elementType, null));
+				throw new EthBinderArgumentException("got 0 length array that's typed for known length array");
 			}
-
 
 			$arrayObj = new AbiArrayKnownLength($length, self::createEncodingFromType($elementType, null));
 
@@ -148,7 +145,7 @@ class ABIEncoder
 	/**
 	 * @param string $signature
 	 * @return void
-	 * @throws EthBinderLogicException
+	 * @throws EthBinderArgumentException thrown whenever validation fails
 	 */
 	private static function validateSignature(string $signature): void {
 		$whitespace = strpos($signature, " ");
@@ -167,7 +164,7 @@ class ABIEncoder
 				$stack[] = $char;
 			} elseif($char === ")") {
 				if(end($stack) !== "(") {
-					throw new EthBinderLogicException("Mismatched brackets in the signature");
+					throw new EthBinderArgumentException("Mismatched brackets in the signature");
 				}
 				array_pop($stack);
 			} elseif($char === "[") {
@@ -175,12 +172,12 @@ class ABIEncoder
 				$numStack[] = "";
 			} elseif($char === "]") {
 				if(end($stack) !== "[") {
-					throw new EthBinderLogicException("Mismatched brackets in the signature");
+					throw new EthBinderArgumentException("Mismatched brackets in the signature");
 				}
 				array_pop($stack);
 				$num = array_pop($numStack);
 				if($num !== "" && !ctype_digit($num)) {
-					throw new EthBinderLogicException("Invalid characters between brackets");
+					throw new EthBinderArgumentException("Invalid characters between brackets");
 				}
 			} elseif(end($stack) === "[") {
 				$numStack[count($numStack) - 1] .= $char;
@@ -188,11 +185,11 @@ class ABIEncoder
 		}
 
 		if(!empty($stack)) {
-			throw new EthBinderLogicException("Mismatched brackets in the signature");
+			throw new EthBinderArgumentException("Mismatched brackets in the signature");
 		}
 
 		if(!$passedFunctionName) {
-			throw new EthBinderLogicException("No function name detected in the signature");
+			throw new EthBinderArgumentException("No function name detected in the signature");
 		}
 	}
 }

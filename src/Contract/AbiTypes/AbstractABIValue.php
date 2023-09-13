@@ -67,4 +67,5 @@ abstract class AbstractABIValue
 	abstract public function isDynamic(): bool;
 	abstract public function encodeBin(): string;
 	abstract public function decodeBin(string &$dataBin, int $globalOffset): int;
+	abstract public function unwrapToPhpFriendlyVals(?array $tuplerData);
 }

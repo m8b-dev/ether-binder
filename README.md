@@ -4,7 +4,9 @@ The goal is to get something that will be like ethers.js for PHP.
 
 # Status
 
-Early. Very early. Don't use yet.
+Early. Don't use yet for production purposes. Feel free to experiment around.
+
+The headline feature to be used is contract binding, which you can look at `bin/abigen.php --help`
 
 # Status
 
@@ -19,10 +21,10 @@ Early. Very early. Don't use yet.
 | RPC Web3_                                 | done        |
 | Wallet (pk raw)                           | done        |
 | Wallet (pk mnemonic)                      | done        |
-| Signing msg                               | planned     |
-| Contract bindings (akin to abigen)        | planned     |
+| Signing msg                               | done        |
+| Contract bindings (akin to abigen)        | in progress |
 | RPC Net_ filters                          | planned     |
-| Documentation (in-code)                   | planned     |
+| Documentation (in-code)                   | in progress |
 | Documentation (generated from in-code)    | planned     |
 | Documentation (standalone)                | wishlist    |
 | RPC Wss                                   | wishlist    |

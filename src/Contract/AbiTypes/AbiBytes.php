@@ -49,4 +49,9 @@ class AbiBytes extends AbstractABIValue
 		return (new OOGmp(strlen($this->data)))->toBin(32)
 			.str_pad($this->data, 32 * $slots, chr(0), STR_PAD_RIGHT);
 	}
+
+	public function unwrapToPhpFriendlyVals(?array $tuplerData): string
+	{
+		return $this->data;
+	}
 }

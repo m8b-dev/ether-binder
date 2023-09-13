@@ -37,4 +37,9 @@ class AbiFunction extends AbstractABIValue
 		$this->val->signature = SolidityFunction4BytesSignature::fromBin(substr($dataBin, $globalOffset+20, 4));
 		return 32;
 	}
+
+	public function unwrapToPhpFriendlyVals(?array $tuplerData): SolidityFunction
+	{
+		return $this->val;
+	}
 }

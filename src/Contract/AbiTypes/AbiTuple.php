@@ -8,6 +8,7 @@
 
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
+use M8B\EtherBinder\Contract\AbstractTuple;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\Utils\OOGmp;
@@ -102,6 +103,27 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 	public function __clone() {
 		for($i = 0; $i < count($this->inner); $i++)
 			$this->inner[$i] = clone $this->inner[$i];
+	}
+
+	public function unwrapToPhpFriendlyVals(?array $tuplerData): array|AbstractTuple
+	{
+		$o = [];
+		if(
+			   $tuplerData !== null         // There is typed tuple logic needed
+			&& !empty($tuplerData["tuple"]) // I am not root-level tuple, which is not solidity struct
+		) {
+			$o = new $tuplerData["tuple"](); // Therefore, I am solidity struct
+			$tuplerData = $tuplerData["children"];
+		}
+		foreach($this->inner as $k => $item) {
+			if($tuplerData === null)
+				$o[] = $item->unwrapToPhpFriendlyVals(null);
+			else {
+				$o[] = $item->unwrapToPhpFriendlyVals($tuplerData[$k]);
+			}
+		}
+
+		return $o;
 	}
 
 	public function offsetExists(mixed $offset): bool

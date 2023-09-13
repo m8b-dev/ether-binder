@@ -15,18 +15,18 @@
     ],
     "minimum-stability": "stable",
     "bin": [
-        "bin/abigen"
+        "bin/abigen.php"
     ],
     "require": {
-        "composer-runtime-api": "^2.2",
         "php": ">=8.2",
+        "composer-runtime-api": "^2.2",
+        "ext-openssl": "*",
         "ext-curl": "*",
         "ext-ctype": "*",
-        "kornrunner/secp256k1": "^0.2.0",
         "ext-gmp": "*",
+        "kornrunner/secp256k1": "^0.2.0",
         "kornrunner/keccak": "^1.1",
         "simplito/elliptic-php": "^1.0",
-        "ext-openssl": "*",
         "furqansiddiqui/bip39-mnemonic-php": "^0.1.7",
         "nikic/php-parser": "^4.17",
         "vanilla/garden-cli": "^4.0"

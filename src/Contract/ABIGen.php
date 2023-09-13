@@ -103,11 +103,10 @@ class ABIGen
 		foreach($abiArr AS $k => list(
 				"stateMutability" => $smut,
 				"inputs"          => $prms,
-				"outputs"         => $outs,
 				"type"            => $fType)
 		) {
 			$fname = $abiArr[$k]["name"] ?? ""; // not all elements of array have this key
-			$outs  = $abiArr[$k]["outputs"] ?? ""; // not all elements of array have this key
+			$outs  = $abiArr[$k]["outputs"] ?? []; // not all elements of array have this key
 			if($fType === "constructor") {
 				$outs = [];
 				$fname = "deployNew".ucfirst($this->className);
@@ -129,7 +128,8 @@ class ABIGen
 				"names"      => $paramNames,
 				"validators" => $validators,
 				"signature"  => $fnSignature) = $this->buildMethodParams($fname, $prms, $bld);
-			$retSignature = $this->buildMethodParams($fname, $outs, $bld)["signature"];
+			$retSignature       = $this->buildMethodParams($fname, $outs, $bld)["signature"];
+			$retPostProcessMeta = $this->prepareOutputTupleInfo($outs, $namespace);
 
 			if($abstractCall === "mkCall") {
 				$retType = $this->getPhpTypingFromOutputs($outs);
@@ -169,7 +169,8 @@ class ABIGen
 					$functionInternal = new Return_(
 						$bld->methodCall($bld->var("this"), "parseOutput", [
 							$bld->methodCall($bld->var("this"), $abstractCall, $paramRefs),
-							$bld->val($retSignature)
+							$bld->val($retSignature),
+							$bld->val($retPostProcessMeta)
 						])
 					);
 				} else {
@@ -441,6 +442,57 @@ class ABIGen
 			"tuple"            => $this->tupleInternalTypeToType($internalType),
 			default            => throw new NotSupportedException("output type $type is not supported")
 		};
+	}
+
+	protected function prepareOutputTupleInfo(array $abiOutputs, string $namespace): null|array
+	{
+		// transform each ABI entry into array that contains 2 keys:
+		//  ["children"=> null|[], "tuple":"FQCN"]
+		// where children should be null if there are no more children with non-null tuple to cut off real runtime
+		// (binding generation can be slower but binding itself shouldn't do unessesery steps).
+		// Output will be walked during parsing call output by AbstractContract::parseOutput
+		// to create correct types bindings instead of just having general-purpose array.
+		$result = [];
+
+		foreach ($abiOutputs as $output) {
+			$result[] = $this->innerPrepareOutputTupleInfo($output, $namespace);;
+		}
+
+		if ($this->emptyr($result)) {
+			return null;
+		}
+
+		return $result;
+	}
+
+	protected function innerPrepareOutputTupleInfo(array $abiOutputs, string $namespace): null|array
+	{
+		$result = [
+			"tuple"    => null,
+			"children" => []
+		];
+
+		if(!isset($abiOutputs["components"]))
+			return null;
+
+		$result["tuple"] = rtrim($namespace, "\\")."\\".$this->tupleInternalTypeToType($abiOutputs["internalType"]);
+		foreach($abiOutputs["components"] AS $output) {
+			$res = $this->innerPrepareOutputTupleInfo($output, $namespace);
+			$result["children"][] = $this->emptyr($res) ? null : $res;
+		}
+		return $result;
+	}
+
+	private function emptyr($var): bool
+	{
+		if(empty($var))
+			return true;
+		if(!is_array($var))
+			return false;
+		foreach($var AS $itm)
+			if(!$this->emptyr($itm))
+				return false;
+		return true;
 	}
 
 	protected function getPhpTypingFromOutputs(array $outputs): string

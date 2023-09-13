@@ -14,16 +14,24 @@ use M8B\EtherBinder\Common\LondonTransaction;
 use M8B\EtherBinder\Common\Transaction;
 use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\OOGmp;
 
 abstract class AbstractContract
 {
 	public static int $transactionFeesPercentageBump = 0;
-	protected ?Key $key = null;
-	protected ?Address $fallbackFrom = null;
-	public function __construct(protected AbstractRPC $rpc, protected Address $contractAddress)
+
+	public function __construct(
+		protected AbstractRPC $rpc,
+		protected Address $contractAddress,
+		#[\SensitiveParameter] protected ?Key $key = null,
+		protected ?Address $fallbackFrom = null
+	)
 	{}
+
+	public function getContractAddress(): Address
+	{ return $this->contractAddress; }
 
 	public function unloadPrivK(): static
 	{
@@ -103,11 +111,18 @@ abstract class AbstractContract
 			)->sign($pk, $rpc->ethChainID());
 	}
 
-	protected function parseOutput(string $output, string $type): mixed
+	protected function parseOutput(string $output, string $type, ?array $tupleReplacements = null): mixed
 	{
-		var_dump($type);
-		var_dump($output);
-		die;
+		if(str_starts_with($output, "0x"))
+			$output = substr($output, 2);
+		$output = hex2bin($output);
+		$ret = ABIEncoder::decode($type, $output)->unwrapToPhpFriendlyVals($tupleReplacements);
+		if(!is_array($ret))
+			throw new EthBinderLogicException("got parse output without top level tuple");
+
+		if(count($ret) == 1)
+			return $ret[0];
+		return $ret;
 	}
 
 	public function mkCall(string $signature, array $params = []): string
@@ -121,7 +136,9 @@ abstract class AbstractContract
 		$txn = $this->_mkTxn($signature, $params, true);
 		if($this->key === null)
 			return $txn;
-		return $txn->sign($this->key, $this->rpc->ethChainID());
+		$txn->sign($this->key, $this->rpc->ethChainID());
+		$this->rpc->ethSendRawTransaction($txn);
+		return $txn;
 	}
 
 	private function _mkTxn(string $signature, array $params, bool $careAboutEstims, bool $trimmedSignature = false): Transaction

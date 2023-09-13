@@ -30,4 +30,9 @@ class AbiAddress extends AbstractABIValue
 		$this->data = Address::fromBin(substr($dataBin, $globalOffset+12,20));
 		return 32;
 	}
+
+	public function unwrapToPhpFriendlyVals(?array $tuplerData): Address
+	{
+		return $this->data;
+	}
 }

@@ -2,9 +2,20 @@
 
 namespace M8B\EtherBinder\Contract;
 
+use M8B\EtherBinder\Contract\AbiTypes\AbiTuple;
+
 abstract class AbstractTuple implements \ArrayAccess
 {
 	private array $store = [];
+
+	public static function createTupleFromABITuple(AbiTuple|array $t): static
+	{
+		$self = new static();
+		foreach($t AS $k => $itm) {
+			$t[$k] = $itm;
+		}
+		return $self;
+	}
 
 	public function offsetExists(mixed $offset): bool
 	{

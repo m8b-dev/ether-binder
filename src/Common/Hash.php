@@ -102,4 +102,14 @@ class Hash
 	{
 		return new static(str_repeat("\0", static::dataSizeBytes));
 	}
+
+	/**
+	 * Checks if inner data contains only zeroes (equals to `static::NULL()`)
+	 *
+	 * @return bool true if inner data is null data, false otherwise
+	 */
+	public function isNull(): bool
+	{
+		return $this->eq(static::NULL());
+	}
 }

@@ -47,4 +47,8 @@ class AbiUint extends AbstractABIValue
 	{
 		return $this->value->toBin(32);
 	}
+	public function unwrapToPhpFriendlyVals(?array $tuplerData): int|OOGmp
+	{
+		return $this->value;
+	}
 }

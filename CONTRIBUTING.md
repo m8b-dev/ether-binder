@@ -1,10 +1,12 @@
 # To contribute create a PR.
-Standard github contributing flow.
+
+Standard github contributing flow. Fork -> commit -> create PR.
+Don't PR to `master`, PR to `dev` branch.
 
 ### Code style
 
 Try to stick to code style:
-- this repo uses tabs not spaces for indents, one per level. 
+- this repo uses tabs not spaces for indents, one per level. Tab width = 4 spaces.
   Additional indentation with spaces is OK.
 - double quotes (`"`) are prefered over (`'`)
 - concat operator doesn't need whitespace, but it's ok if it has one in more complex expressions
@@ -28,13 +30,40 @@ Try to stick to code style:
     && ($etc)
   )
   ```
-- no closing `?>` tag, full `<?php` tag.
+- no closing `?>` tag, ever. Full `<?php` tag.
 - Classes us `PascalCase`
 - Functions and methods use `camelCase`
 - Constants may use `camelCase` if not public (private / protected), otherwise `CAPSLOCK_CASE`
 - Enum values use `CAPSLOCK_CASE`
-- In general `static` is preferred compared to `self`. This enables easier inheritance and extending classes.
-- JSON decoding is assoc (`json_decode($json, true)`)
+- Minor code-golfing is allowed, but must be limited.
+- method definition (ie. `function foo(): returnT)`) and opening `{` must be separated by new line
+- trivial methods can have one-liner `{ operation }`, ie.
+  ```php
+  public function getFoo(): FooType
+  { return $this->foo; }
+  ```
+  but full-size form is OK too:
+  ```php
+  public function getFoo(): FooType
+  {
+    return $this->foo;
+  }
+  ```
+- Where applies use `?` and `??` operators instead of `if`, unless that would significantly decease readability
+
+### Other codebase rules
+
+- In general `static` is preferred compared to `self`. This enables easier inheritance and extending classes, for library users too.
+- JSON decoding is always associative (`json_decode($json, true)`)
+- Internally data should be bytes not hexes wherever possible. Hexes are OK for representation purposes, but underlying
+  data should always be stored and processed on byte arrays in form of `string`.
+- Try to minimize amount of PHP extensions used. For core library hard no-go for any non-standard extension like `crypt`
+- Declare extensions if used in composer.json file. Core extensions (like json, curl) are OK, unless can be trivially avoided.
+- Including composer library must be well justified. For example "don't do your own cryptography". Encodings and such are
+  ought to be implemented inside the library itself, to make it as independent as possible. Including alternative
+  implementations of similar libraries is not allowed since this library aims for fostering independent implementations.
+  This would be like implementing OpenEthereum \[\*\] with bindings from Geth for let's say EVM code.
+
 
 ### Boilerplate
 
@@ -49,3 +78,5 @@ Boilerplate to new files after `<?php` tag:
  */
 
 ```
+
+If some .php file misses boilerplate, please create an issue. Thank you.

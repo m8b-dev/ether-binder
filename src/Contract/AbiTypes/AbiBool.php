@@ -28,4 +28,8 @@ class AbiBool extends AbstractABIValue
 	{
 		return str_repeat(chr(0), 31) . ($this->val ? chr(1) : chr(0));
 	}
+	public function unwrapToPhpFriendlyVals(?array $tuplerData): bool
+	{
+		return $this->val;
+	}
 }

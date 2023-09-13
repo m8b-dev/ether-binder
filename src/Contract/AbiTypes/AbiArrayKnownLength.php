@@ -31,4 +31,13 @@ class AbiArrayKnownLength extends AbiTuple
 		$ret .= "]";
 		return $ret;
 	}
+
+	public function unwrapToPhpFriendlyVals(?array $tuplerData): array
+	{
+		$o = [];
+		foreach($this->inner as $item) {
+			$o[] = $item->unwrapToPhpFriendlyVals($tuplerData); // arrays unwind "As Is" since bindings flatten tuple arrays.
+		}
+		return $o;
+	}
 }

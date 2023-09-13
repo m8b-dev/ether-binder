@@ -1,7 +1,21 @@
 #!/usr/bin/env php
 <?php
 
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+global $_composer_autoload_path;
 require $_composer_autoload_path ?? __DIR__ . '/../vendor/autoload.php';
+
+/*
+return codes:
+-1: probably invalid data in user input
+-2: internal exception, ie. bug in AbiGen class
+-3: external exception, ie. parse user input error
+*/
 
 $cli = new Garden\Cli\Cli();
 
@@ -21,7 +35,7 @@ try {
 	$args = $cli->parse($argv, true);
 } catch(Exception $e) {
     echo "failed to parse user input with error ".$e->getMessage().PHP_EOL;
-    exit(-1);
+    exit(-3);
 }
 
 $abiPath   = $args->get("abi");
@@ -60,9 +74,16 @@ if(is_file($outPath)) {
     echo "output path $outPath points to file, cannot proceed".PHP_EOL;
     exit(-1);
 }
-
-$ag = new \M8B\EtherBinder\Contract\ABIGen($abi, $bin);
-$output = $ag->gen($className);
+try {
+	$ag = new \M8B\EtherBinder\Contract\ABIGen($abi, $bin);
+	$output = $ag->gen($className);
+} catch(\M8B\EtherBinder\Exceptions\EthBinderException $e) {
+    echo "Operation failed with internal exception: ".$e::class.PHP_EOL.$e->getMessage().PHP_EOL;
+    exit(-2);
+} catch(Exception $e) {
+    echo "Operation failed with external exception: ".$e::class.PHP_EOL.$e->getMessage().PHP_EOL;
+    exit(-3);
+}
 
 $outPath = rtrim($outPath, "/");
 

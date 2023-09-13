@@ -9,9 +9,14 @@
 namespace M8B\EtherBinder\Utils;
 
 use M8B\EtherBinder\Common\Block;
+use M8B\EtherBinder\Common\Hash;
+use M8B\EtherBinder\Common\Receipt;
+use M8B\EtherBinder\Common\Transaction;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Misc\EIP1559Config;
+use M8B\EtherBinder\RPC\AbstractRPC;
 
 /**
  * Functions is an abstract utility class that holds static utility methods.
@@ -120,6 +125,34 @@ abstract class Functions {
 					->div($parentGasTarget)
 					->div(EIP1559Config::BASE_FEE_CHANGE_DENOMINATOR)
 				)->max(0);
+		}
+	}
+
+	/**
+	 * This function will wait and block until the transaction is confirmed via repetatively checking receipt
+	 *
+	 * @param Transaction|Hash $txHash Hash of the transaction or signed transaction
+	 * @param AbstractRPC $rpc RPC to use for transaction receipt pooling
+	 * @param int $timeoutSeconds After how many seconds to give up
+	 * @param int $intervalMS How long to wait between pooling attempts
+	 *
+	 * @return Receipt Transaction receipt
+	 * @throws EthBinderRuntimeException if timeout happens. It does not mean the transaction will not get confirmed!
+	 */
+	public static function waitForTxReceipt(Transaction|Hash $txHash, AbstractRPC $rpc, int $timeoutSeconds = 60, int $intervalMS = 500): Receipt
+	{
+		if($txHash instanceof Transaction)
+			$txHash = $txHash->hash();
+		$startT = time();
+		while(true) {
+			try {
+				return $rpc->ethGetTransactionReceipt($txHash);
+			} catch(\M8B\EtherBinder\Exceptions\RpcException $exception) {
+				if($startT + $timeoutSeconds < time())
+					throw new EthBinderRuntimeException("Timed out");
+				usleep(1000*$intervalMS);
+				continue;
+			}
 		}
 	}
 }

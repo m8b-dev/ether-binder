@@ -12,6 +12,7 @@ use kornrunner\Keccak;
 use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
 use M8B\EtherBinder\RLP\Decoder;
+use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\EtherFormats;
 use M8B\EtherBinder\Utils\OOGmp;
@@ -275,5 +276,17 @@ abstract class Transaction
 	public function useRpcEstimates(AbstractRPC $rpc, Address $from)
 	{
 		return $this->useRpcEstimatesWithBump($rpc, $from, 0, 0);
+	}
+
+	public function deployAddress(): Address
+	{
+		if(!$this->isSigned())
+			return Address::NULL();
+		if($this->to !== null)
+			return Address::NULL();
+
+		return Address::fromBin(substr(Keccak::hash(
+			Encoder::encodeBin([[$this->ecRecover()->toBin(), $this->nonce]]),
+			256, true), 12));
 	}
 }
