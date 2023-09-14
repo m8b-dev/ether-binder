@@ -10,8 +10,7 @@ namespace M8B\EtherBinder\Wallet;
 
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Crypto\Key;
-
-/* todo: implement wallet and wallet+rpc object */
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 
 /**
  * AbstractWallet serves as the base class for wallet implementations.
@@ -48,6 +47,7 @@ abstract class AbstractWallet
 	 * Returns the wallet's associated Ethereum address.
 	 *
 	 * @return Address The Ethereum address.
+	 * @throws EthBinderLogicException Logic exception
 	 */
 	public function getAddress(): Address
 	{

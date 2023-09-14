@@ -8,5 +8,7 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-class EthBinderException extends \Exception
+use Exception;
+
+class EthBinderException extends Exception
 {}

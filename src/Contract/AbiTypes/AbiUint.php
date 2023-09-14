@@ -11,10 +11,17 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
 class AbiUint extends AbstractABIValue
 {
 	public OOGmp $value;
 
+	/**
+	 * @throws EthBinderArgumentException
+	 */
 	public function __construct(null|int|OOGmp $val, int $maxBits)
 	{
 		if(!($val instanceof OOGmp))
@@ -27,6 +34,9 @@ class AbiUint extends AbstractABIValue
 		$this->value = $val;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
 		$this->value = new OOGmp(bin2hex(substr($dataBin, $globalOffset, 32)), 16);
@@ -38,15 +48,25 @@ class AbiUint extends AbstractABIValue
 		return $this->value->toString();
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function isDynamic(): bool
 	{
 		return false;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function encodeBin(): string
 	{
 		return $this->value->toBin(32);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function unwrapToPhpFriendlyVals(?array $tuplerData): int|OOGmp
 	{
 		return $this->value;

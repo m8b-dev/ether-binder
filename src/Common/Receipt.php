@@ -9,9 +9,9 @@
 namespace M8B\EtherBinder\Common;
 
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
-use M8B\EtherBinder\Exceptions\InvalidLengthException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\Utils\OOGmp;
 
@@ -47,7 +47,7 @@ class Receipt
 	 * @throws BadAddressChecksumException
 	 * @throws InvalidHexException
 	 * @throws InvalidHexLengthException
-	 * @throws InvalidLengthException
+	 * @throws EthBinderLogicException
 	 */
 	public static function fromRPCArr(array $rpcArr): static
 	{

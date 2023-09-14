@@ -8,6 +8,7 @@
 
 namespace M8B\EtherBinder\Contract;
 
+use Exception;
 use kornrunner\Keccak;
 use M8B\EtherBinder\Contract\AbiTypes\AbiArrayKnownLength;
 use M8B\EtherBinder\Contract\AbiTypes\AbiArrayUnknownLength;
@@ -16,14 +17,23 @@ use M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 
+/**
+ * ABIEncoder handles the encoding and decoding of ABI data in Ethereum smart contracts.
+ *
+ * @author DubbaThony
+ */
 class ABIEncoder
 {
 	/**
-	 * @param string $signature
-	 * @param array $data
-	 * @param bool $withTransactionSignature
-	 * @return string
-	 * @throws EthBinderLogicException
+	 * Encodes ABI data for an Ethereum smart contract function. It returns binary blob which can be `bin2hex()`-ed
+	 * for presentation purposes.
+	 *
+	 * @param string $signature The function signature including the function name and its parameters.
+	 * @param array $data The data to encode.
+	 * @param bool $withTransactionSignature Whether to prepend the function selector hash to the encoded data.
+	 * @return string The ABI-encoded binary blob.
+	 * @throws EthBinderLogicException Thrown if function name end is not found or indicates other bug.
+	 * @throws EthBinderArgumentException Thrown if validation of signature fails.
 	 */
 	public static function encode(string $signature, array $data, bool $withTransactionSignature = true): string {
 		self::validateSignature($signature);
@@ -37,13 +47,27 @@ class ABIEncoder
 			$signature = str_replace("int,", "int256,", $signature);
 			$signature = str_replace("int)", "int256)", $signature);
 			$signature = str_replace("int]", "int256]", $signature);
-			$signatureHash = Keccak::hash($signature, 256, true);
+			try {
+				$signatureHash = Keccak::hash($signature, 256, true);
+			} catch(Exception $e) {
+				throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+			}
 			return substr($signatureHash, 0, 4).$mainFn->encodeBin();
 		}
 		return $mainFn->encodeBin();
 	}
 
-	public static function decode(string $signature, string $dataBin)
+	/**
+	 * Decodes ABI data returned from an Ethereum smart contract function using function signature (which can have
+	 * fictional function name, but that's optional)
+	 *
+	 * @param string $signature The function signature including the function name and its parameters.
+	 * @param string $dataBin The ABI-encoded binary data.
+	 * @return AbiTuple The decoded ABI data as an AbiTuple.
+	 * @throws EthBinderLogicException Thrown if function name end is not found or if other logic error occurs.
+	 * @throws EthBinderArgumentException Thrown if validation of signature fails.
+	 */
+	public static function decode(string $signature, string $dataBin): AbiTuple
 	{
 		self::validateSignature($signature);
 		$fnNameEnd = strpos($signature, "(");
@@ -52,6 +76,8 @@ class ABIEncoder
 
 		$tupl = self::createEncodingFromType(substr($signature, $fnNameEnd), null);
 		$tupl->decodeBin($dataBin, 0);
+		/** @var AbiTuple $tupl */
+		// AbiTuple will always be top-level, and it's a bug if it won't.
 		return $tupl;
 	}
 
@@ -59,6 +85,8 @@ class ABIEncoder
 	 * @param string $type
 	 * @param $data
 	 * @return AbstractABIValue
+	 * @throws EthBinderArgumentException
+	 * @throws EthBinderLogicException
 	 */
 	private static function createEncodingFromType(string $type, $data): AbstractABIValue
 	{
@@ -75,7 +103,7 @@ class ABIEncoder
 			$openBracketPos = strrpos($type, "[");
 			$closeBracketPos = strrpos($type, "]");
 			if($closeBracketPos === false)
-				throw new EthBinderLogicException("type $type does not contain [, this should be cought by validator, but wasn't");
+				throw new EthBinderLogicException("type $type does not contain [, this should be caught by validator, but wasn't");
 			$elementType = substr($type, 0, $openBracketPos);
 			$length = (int) substr($type, $openBracketPos + 1, $closeBracketPos - $openBracketPos - 1);
 
@@ -110,6 +138,15 @@ class ABIEncoder
 		}
 	}
 
+	/**
+	 * Splits a tuple type into its constituent types, preserving child tuples as single type. Input must start with
+	 * `(` and end with `)`, without function name etc. Example input and output:
+	 * "(uint256,(uint8,uint16)[],bytes)" => ["uint256", "(uint8,uint16)[]", "bytes"]
+	 *
+	 * @param string $types The tuple types string.
+	 * @return array An array of the constituent types.
+	 * @throws EthBinderArgumentException Thrown if provided tuple is invalid.
+	 */
 	public static function explodeTuple(string $types): array {
 		if($types[0] !== "(" || $types[strlen($types) - 1] !== ")")
 			throw new EthBinderArgumentException("Provided invalid tuple");

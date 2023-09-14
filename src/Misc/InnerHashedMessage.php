@@ -8,7 +8,9 @@
 
 namespace M8B\EtherBinder\Misc;
 
+use Exception;
 use kornrunner\Keccak;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 
 /**
  * InnerHashedMessage is a subclass of AbstractSigningMessage designed to handle messages where the content is hashed internally.
@@ -18,9 +20,16 @@ use kornrunner\Keccak;
  */
 class InnerHashedMessage extends AbstractSigningMessage
 {
+	/**
+	 * @throws EthBinderLogicException
+	 */
 	protected function preProcessMessage(): string
 	{
-		return chr(0x19)."Ethereum Signed Message:\n32"
-			.Keccak::hash($this->message, 256, true);
+		try {
+			return chr(0x19) . "Ethereum Signed Message:\n32"
+				. Keccak::hash($this->message, 256, true);
+		} catch(Exception $e) {
+			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+		}
 	}
 }

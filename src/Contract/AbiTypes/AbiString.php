@@ -8,8 +8,10 @@
 
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
-use M8B\EtherBinder\Contract\AbiTypes\AbiBytes;
-
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
 class AbiString extends AbiBytes
 {
 	public function __construct(?string $data)

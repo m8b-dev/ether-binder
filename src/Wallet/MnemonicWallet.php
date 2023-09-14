@@ -17,8 +17,9 @@ use FurqanSiddiqui\BIP39\WordList;
 use M8B\EtherBinder\Crypto\EC;
 use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Exceptions\MnemonicWalletInternalException;
-use M8B\EtherBinder\Exceptions\WrongMenemonicPathException;
+use M8B\EtherBinder\Exceptions\WrongMnemonicPathException;
 use M8B\EtherBinder\Utils\OOGmp;
+use SensitiveParameter;
 
 /**
  * MnemonicWallet extends the AbstractWallet to create a wallet from a mnemonic phrase.
@@ -38,14 +39,14 @@ class MnemonicWallet extends AbstractWallet
 	 *        and there is no way of knowing if passphrase matched other than checking returning address is what was expected
 	 * @param string $path HD Wallet derivation path.
 	 * @param MnemonicLanguage|string $language Language for the mnemonic words.
-	 * @throws WrongMenemonicPathException
+	 * @throws WrongMnemonicPathException
 	 * @throws MnemonicWalletInternalException
 	 */
 	public function __construct(
-		#[\SensitiveParameter] string|array $words,
-		#[\SensitiveParameter] string $passPhrase = "",
-		string $path = "m/44'/60'/0'/0/0",
-	    MnemonicLanguage|string $language = MnemonicLanguage::ENGLISH
+		#[SensitiveParameter] string|array $words,
+		#[SensitiveParameter] string       $passPhrase = "",
+		string                             $path = "m/44'/60'/0'/0/0",
+	    MnemonicLanguage|string            $language = MnemonicLanguage::ENGLISH
 	) {
 		if(is_array($words))
 			$words = implode(" ", $words);
@@ -60,7 +61,7 @@ class MnemonicWallet extends AbstractWallet
 			throw new MnemonicWalletInternalException($e->getMessage(), $e->getCode(), $e);
 		}
 
-		$chainCode = substr($key, 32);;
+		$chainCode = substr($key, 32);
 		$privK     = substr($key, 0, 32);
 		foreach($this->parsePath($path) AS $childNum)
 			list($privK, $chainCode) = $this->deriveChild($privK, $chainCode, $childNum);
@@ -88,13 +89,13 @@ class MnemonicWallet extends AbstractWallet
 	}
 
 	/**
-	 * @throws WrongMenemonicPathException
+	 * @throws WrongMnemonicPathException
 	 */
 	private	function parsePath(string $path): array
 	{
 		$path = explode("/", $path);
 		if(strtolower($path[0]) !== "m")
-			throw new WrongMenemonicPathException("bad format");
+			throw new WrongMnemonicPathException("bad format");
 		$o = [];
 		foreach(array_slice($path, 1) AS $itm ) {
 			$hardened = str_ends_with($itm, "'");
@@ -106,7 +107,7 @@ class MnemonicWallet extends AbstractWallet
 		return $o;
 	}
 
-	private function serializeCurvePoint(#[\SensitiveParameter] KeyPair $p): string
+	private function serializeCurvePoint(#[SensitiveParameter] KeyPair $p): string
 	{
 		$x = hex2bin($p->getPublic()->x->toString(16));
 		$y = $p->getPublic()->y;
@@ -115,7 +116,7 @@ class MnemonicWallet extends AbstractWallet
 			str_pad($x, 32, "\x0", STR_PAD_LEFT);
 	}
 
-	private function deriveChild(#[\SensitiveParameter] string $privateKeyBin,#[\SensitiveParameter]  string $chainCodeBin, int $childNum): array
+	private function deriveChild(#[SensitiveParameter] string $privateKeyBin, #[SensitiveParameter]  string $chainCodeBin, int $childNum): array
 	{
 		$keyPair = EC::ec()->keyFromPrivate(bin2hex($privateKeyBin));
 		if ($childNum >= self::offset) {

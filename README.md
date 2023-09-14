@@ -4,32 +4,83 @@ The goal is to get something that will be like ethers.js for PHP.
 
 # Status
 
-Early. Don't use yet for production purposes. Feel free to experiment around.
+Early, but should be nearly feature-complete. Don't use yet for production purposes. Feel free to experiment around.
 
 The headline feature to be used is contract binding, which you can look at `bin/abigen.php --help`
+This will generate bunch of files, for example if you have ERC20 contract:
+```
+ERC20EventApproval.php
+ERC20EventOwnershipTransferred.php
+ERC20EventTransfer.php
+ERC20.php
+```
+There are also Tuple files, but ERC20 doesn't have tuples in ABI.
+The documentation isn't done yet, but if you want to check it out early, here is example usage of ERC20 token (used
+fqcn instead of `use` so it's clear what to import):
+```shell
+#first create bindings
+./bin/abigen.php --abi ./erc20.abi.json --bin ./erc20.bin.hex --fqcn \\Test\\ERC20 -o ./src/Test
+```
+```php
+$rpc = new \M8B\EtherBinder\RPC\HttpRPC("http://localhost:8545");
+$key = \M8B\EtherBinder\Crypto\Key::fromHex(YOUR_PRIVATE_KEY_HEX);
+// or use mnemonic:
+$key = (new \M8B\EtherBinder\Wallet\MnemonicWallet(
+	["your", "mnemonic", "words"],
+	"optional passphrase. Note, that right now it doesn't reproduce identical private keys as different"
+	." implementation, so treat it for time being as vendor locking. You can always export key into raw hex", //optional
+	"m/44'/60'/0'/0/0",
+	\M8B\EtherBinder\Wallet\MnemonicLanguage::ENGLISH
+))->key();
+// also you can generate new mnemonic
+$wordsArray = \M8B\EtherBinder\Wallet\MnemonicWallet::genNew(/*words count default 24*/24 /*, language default english*/);
+
+// deploy new token
+$txn = \Test\ERC20::deployNewERC20($rpc, $key, "EthBinderToken", "TEST");
+// each transaction have deployAddress(). If it's not deploy transaction, 0x000... will be returned
+$tokAddr = $txn->deployAddress();
+echo "ERC20 Address = " . $tokAddr->checksummed() . PHP_EOL;
+// Functions:: is just helpers.
+$receipt = \M8B\EtherBinder\Utils\Functions::waitForTxReceipt($txn->hash(), $rpc, 120, 250);
+// check status
+if($receipt->status === false)
+    die("reverted");
+
+$token = new \Test\ERC20($rpc, $tokAddr, /*optional for read only can be null*/$key);
+$txn = $token->transfer(Address::fromHex("0x..."), \M8B\EtherBinder\Utils\WeiFormatter::fromHuman("123"));
+echo "sent transaction, hash is " . $txn->hash()->toHex(/*false to remove 0x*/) . PHP_EOL;
+
+$receipt = \M8B\EtherBinder\Utils\Functions::waitForTxReceipt($txn->hash(), $rpc, 120, 250);
+// assuming this specific implementation emits only 1 Transfer event. It's up to ERC20 implementation
+list($transfer) = \Test\ERC20::getEventsFromReceipt($receipt);
+/** @var \Test\ERC20EventTransfer $transfer */
+echo "ERC 20 transaction log: " . PHP_EOL . "  "
+    ."from:      ". $transfer->getFrom()->checksummed(). PHP_EOL . "  "
+    ."to:        ". $transfer->getTo()->checksummed(). PHP_EOL . "  "
+    ."value wei: ". $transfer->getValue()
+    ."value:     ". \M8B\EtherBinder\Utils\WeiFormatter::fromWei($transfer->getValue(), 4).PHP_EOL;
+```
 
 # Status
 
-| feature                                   | status      |
-|-------------------------------------------|-------------|
-| RPC HTTP                                  | done        |
-| Transactions, serializing / deserializing | done        |
-| RLP encoder / decoder                     | done        |
-| RPC Eth_                                  | done        |
-| Signing txn                               | done        |
-| RPC Net_                                  | in progress |
-| RPC Web3_                                 | done        |
-| Wallet (pk raw)                           | done        |
-| Wallet (pk mnemonic)                      | done        |
-| Signing msg                               | done        |
-| Contract bindings (akin to abigen)        | in progress |
-| RPC Net_ filters                          | planned     |
-| Documentation (in-code)                   | in progress |
-| Documentation (generated from in-code)    | planned     |
-| Documentation (standalone)                | wishlist    |
-| RPC Wss                                   | wishlist    |
-| RPC Shh_                                  | not planned |
-| Wallet (pk .json)                         | dropped     |
+| feature                                   | status                  |
+|-------------------------------------------|-------------------------|
+| RPC HTTP                                  | done                    |
+| Transactions, serializing / deserializing | done                    |
+| RLP encoder / decoder                     | done                    |
+| RPC Eth_                                  | done                    |
+| Signing txn                               | done                    |
+| RPC Net_                                  | done                    |
+| RPC Web3_                                 | done                    |
+| Wallet (pk raw)                           | done                    |
+| Wallet (pk mnemonic)                      | done                    |
+| Signing msg                               | done                    |
+| Contract bindings (akin to abigen)        | done                    |
+| RPC Net_ filters                          | planned                 |
+| Documentation (in-code)                   | done                    |
+| Documentation (generated from in-code)    | planned                 |
+| Documentation (standalone)                | wishlist                |
+| Wallet (pk .json)                         | planned as separate lib |
 
 JSON keystore is dropped due to fact it requires scrypt. Scrypt kdf in pure php is extremly slow, and there are 2 solutions:
 - supplying C build for it, and using FFI. This approach has flaw that different php enviroments have different CPU extensions,

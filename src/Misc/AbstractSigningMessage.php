@@ -8,12 +8,16 @@
 
 namespace M8B\EtherBinder\Misc;
 
+use Exception;
 use kornrunner\Keccak;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Crypto\EC;
 use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Crypto\Signature;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\InvalidLengthException;
 
 /**
  * AbstractSigningMessage is class for handling Ethereum signed messages, regardless of specific formatting which is
@@ -64,6 +68,7 @@ abstract class AbstractSigningMessage
 	 *
 	 * @param Key $key Private key for signing.
 	 * @return Signature Clone of generated signature.
+	 * @throws EthBinderLogicException
 	 */
 	public function sign(Key $key): Signature
 	{
@@ -88,6 +93,7 @@ abstract class AbstractSigningMessage
 	 *
 	 * @param bool $pretty Use JSON pretty print option if true.
 	 * @return string The object state as a JSON string.
+	 * @throws EthBinderLogicException
 	 */
 	public function toJson(bool $pretty): string
 	{
@@ -103,8 +109,9 @@ abstract class AbstractSigningMessage
 	/**
 	 * Default to string behaviour is pretty printed JSON.
 	 *
-	 * @see self::toJson
 	 * @return string Pretty printed JSON
+	 * @throws EthBinderLogicException
+	 * @see self::toJson
 	 */
 	public function __toString(): string
 	{
@@ -125,16 +132,25 @@ abstract class AbstractSigningMessage
 	 * Validate if the existing signature matches address it claims to be from.
 	 *
 	 * @return bool True if signature is valid, false otherwise.
+	 * @throws EthBinderLogicException
+	 * @throws EthBinderRuntimeException
 	 */
 	public function validateSignature(): bool
 	{
 		return $this->from->eq(EC::Recover($this->getMessageHash(), $this->sig->r, $this->sig->s, $this->sig->v));
 	}
 
+	/**
+	 * @throws EthBinderLogicException
+	 */
 	private function getMessageHash(): Hash
 	{
 		$t = $this->preProcessMessage();
-		return Hash::fromBin(Keccak::hash($t, 256, true));
+		try {
+			return Hash::fromBin(Keccak::hash($t, 256, true));
+		} catch(InvalidLengthException|Exception $e) {
+			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
 	/**

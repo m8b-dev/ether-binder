@@ -8,16 +8,23 @@
 
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
+use ArrayAccess;
 use M8B\EtherBinder\Contract\AbstractTuple;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
-use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\Utils\OOGmp;
 
-class AbiTuple extends AbstractABIValue implements \ArrayAccess
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
+class AbiTuple extends AbstractABIValue implements ArrayAccess
 {
 	/** @var AbstractABIValue[] $inner */
 	protected array $inner = [];
 
+	/**
+	 * @inheritDoc
+	 */
 	public function isDynamic(): bool
 	{
 		foreach($this->inner AS $val) {
@@ -27,6 +34,9 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 		return false;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function encodeBin(): string
 	{
 		$tails = [];
@@ -55,6 +65,9 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 		return $heads . implode("", $tails);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
 		$tailSize = 0;
@@ -94,7 +107,7 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 	{
 		$ret = "(";
 		foreach($this->inner AS $k => $inr) {
-			$ret .= ($k > 0 ? ",":"").(string)$inr;
+			$ret .= ($k > 0 ? ",":"").$inr;
 		}
 		$ret .= ")";
 		return $ret;
@@ -105,6 +118,9 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 			$this->inner[$i] = clone $this->inner[$i];
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function unwrapToPhpFriendlyVals(?array $tuplerData): array|AbstractTuple
 	{
 		$o = [];
@@ -126,16 +142,26 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 		return $o;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function offsetExists(mixed $offset): bool
 	{
 		return isset($this->inner[$offset]);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function offsetGet(mixed $offset): AbstractABIValue
 	{
 		return $this->inner[$offset];
 	}
 
+	/**
+	 * @inheritDoc
+	 * @throws EthBinderLogicException
+	 */
 	public function offsetSet(mixed $offset, mixed $value): void
 	{
 		if($offset === null) {
@@ -151,6 +177,9 @@ class AbiTuple extends AbstractABIValue implements \ArrayAccess
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function offsetUnset(mixed $offset): void
 	{
 		unset($this->inner[$offset]);

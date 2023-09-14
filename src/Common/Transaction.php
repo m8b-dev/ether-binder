@@ -8,9 +8,18 @@
 
 namespace M8B\EtherBinder\Common;
 
+use Exception;
 use kornrunner\Keccak;
 use M8B\EtherBinder\Crypto\Key;
+use M8B\EtherBinder\Crypto\Signature;
+use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
+use M8B\EtherBinder\Exceptions\InvalidLengthException;
+use M8B\EtherBinder\Exceptions\NotSupportedException;
+use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
 use M8B\EtherBinder\RLP\Decoder;
 use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\RPC\AbstractRPC;
@@ -18,6 +27,12 @@ use M8B\EtherBinder\Utils\EtherFormats;
 use M8B\EtherBinder\Utils\OOGmp;
 use M8B\EtherBinder\Utils\WeiFormatter;
 
+/**
+ * Transaction serves as an abstract base class for Ethereum transactions. It represents any transaction, can be signed
+ * or unsigned.
+ *
+ * @author DubbaThony
+ */
 abstract class Transaction
 {
 	protected bool $signed = false;
@@ -33,6 +48,16 @@ abstract class Transaction
 	protected OOGmp $s;
 	protected ?int $chainId = null;
 
+	abstract public    function encodeBin(): string;
+	abstract public    function encodeBinForSigning(?int $chainId): string;
+	abstract public    function transactionType(): TransactionType;
+	abstract public    function ecRecover(): Address;
+	abstract public    function useRpcEstimatesWithBump(
+		AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static;
+	abstract protected function blanksFromRPCArr(array $rpcArr): void;
+	abstract protected function setInnerFromRLPValues(array $rlpValues): void;
+
+
 	public function __construct()
 	{
 		$this->gasPrice = new OOGmp();
@@ -42,6 +67,14 @@ abstract class Transaction
 		$this->s = new OOGmp();
 	}
 
+	/**
+	 * Decodes a hexadecimal RLP-encoded transaction. Accepts both legacy formatting and typed transaction.
+	 *
+	 * @param string $rlp The RLP-encoded transaction as a hexadecimal string.
+	 * @return static The decoded Transaction object.
+	 * @throws NotSupportedException
+	 * @throws EthBinderLogicException
+	 */
 	public static function decodeHex(string $rlp): static
 	{
 		if(str_starts_with($rlp, "0x"))
@@ -49,6 +82,14 @@ abstract class Transaction
 		return static::decodeBin(hex2bin($rlp));
 	}
 
+	/**
+	 * Decodes a binary RLP-encoded transaction. Accepts both legacy formatting and typed transaction.
+	 *
+	 * @param string $rlp The RLP-encoded transaction as a binary string.
+	 * @return static The decoded Transaction object.
+	 * @throws NotSupportedException
+	 * @throws EthBinderLogicException
+	 */
 	public static function decodeBin(string $rlp): static
 	{
 		$txDataRaw = Decoder::decodeRLPBin($rlp);
@@ -67,24 +108,40 @@ abstract class Transaction
 		return $tx;
 	}
 
+	/**
+	 * Encodes the transaction into a hexadecimal string for signing purposes (which differs from encoding for storage
+	 * or transfer. Difference is for example missing fields).
+	 *
+	 * @param ?int $chainId The chain ID for the transaction.
+	 * @return string The hexadecimal encoded transaction.
+	 */
 	public function encodeHexForSigning(?int $chainId): string
 	{
 		return "0x".bin2hex($this->encodeBinForSigning($chainId));
 	}
 
+	/**
+	 * Encodes the transaction into a hexadecimal string.
+	 *
+	 * @return string The hexadecimal encoded transaction.
+	 */
 	public function encodeHex(): string
 	{
 		return "0x".bin2hex($this->encodeBin());
 	}
 
-	abstract public function encodeBin(): string;
-	abstract public function encodeBinForSigning(?int $chainId): string;
-	abstract public function transactionType(): TransactionType;
-	abstract protected function blanksFromRPCArr(array $rpcArr): void;
-	abstract protected function setInnerFromRLPValues(array $rlpValues): void;
-	abstract public function ecRecover(): Address;
-	abstract public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static;
-
+	/**
+	 * Creates a transaction from an RPC array.
+	 *
+	 * @param array $rpcArr The array containing transaction details from RPC.
+	 * @return static The created Transaction object.
+	 * @throws BadAddressChecksumException
+	 * @throws NotSupportedException
+	 * @throws InvalidHexLengthException
+	 * @throws EthBinderLogicException
+	 * @throws InvalidHexException
+	 * @throws HexBlobNotEvenException
+	 */
 	public static function fromRPCArr(array $rpcArr): static
 	{
 		$static = TransactionType::numericToEnum($rpcArr["type"] ?? 0)->spawnSuchTransaction();
@@ -110,6 +167,13 @@ abstract class Transaction
 		return $static;
 	}
 
+	/**
+	 * Sets the nonce for the transaction.
+	 *  This invalidates signature if data differs from existing data.
+	 *
+	 * @param int $nonce The nonce value.
+	 * @return static The updated Transaction object.
+	 */
 	public function setNonce(int $nonce): static
 	{
 		if($this->nonce != $nonce) {
@@ -119,11 +183,23 @@ abstract class Transaction
 		return $this;
 	}
 
+	/**
+	 * Gets the nonce of the transaction.
+	 *
+	 * @return int The nonce value.
+	 */
 	public function nonce(): int
 	{
 		return $this->nonce;
 	}
 
+	/**
+	 * Sets the gas limit for the transaction.
+	 *  This invalidates signature if data differs from existing data.
+	 *
+	 * @param int $gasLimit The gas limit value.
+	 * @return static The updated Transaction object.
+	 */
 	public function setGasLimit(int $gasLimit): static
 	{
 		if($this->gas != $gasLimit) {
@@ -133,6 +209,11 @@ abstract class Transaction
 		return $this;
 	}
 
+	/**
+	 * Gets the gas limit of the transaction.
+	 *
+	 * @return int The gas limit value.
+	 */
 	public function gasLimit(): int
 	{
 		return $this->gas;
@@ -148,35 +229,74 @@ abstract class Transaction
 		return $this;
 	}
 
+	/**
+	 * Gets the total gas price for the transaction.
+	 *
+	 * @return OOGmp Total gas price.
+	 */
 	public function totalGasPrice(): OOGmp
 	{
 		return $this->gasPrice;
 	}
 
+	/**
+	 * Sets the value for the transaction using WeiFormatter. Accepts "human" input.
+	 *  This invalidates signature if data differs from existing data.
+	 *
+	 * @param float|int|string|OOGmp $human
+	 * @param int|string|EtherFormats $format
+	 * @return static The updated Transaction object.
+	 */
 	public function setValueFmt(float|int|string|OOGmp $human, int|string|EtherFormats $format = EtherFormats::ETHER): static
 	{
 		return $this->setValue(WeiFormatter::fromHuman($human, $format));
 	}
 
+	/**
+	 * Sets the value for the transaction.
+	 *  This invalidates signature if data differs from existing data.
+	 *
+	 * @param OOGmp $valueWEI The value in Wei.
+	 * @return static The updated Transaction object.
+	 */
 	public function setValue(OOGmp $valueWEI): static
 	{
-		if($this->value != $valueWEI) {
+		if(!$this->value->eq($valueWEI)) {
 			$this->value = $valueWEI;
 			$this->signed = false;
 		}
 		return $this;
 	}
 
+	/**
+	 * Gets the value of the transaction.
+	 *
+	 * @return OOGmp The value in Wei.
+	 */
 	public function value(): OOGmp
 	{
 		return $this->value;
 	}
 
+	/**
+	 * Gets the value of the transaction and formats it with WeiFormatter, proxying params to it.
+	 *
+	 * @param int $finalDecimals Number of decimals for formatting.
+	 * @param int|string|EtherFormats $format Ether format.
+	 * @return string Formatted value.
+	 */
 	public function valueFmt(int $finalDecimals, int|string|EtherFormats $format = EtherFormats::ETHER): string
 	{
 		return WeiFormatter::fromWei($this->value, $finalDecimals, $format);
 	}
 
+	/**
+	 * Sets the recipient address for the transaction. If it's null, the transaction is contract deploy transaction.
+	 *  This invalidates signature if data differs from existing data.
+	 *
+	 * @param Address|null $address The Address object or null. If null, the transaction is contract deploy
+	 * @return static The updated Transaction object.
+	 */
 	public function setTo(?Address $address): static
 	{
 		if(
@@ -190,11 +310,23 @@ abstract class Transaction
 		return $this;
 	}
 
+	/**
+	 * Gets the recipient address of the transaction, null if it's deploy transaction.
+	 *
+	 * @return Address|null The recipient address or null (deploy).
+	 */
 	public function to(): ?Address
 	{
 		return $this->to;
 	}
 
+	/**
+	 * Sets the data payload for the transaction using binary blob.
+	 *  This invalidates signature if data differs from existing data.
+	 *
+	 * @param string $dataBin The binary data.
+	 * @return static The updated Transaction object.
+	 */
 	public function setDataBin(string $dataBin): static
 	{
 		if($dataBin !== $this->dataBin) {
@@ -204,6 +336,14 @@ abstract class Transaction
 		return $this;
 	}
 
+	/**
+	 * Sets the data for the transaction using a hex string.
+	 *   This invalidates signature if data differs from existing data.
+	 *
+	 * @param string $dataHex Data in hex format.
+	 * @return static
+	 * @throws HexBlobNotEvenException
+	 */
 	public function setDataHex(string $dataHex): static
 	{
 		if(str_starts_with($dataHex, "0x"))
@@ -213,6 +353,11 @@ abstract class Transaction
 		return $this->setDataBin(hex2bin($dataHex));
 	}
 
+	/**
+	 * Gets the transaction data in hex format.
+	 *
+	 * @return string Data in hex.
+	 */
 	public function dataHex(): string
 	{
 		if(empty($this->dataBin))
@@ -220,41 +365,99 @@ abstract class Transaction
 		return "0x".bin2hex($this->dataBin);
 	}
 
+	/**
+	 * Gets the binary data payload of the transaction.
+	 *
+	 * @return string The binary data.
+	 */
 	public function dataBin(): string
 	{
 		return $this->dataBin;
 	}
 
+	/**
+	 * Gets the ECDSA 'v' value of the signature.
+	 *
+	 * @return OOGmp The 'v' value.
+	 */
 	public function v(): OOGmp
 	{
 		return $this->v;
 	}
 
+	/**
+	 * Gets the ECDSA 'r' value of the signature.
+	 *
+	 * @return OOGmp The 'r' value.
+	 */
 	public function r(): OOGmp
 	{
 		return $this->r;
 	}
 
+	/**
+	 * Gets the ECDSA 's' value of the signature.
+	 *
+	 * @return OOGmp The 's' value.
+	 */
 	public function s(): OOGmp
 	{
 		return $this->s;
 	}
-
+	/**
+	 * Checks if the transaction is signed.
+	 *
+	 * @return bool True if signed, false otherwise.
+	 */
 	public function isSigned(): bool
 	{
 		return $this->signed;
 	}
 
+	/**
+	 * Calculates the transaction hash.
+	 *
+	 * @return Hash The transaction hash.
+	 * @throws EthBinderLogicException
+	 */
 	public function hash(): Hash
 	{
-		return Hash::fromBin(Keccak::hash($this->encodeBin(), 256, true));
+		try {
+			$bin = Keccak::hash($this->encodeBin(), 256, true);
+			return Hash::fromBin($bin);
+		} catch(Exception $e) {
+			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+
+	/**
+	 * Calculates the hash used for signing the transaction.
+	 *
+	 * @param int|null $chainId Optional chain ID.
+	 * @return Hash The signing hash.
+	 * @throws InvalidLengthException
+	 * @throws EthBinderLogicException
+	 */
 	public function getSigningHash(?int $chainId): Hash
 	{
-		return Hash::fromBin(Keccak::hash($this->encodeBinForSigning($chainId), 256, true));
+		try {
+			$bin = Keccak::hash($this->encodeBinForSigning($chainId), 256, true);
+		} catch(Exception $e) {
+			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+		}
+		return Hash::fromBin($bin);
 	}
 
+	/**
+	 * Signs the transaction.
+	 *
+	 * @param Key $key Private key for signing.
+	 * @param int|null $chainId Optional chain ID.
+	 * @return static
+	 * @throws InvalidLengthException
+	 * @throws EthBinderLogicException
+	 */
 	public function sign(Key $key, ?int $chainId): static
 	{
 		$this->chainId = $chainId;
@@ -266,6 +469,12 @@ abstract class Transaction
 		return $this;
 	}
 
+	/**
+	 * Calculates the recovery id (v) for signature accounting for EIP155 (replay protection).
+	 *
+	 * @param OOGmp $recovery Recovery id before chain id calculations.
+	 * @return OOGmp Final recovery id.
+	 */
 	public function calculateV(OOGmp $recovery): OOGmp
 	{
 		if($this->chainId === null)
@@ -273,11 +482,29 @@ abstract class Transaction
 		return $recovery->add($this->chainId * 2)->add(35);
 	}
 
-	public function useRpcEstimates(AbstractRPC $rpc, Address $from)
+	/**
+	 * Estimates gas and fee values using from RPC, trying to use conservative values.
+	 * This invalidates signature if data differs from existing data
+	 *
+	 * @param AbstractRPC $rpc The RPC client.
+	 * @param Address $from The sender address.
+	 * @return static The updated Transaction object.
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
+	 */
+	public function useRpcEstimates(AbstractRPC $rpc, Address $from): static
 	{
 		return $this->useRpcEstimatesWithBump($rpc, $from, 0, 0);
 	}
 
+	/**
+	 * Gets the address where the contract will be deployed if it's deploy transaction. If it is
+	 * not deploy transaction, it will return null address - Address::NULL()
+	 *
+	 * @return Address Address where contract will be deployed.
+	 * @throws EthBinderLogicException
+	 * @throws InvalidLengthException
+	 */
 	public function deployAddress(): Address
 	{
 		if(!$this->isSigned())
@@ -285,8 +512,32 @@ abstract class Transaction
 		if($this->to !== null)
 			return Address::NULL();
 
-		return Address::fromBin(substr(Keccak::hash(
-			Encoder::encodeBin([[$this->ecRecover()->toBin(), $this->nonce]]),
-			256, true), 12));
+		try {
+			$bin = substr(
+				Keccak::hash(
+					Encoder::encodeBin([[$this->ecRecover()->toBin(), $this->nonce]]),
+					256,
+					true
+				),
+				12
+			);
+		} catch(Exception $e) {
+			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+		}
+		return Address::fromBin($bin);
+	}
+
+	/**
+	 * Gets the signature in wrapper object.
+	 *
+	 * @return Signature The signature details.
+	 */
+	public function signature(): Signature
+	{
+		$s = new Signature();
+		$s->v = $this->v;
+		$s->r = $this->r;
+		$s->s = $this->s;
+		return $s;
 	}
 }

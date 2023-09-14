@@ -9,10 +9,23 @@
 namespace M8B\EtherBinder\Common;
 
 use M8B\EtherBinder\Crypto\EC;
+use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
+use M8B\EtherBinder\Exceptions\InvalidLengthException;
 use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * LegacyTransaction is a class for handling Ethereum legacy transactions (pre EIP1559), with pre EIP155 or post EIP155
+ * support
+ *
+ * @author DubbaThony
+ */
 class LegacyTransaction extends Transaction
 {
 	private function internalEncodeBin(bool $signing, ?int $signingChainID): string
@@ -36,24 +49,50 @@ class LegacyTransaction extends Transaction
 		return Encoder::encodeBin([[$nonce, $gasPrice, $gasLimit, $to, $value, $data, $v, $r, $s]]);
 	}
 
+	/**
+	 * Encodes the transaction for signing purposes (which differs from encoding for storage
+	 *   or transfer. Difference is for example missing fields).
+	 *
+	 * @param int|null $chainId The chain ID of the Ethereum network.
+	 * @return string Binary representation of the transaction for signing.
+	 */
 	public function encodeBinForSigning(?int $chainId): string
 	{
 		return $this->internalEncodeBin(true, $chainId);
 	}
 
+	/**
+	 * Encodes the transaction into a binary blob.
+	 *
+	 * @return string Binary blob of the transaction.
+	 */
 	public function encodeBin(): string
 	{
 		return $this->internalEncodeBin(false, null);
 	}
 
+	/**
+	 * Returns the type of the transaction, which is always LEGACY.
+	 *
+	 * @return TransactionType Returns LEGACY as the transaction type.
+	 */
 	public function transactionType(): TransactionType
 	{
 		return TransactionType::LEGACY;
 	}
 
+
 	protected function blanksFromRPCArr(array $rpcArr): void
 	{}
 
+
+	/**
+	 * @throws BadAddressChecksumException
+	 * @throws EthBinderLogicException
+	 * @throws InvalidHexLengthException
+	 * @throws InvalidHexException
+	 * @throws HexBlobNotEvenException
+	 */
 	protected function setInnerFromRLPValues(array $rlpValues): void
 	{
 		list($nonce, $gasPrice, $gasLimit, $to, $value, $data, $v, $r, $s) = $rlpValues;
@@ -70,6 +109,14 @@ class LegacyTransaction extends Transaction
 		$this->signed            = true;
 	}
 
+	/**
+	 * Recovers the sender address from the transaction signature.
+	 *
+	 * @throws EthBinderRuntimeException
+	 * @throws EthBinderLogicException
+	 * @throws InvalidLengthException
+	 * @return Address The address of the transaction sender.
+	 */
 	public function ecRecover(): Address
 	{
 		if(!$this->isSigned())
@@ -88,19 +135,36 @@ class LegacyTransaction extends Transaction
 		return EC::Recover($hash, $this->r, $this->s, $parity);
 	}
 
-	//todo:
-	// if supporting signing new antique transactions would be required, add calculateV override
-
+	/**
+	 * Checks if the transaction is replay-protected (post EIP155).
+	 *
+	 * @return bool True if the transaction is replay-protected, false otherwise.
+	 */
 	public function isReplayProtected(): bool
 	{
 		return !($this->v->eq(27) || $this->v->eq(28) || $this->v->eq(0) || $this->v->eq(1));
 	}
 
+	/**
+	 * Sets the gas price for the transaction.
+	 *
+	 * @param OOGmp $gasPrice The new gas price.
+	 * @return static Returns the instance of the class.
+	 */
 	public function setGasPrice(OOGmp $gasPrice): static
 	{
 		return parent::setGasPriceOrBaseFee($gasPrice);
 	}
 
+	/**
+	 * Uses RPC to estimate gas and fee, then sets them with an optional bump.
+	 *
+	 * @param AbstractRPC $rpc The RPC client.
+	 * @param Address|null $from The sender's address.
+	 * @param int $bumpGasPercentage Percentage to bump the estimated gas.
+	 * @param int $bumpFeePercentage Percentage to bump the estimated fee.
+	 * @return static Returns the instance of the class.
+	 */
 	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static
 	{
 		$gas      = ($rpc->ethEstimateGas($this, $from) * ($bumpFeePercentage + 100)) / 100;

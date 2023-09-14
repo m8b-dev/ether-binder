@@ -9,6 +9,8 @@
 namespace M8B\EtherBinder\RPC;
 
 use M8B\EtherBinder\Common\LondonTransaction;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
 use M8B\EtherBinder\RPC\Modules\Web3;
 use M8B\EtherBinder\Utils\EtherFormats;
 use M8B\EtherBinder\Utils\OOGmp;
@@ -31,6 +33,8 @@ abstract class Compound extends Web3
 	 *
 	 * @param int $blockNumbers number of recent blocks to consider
 	 * @return OOGmp average tip across considered blocks
+	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
 	 */
 	public function calcAvgTip(int $blockNumbers = 3): OOGmp
 	{
@@ -66,6 +70,8 @@ abstract class Compound extends Web3
 	 * Checks whether the network seems to be like London (EIP-1559) by checking block data fields that are EIP1559 specific
 	 *
 	 * @return bool true if network seems to be post-London fork, false otherwise
+	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
 	 */
 	public function isLookingLikeLondon(): bool
 	{

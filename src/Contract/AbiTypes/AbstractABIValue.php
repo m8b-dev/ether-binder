@@ -8,15 +8,28 @@
 
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
+use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
 
 /**
+ * Base class for encoding and decoding ABI (Application Binary Interface) types for Ethereum contracts.
+ *
  * @author DubbaThony (structure, abstraction, bugs)
  * @author gh/VOID404 (maths)
  */
 abstract class AbstractABIValue
 {
+	/**
+	 * Parse the ABI type and value and returns the corresponding AbstractABIValue object.
+	 *
+	 * @param string $type The ABI type.
+	 * @param mixed $value The value to be parsed.
+	 * @return AbstractABIValue An instance of the parsed ABI type.
+	 * @throws NotSupportedException
+	 * @throws EthBinderLogicException
+	 * @throws EthBinderArgumentException
+	 */
 	public static function parseValue(string $type, mixed $value): AbstractABIValue
 	{
 		if(is_array($value))
@@ -48,8 +61,10 @@ abstract class AbstractABIValue
 	}
 
 	/**
-	 * @param string $type
-	 * @return array<"type"|"bits", string|int|null>
+	 * Splits the ABI type into its type and bit-length components. Also works for amount of bytes for non-dynamic bytes.
+	 *
+	 * @param string $type The ABI type.
+	 * @return array<"type"|"bits", string|int|null> The split type and bit-length.
 	 */
 	public static function splitTypeBits(string $type): array
 	{
@@ -64,8 +79,34 @@ abstract class AbstractABIValue
 		return ["type" => $typeNoBits, "bits" => $bits];
 	}
 
+	/**
+	 * Checks whether the ABI value is dynamic or not.
+	 *
+	 * @return bool True if dynamic, false otherwise.
+	 */
 	abstract public function isDynamic(): bool;
+
+	/**
+	 * Encodes the ABI value to its binary representation (recursive).
+	 *
+	 * @return string The binary-encoded string.
+	 */
 	abstract public function encodeBin(): string;
+
+	/**
+	 * Decodes the binary data and updates the object(recursive).
+	 *
+	 * @param string &$dataBin The binary data to be decoded.
+	 * @param int $globalOffset The global offset in the binary data.
+	 * @return int The new global offset.
+	 */
 	abstract public function decodeBin(string &$dataBin, int $globalOffset): int;
+
+	/**
+	 * Transforms the ABI value into a more PHP-friendly types, such as Common\Address, OOGmp, and such (recursive).
+	 *
+	 * @param array|null $tuplerData Data structure for wanted tuples, tightly related to ABIGen logic. Always null-safe.
+	 * @return mixed The PHP-friendly value.
+	 */
 	abstract public function unwrapToPhpFriendlyVals(?array $tuplerData);
 }

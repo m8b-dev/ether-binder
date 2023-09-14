@@ -13,6 +13,13 @@ use M8B\EtherBinder\Common\Block;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Common\Receipt;
 use M8B\EtherBinder\Common\Transaction;
+use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
+use M8B\EtherBinder\Exceptions\NotSupportedException;
+use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
 use M8B\EtherBinder\Exceptions\UnexpectedUnsignedException;
 use M8B\EtherBinder\RPC\BlockParam;
 use M8B\EtherBinder\Utils\Functions;
@@ -40,9 +47,17 @@ abstract class Eth extends Debug
 		return $return;
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
+	 */
 	public function ethCoinbase(): Address
 	{
-		return Address::fromHex($this->runRpc("eth_coinbase")[0]);
+		try {
+			return Address::fromHex($this->runRpc("eth_coinbase")[0]);
+		} catch(BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
 	private ?int $cachedChainId = null;
@@ -70,13 +85,19 @@ abstract class Eth extends Debug
 
 	/**
 	 * @return Address[]
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
 	 */
 	public function ethAccounts(): array
 	{
 		$accountsRaw = $this->runRpc("eth_accounts");
 		$return = [];
 		foreach($accountsRaw AS $accountRaw) {
-			$return[] = Address::fromHex($accountRaw);
+			try {
+				$return[] = Address::fromHex($accountRaw);
+			} catch(BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+				throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+			}
 		}
 		return $return;
 	}
@@ -156,23 +177,45 @@ abstract class Eth extends Debug
 		return $this->runRpc("eth_signTransaction", [$this->transactionToRPCArr($txn, $from)])[0];
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethSendTransaction(Transaction $txn, Address $from): Hash
 	{
-		return Hash::fromHex($this->runRpc("eth_sendTransaction", [$this->transactionToRPCArr($txn, $from)])[0]);
+		try {
+			return Hash::fromHex($this->runRpc("eth_sendTransaction", [$this->transactionToRPCArr($txn, $from)])[0]);
+		} catch(InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws UnexpectedUnsignedException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethSendRawTransaction(Transaction $signedTransaction): Hash
 	{
 		if(!$signedTransaction->isSigned())
 			throw new UnexpectedUnsignedException();
-		return Hash::fromHex($this->runRpc("eth_sendRawTransaction", [$signedTransaction->encodeHex()])[0]);
+		try {
+			return Hash::fromHex($this->runRpc("eth_sendRawTransaction", [$signedTransaction->encodeHex()])[0]);
+		} catch(InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethSendRawTransactionHex(string $rawTransactionHex): Hash
 	{
 		if(!str_starts_with($rawTransactionHex, "0x"))
 			$rawTransactionHex = "0x".$rawTransactionHex;
-		return Hash::fromHex($this->runRpc("eth_sendRawTransaction", [$rawTransactionHex])[0]);
+		try {
+			return Hash::fromHex($this->runRpc("eth_sendRawTransaction", [$rawTransactionHex])[0]);
+		} catch(InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
 	public function ethCall(Transaction $message, ?Address $from = null, int|BlockParam $blockParam = BlockParam::LATEST): string
@@ -185,49 +228,124 @@ abstract class Eth extends Debug
 		return hexdec($this->runRpc("eth_estimateGas", [$this->transactionToRPCArr($txn, $from, true)])[0]);
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
+	 */
 	public function ethGetBlockByHash(Hash $hash, bool $fullBlock = false): Block
 	{
-		return Block::fromRPCArr($this->runRpc("eth_getBlockByHash", [$hash->toHex(), $fullBlock]));
+		try {
+			return Block::fromRPCArr($this->runRpc("eth_getBlockByHash", [$hash->toHex(), $fullBlock]));
+		} catch(BadAddressChecksumException|HexBlobNotEvenException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
+	 */
 	public function ethGetBlockByNumber(int|BlockParam $blockParam = BlockParam::LATEST, bool $fullBlock = false): Block
 	{
-		return Block::fromRPCArr($this->runRpc("eth_getBlockByNumber", [$this->blockParam($blockParam), $fullBlock]));
+		try {
+			return Block::fromRPCArr($this->runRpc("eth_getBlockByNumber", [$this->blockParam($blockParam), $fullBlock]));
+		} catch(HexBlobNotEvenException|BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethGetTransactionByHash(Hash $hash): Transaction
 	{
-		return Transaction::fromRPCArr($this->runRpc("eth_getTransactionByHash", [$hash->toHex()]));
+		try {
+			return Transaction::fromRPCArr($this->runRpc("eth_getTransactionByHash", [$hash->toHex()]));
+		} catch(HexBlobNotEvenException|BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethGetTransactionByBlockHashAndIndex(Hash $hash, int $index): Transaction
 	{
-		return Transaction::fromRPCArr($this->runRpc(
-			"eth_getTransactionByBlockHashAndIndex", [$hash->toHex(), "0x".dechex($index)]
-		));
+		try {
+			return Transaction::fromRPCArr($this->runRpc(
+				"eth_getTransactionByBlockHashAndIndex", [$hash->toHex(), "0x".dechex($index)]
+			));
+		} catch(HexBlobNotEvenException|BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethGetTransactionByBlockNumberAndIndex(int|BlockParam $blockParam, int $index): Transaction
 	{
+		try {
 		return Transaction::fromRPCArr($this->runRpc("eth_getTransactionByBlockNumberAndIndex",
 			[$this->blockParam($blockParam), "0x".dechex($index)]));
+		} catch(HexBlobNotEvenException|BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
+	 */
 	public function ethGetTransactionReceipt(Hash $hash): Receipt
 	{
-		return Receipt::fromRPCArr($this->runRpc("eth_getTransactionReceipt", [$hash->toHex()]));
+		try {
+			return Receipt::fromRPCArr($this->runRpc("eth_getTransactionReceipt", [$hash->toHex()]));
+		} catch(BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
+	 */
 	public function ethGetUncleByBlockHashAndIndex(Hash $hash, int $unclePos): Block
 	{
-		return Block::fromRPCArr($this->runRpc("eth_getUncleByBlockHashAndIndex", [$hash->toHex(), "0x".dechex($unclePos)]));
+		try {
+			return Block::fromRPCArr($this->runRpc("eth_getUncleByBlockHashAndIndex", [$hash->toHex(), "0x".dechex($unclePos)]));
+		} catch(HexBlobNotEvenException|BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
+	 */
 	public function ethGetUncleByBlockNumberAndIndex(int|BlockParam $blockParam, int $unclePos):Block
 	{
-		return Block::fromRPCArr(
-			$this->runRpc("eth_getUncleByBlockNumberAndIndex", [$this->blockParam($blockParam), "0x".dechex($unclePos)])
-		);
+		try {
+			return Block::fromRPCArr(
+				$this->runRpc("eth_getUncleByBlockNumberAndIndex", [$this->blockParam($blockParam), "0x".dechex($unclePos)])
+			);
+		} catch(HexBlobNotEvenException|BadAddressChecksumException|InvalidHexLengthException|InvalidHexException $e) {
+			throw new RPCInvalidResponseParamException("invalid data received: ".$e->getMessage(), $e->getCode(), $e);
+		}
+	}
+
+	public function ethMaxPriorityFeePerGas(): OOGmp
+	{
+		return new OOGmp($this->runRpc(
+			"eth_maxPriorityFeePerGas", []
+		)[0]);
 	}
 
 	/* todo: add filters */

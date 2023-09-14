@@ -11,7 +11,7 @@ namespace M8B\EtherBinder\RPC;
 use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
 use M8B\EtherBinder\Exceptions\RPCNotFoundException;
-use M8B\EtherBinder\RPC\Modules\Web3;
+
 /**
  * AbstractRPC provides the base functionality for communicating with Ethereum's JSON-RPC API.
  *

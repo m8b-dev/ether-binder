@@ -8,5 +8,5 @@
 
 namespace M8B\EtherBinder\Exceptions;
 
-class WrongMenemonicPathException extends EthBinderArgumentException
+class WrongMnemonicPathException extends EthBinderArgumentException
 {}

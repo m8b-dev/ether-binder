@@ -11,9 +11,16 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
 class AbiInt extends AbiUint
 {
-	/** @noinspection PhpMissingParentConstructorInspection */
+	/**
+	 * @throws EthBinderArgumentException
+	 * @noinspection PhpMissingParentConstructorInspection
+	 */
 	public function __construct(null|int|OOGmp $val, int $maxBits)
 	{
 		if(!($val instanceof OOGmp))

@@ -8,9 +8,10 @@
 
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
-use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
-use M8B\EtherBinder\Utils\OOGmp;
-
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
 class AbiArrayKnownLength extends AbiTuple
 {
 	protected ?AbstractABIValue $emptyType;
@@ -22,16 +23,22 @@ class AbiArrayKnownLength extends AbiTuple
 			$this->inner[$i] = clone($children);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function __toString(): string
 	{
 		$ret = "k[";
 		foreach($this->inner AS $k => $inr) {
-			$ret .= ($k > 0 ? ",":"").(string)$inr;
+			$ret .= ($k > 0 ? ",":""). $inr;
 		}
 		$ret .= "]";
 		return $ret;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function unwrapToPhpFriendlyVals(?array $tuplerData): array
 	{
 		$o = [];

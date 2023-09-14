@@ -8,6 +8,8 @@
 
 namespace M8B\EtherBinder\Contract;
 
+use Exception as GlobalException;
+use kornrunner\Keccak;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Common\SolidityFunction;
@@ -18,16 +20,22 @@ use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
 use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\OOGmp;
+use PhpParser\Builder\Param;
 use PhpParser\BuilderFactory;
 use PhpParser\Node\Attribute;
-use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Expr\ArrayDimFetch;
 use PhpParser\Node\Expr\Assign;
-use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
-use PhpParser\Node\Param;
+use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Return_;
 use PhpParser\PrettyPrinter\Standard;
 
+/**
+ * Core class for generating ABI bindings.
+ *
+ * @author DubbaThony
+ */
 class ABIGen
 {
 	protected array $abiFunctions;
@@ -35,7 +43,15 @@ class ABIGen
 	protected array $abiConstructor;
 	protected string $className;
 	protected array $tuplesRegistry = [];
+	protected const autogenWarning = <<<HDC
+// Code auto generated - DO NOT EDIT.
+// This file is a generated binding and any manual changes will be lost.
+// If you need to edit this class, extend it.
+HDC;
 
+	/**
+	 * @throws EthBinderArgumentException
+	 */
 	public function __construct(array $abi, protected ?string $compiledBlob = null)
 	{
 		$this->abiFunctions   = [];
@@ -53,6 +69,10 @@ class ABIGen
 		}
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 * @throws EthBinderArgumentException
+	 */
 	public function gen(string $fullyQualifiedClassName): array
 	{
 		$this->tuplesRegistry = [];
@@ -77,6 +97,8 @@ class ABIGen
 
 		$bld = new BuilderFactory();
 
+		// Embed important data into code in case original abi files are lost and need reproducing, or library user needs
+		// them. In general, they shouldn't be needed in the library itself or bindings.
 		$class = $bld->class($this->className)
 			->extend("\\".AbstractContract::class)
 			->addStmt($bld->method("abi")
@@ -107,17 +129,23 @@ class ABIGen
 		) {
 			$fname = $abiArr[$k]["name"] ?? ""; // not all elements of array have this key
 			$outs  = $abiArr[$k]["outputs"] ?? []; // not all elements of array have this key
+			// constructor doesn't have function name, so use deployNew with class name supplied by caller (usually CLI)
+			// slapped onto it with UCFirst just in case someone doesn't follow PascalCase for class names.
 			if($fType === "constructor") {
 				$outs = [];
 				$fname = "deployNew".ucfirst($this->className);
 			}
 			if(in_array($fname, $processedNames)) {
+				// It is possible that solidity generates 2 functions of same name. At the moment there is no logic
+				// to add for example _0 or _1 to the function names, and if it was added, the binding usage would become
+				// a bit more confusing. For now warning user during generation should suffice.
 				trigger_error("function $fname appears in abi file more than once. Compiler can produce such output, "
 				."and it's fine, but subsequent definitions of same functions are not supported. Skipping this occurrence.", E_USER_WARNING);
 				continue;
 			}
 			$processedNames[] = $fname;
 
+			// abstractCall refers to function call on abstract class that binding will extend
 			$abstractCall = match($smut) {
 				"pure", "view" => "mkCall",
 				"nonpayable"   => "mkTxn",
@@ -128,20 +156,30 @@ class ABIGen
 				"names"      => $paramNames,
 				"validators" => $validators,
 				"signature"  => $fnSignature) = $this->buildMethodParams($fname, $prms, $bld);
+			// return signature is needed for ABI decoding response from contract. Right now ABI decoder uses function
+			// signatures such as "foo(uint256,(uint256,uint256[])[3])" while building types tree. Name of "function" is
+			// ignored and can whatever non-empty [a-zA-Z\d] string
 			$retSignature       = $this->buildMethodParams($fname, $outs, $bld)["signature"];
-			$retPostProcessMeta = $this->prepareOutputTupleInfo($outs, $namespace);
 
 			if($abstractCall === "mkCall") {
 				$retType = $this->getPhpTypingFromOutputs($outs);
+				// getPhpTypingFromOutputs will be set only on this branch, second branch means the Transaction will be
+				// returned by binding function. That's because in case of bug that the retPostProcessMeta is used when
+				// not needed, the php generated warning will be useful notification something went wrong
+				$retPostProcessMeta = $this->prepareOutputTupleInfo($outs, $namespace);
 			} else {
 				$retType = "\\".Transaction::class;
 			}
 
+			// pramRefs is references to parameters (what will be put into abstract class call as params).
+			// paramsBuilt is parameters to the binding's function
+			// CONTRACT constructor (NOT PHP constructor) is called statically and needs RPC and PrivateKey for the
+			// transaction. These are always first 2 params.
 			if($fType === "constructor") {
 				array_unshift($paramsBuilt, $bld
 					->param("privateKey")
 					->setType("\\" . Key::class)
-					->addAttribute(new Attribute(new Name("\\SensitiveParameter"))));
+					->addAttribute(new Attribute(new Name("\\SensitiveParameter")))); // mask key param in case of crash
 				array_unshift($paramsBuilt, $bld->param("rpcToDeployWith")->setType("\\" . AbstractRPC::class));
 				$paramRefs = [
 					$bld->val($fnSignature),
@@ -153,6 +191,8 @@ class ABIGen
 				$paramRefs = [$fnSignature];
 				$idx = 1;
 			}
+
+			// if function is payable, first param should be eth value of transaction
 			if($smut == "payable") {
 				array_unshift($paramsBuilt, $bld->param("transactionValue")->setType("\\".OOGmp::class));
 				$paramRefs[] = $bld->var("transactionValue");
@@ -162,6 +202,8 @@ class ABIGen
 				$paramRefs[$idx][] = $bld->var($paramName);
 
 			if($fType === "constructor") {
+				// constructor can be payable. There is another abstract classes' handler for this, therefore requires
+				// different function call
 				$functionInternal = new Return_($bld->staticCall("static", $smut == "payable" ?
 					"runPayableDeploy" : "runNonPayableDeploy", $paramRefs));
 			} else {
@@ -180,6 +222,7 @@ class ABIGen
 				}
 			}
 
+			// plug in bound contract method to contract
 			$method = $bld->method($fname)
 				->makePublic()
 				->addParams($paramsBuilt)
@@ -192,8 +235,13 @@ class ABIGen
 		}
 
 		$eventsGen = $this->generateEventClasses($namespace);
+		// We have generated root class and event classes, so we collected in helper functions info about all tuples
+		// that could possibly come up. It is possible contract has more tuples in its implementation, but none of them
+		// got surfaced in ABI, so we can safely ignore them as they will never come up
 		$tuplesGen = $this->generateTuples($namespace);
 
+		// Later down the line to be able to parse events we will need to enumerate them, to check against known events
+		// for the contract, so a registry needs to be constructed
 		$eventsRegistry = [];
 		foreach(array_keys($eventsGen) AS $eventName) {
 			$eventsRegistry[] = $bld->classConstFetch($eventName,"class");
@@ -207,11 +255,17 @@ class ABIGen
 					$eventsRegistry
 				)))
 		);
-		$class->setDocComment("/// Autogenerated source code");
+		// add note
+
 		if($hasNamespace) {
 			$nodes = [
-				$bld->namespace(ltrim($namespace, "\\"))->addStmt($class)->getNode()];
+				$bld->namespace(ltrim($namespace, "\\"))
+					->setDocComment(static::autogenWarning)
+					->addStmt($class)
+					->getNode()
+			];
 		} else {
+			$class->setDocComment(static::autogenWarning);
 			$nodes = [$class->getNode()];
 		}
 		return [
@@ -221,6 +275,10 @@ class ABIGen
 		];
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 * @throws GlobalException
+	 */
 	protected function generateEventClasses(string $namespace): array
 	{
 		$o = [];
@@ -228,30 +286,115 @@ class ABIGen
 			$className = $this->className . "Event" . ucfirst($event["name"]);
 			$bld = new BuilderFactory();
 
+			$eventAsFnPrms = $this->buildMethodParams($event["name"], $event["inputs"], $bld);
+			$rawSignatureID = Keccak::hash($eventAsFnPrms["signature"], 256, true);
 
 			$class = $bld->class($className)
 				->extend("\\".AbstractEvent::class)
-				->addStmt($bld->method("getEventData")
+				->addStmt($bld->method("abiEventData")
 					->makePublic()
 					->makeStatic()
 					->setReturnType("array")
 					->addStmt(
 						new Return_($bld->val($event))
+					))
+				->addStmt($bld->method("abiEventID")
+					->makePublic()
+					->makeStatic()
+					->setReturnType("string")
+					->addStmt(
+						new Return_($bld->funcCall("hex2bin", [$bld->val(bin2hex($rawSignatureID))]))
 					));
-			foreach($event["inputs"] AS list("indexed"=>$indexed, "internalType"=>$internalType, "name"=>$name, "type"=>$type)) {
+			$offsetIndexed = 0;
+			$offsetNonIndexed = 0;
+			// these 2 variables are used to create 2 signatures of event for decoder, decoder works universally on
+			//  function-like signatures for typing. This allows shifting complexity from logic in parser (supports only one
+			//  approach) to abigen. And signatures are nicest as they allow dynamic usage without generating bindings
+			//  which may come in handy time to time.
+			$evInputsData = [];
+			$evInputsIndexed = [];
+
+			foreach($event["inputs"] AS $eventInputs) {
+				list("indexed"=>$indexed, "internalType"=>$internalType, "name"=>$name, "type"=>$type) = $eventInputs;
+				if(
+					   $indexed
+					&& (   // bytesNUM are OK, since they are static
+					       !(str_starts_with("bytes", $type) && rtrim($type, "1234567890" != $type))
+						&& !in_array(rtrim($type, "1234567890"), ["int", "uint", "address", "bool"]))
+				) {
+					throw new NotSupportedException("Indexed event contains type $type, which is not supported."
+					." This is because decoding indexed complex type is not really a thing. See solidity abi-spec documentation,"
+					." section \"events\". This library assumes that all event data is always decodable, and this would"
+					." break PHP typings. In short, the indexed field will contain Keccak hash of data. Consider changing"
+					." solidity code to contain dynamic data in non-indexed values of event.");
+				}
+
+				$reference = new ArrayDimFetch(new Variable("this"),
+					new String_(($indexed?"topic-".$offsetIndexed:"data-".$offsetNonIndexed)));
+				if($indexed) {
+					$evInputsIndexed[] = $eventInputs;
+					$offsetIndexed++;
+				} else {
+					$evInputsData[] = $eventInputs;
+					$offsetNonIndexed++;
+				}
+
+				// getPhpTypingFromType registers if it's tuple, so we can use tuple registry for return type for this
+				// specific event for ABIEncoder.
 				$class->addStmt($bld->method("get".ucfirst($name))
 					->makePublic()
 					->setReturnType($this->getPhpTypingFromType($type, $internalType))
 					->addStmt(
-						new Return_($bld->methodCall($bld->var("this"), "getDataByName", [$name]))
+						new Return_($reference)
+					)
+				);
+				$class->addStmt($bld->method("set".ucfirst($name))
+					->makePublic()
+					->addParam(
+						$bld->param("value")
+							->setType($this->getPhpTypingFromType($type, $internalType)))
+					->addStmt(
+						new Assign($reference, $bld->var("value"))
 					)
 				);
 			}
+
+			$indexedSig = empty($evInputsData)
+				? null : $this->buildMethodParams("boundEvent", $evInputsData, $bld)["signature"];
+			$class->addStmt($bld->method("abiDataSignature")
+				->makePublic()
+				->makeStatic()
+				->setReturnType("?string")
+				->addStmt(new Return_($bld->val($indexedSig)))
+			);
+			// it may be counter-intuitive that event inputs is used for method designed for method outputs. These structs
+			// have enough in common - same notation is used for tuples, and this method is concerned about tuples only.
+			$retPostProcessMeta = $indexedSig === null ? null : $this->prepareOutputTupleInfo($event["inputs"], $namespace);
+			$class->addStmt($bld->method("abiDataTupleReplacements")
+				->makePublic()
+				->makeStatic()
+				->setReturnType("?array")
+				->addStmt(new Return_($bld->val($retPostProcessMeta)))
+			);
+
+			$class->addStmt($bld->method("abiIndexedSignature")
+				->makePublic()
+				->makeStatic()
+				->setReturnType("string")
+				->addStmt(new Return_($bld->val(
+					empty($evInputsIndexed) ? null : $this->buildMethodParams("boundEvent", $evInputsIndexed, $bld)["signature"]
+				)))
+			);
+
 			if(!empty(ltrim($namespace, "\\"))) {
 				$nodes = [
-					$bld->namespace(ltrim($namespace, "\\"))->addStmt($class)->getNode()
+					$bld->namespace(ltrim($namespace, "\\"))
+						->setDocComment(static::autogenWarning)
+						->addStmt($class)
+						->getNode()
 				];
 			} else {
+				$class->setDocComment(static::autogenWarning);
 				$nodes = [$class->getNode()];
 			}
 			$o[$className] = (new Standard())->prettyPrintFile($nodes);
@@ -259,6 +402,9 @@ class ABIGen
 		return $o;
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 */
 	protected function generateTuples(string $namespace): array
 	{
 		$o = [];
@@ -299,9 +445,13 @@ class ABIGen
 			}
 			if(!empty(ltrim($namespace, "\\"))) {
 				$nodes = [
-					$bld->namespace(ltrim($namespace, "\\"))->addStmt($class)->getNode()
+					$bld->namespace(ltrim($namespace, "\\"))
+						->setDocComment(static::autogenWarning)
+						->addStmt($class)
+						->getNode()
 				];
 			} else {
+				$class->setDocComment(static::autogenWarning);
 				$nodes = [$class->getNode()];
 			}
 			$o[$className] = (new Standard())->prettyPrintFile($nodes);
@@ -309,7 +459,11 @@ class ABIGen
 		return $o;
 	}
 
-	protected function buildMethodParams(string $fnName, array $inputs, BuilderFactory $bld)
+	/**
+	 * @return array{params: Param[], names: string[], validators: Assign[], signature: string}
+	 * @throws NotSupportedException
+	 */
+	protected function buildMethodParams(string $fnName, array $inputs, BuilderFactory $bld): array
 	{
 		// see https://docs.soliditylang.org/en/latest/abi-spec.html
 		$signature = $fnName."(";
@@ -382,7 +536,7 @@ class ABIGen
 					$bld->var($name),
 					$bld->methodCall($bld->var("this"), "expectBinarySizeNormalizeString", [
 						$bld->var($name),
-						$bld->val((int)$size)])
+						$bld->val($size)])
 				);
 				$param->setType("string");
 			} elseif($type == "tuple") {
@@ -422,6 +576,9 @@ class ABIGen
 		return $o.")$suffix";
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 */
 	protected function getPhpTypingFromType(string $type, string $internalType): string
 	{
 		if(str_contains($type, "[") && $type !== "byte[]")
@@ -455,7 +612,7 @@ class ABIGen
 		$result = [];
 
 		foreach ($abiOutputs as $output) {
-			$result[] = $this->innerPrepareOutputTupleInfo($output, $namespace);;
+			$result[] = $this->innerPrepareOutputTupleInfo($output, $namespace);
 		}
 
 		if ($this->emptyr($result)) {
@@ -495,6 +652,9 @@ class ABIGen
 		return true;
 	}
 
+	/**
+	 * @throws NotSupportedException
+	 */
 	protected function getPhpTypingFromOutputs(array $outputs): string
 	{
 		foreach($outputs AS $o) {
@@ -521,5 +681,8 @@ class ABIGen
 	{
 		list("internalType" => $internalType, "components" => $components)   = $tupleData;
 		$this->tuplesRegistry[$this->tupleInternalTypeToType($internalType)] = $components;
+		foreach($components AS $component)
+			if(!empty($component["components"]))
+				$this->registerTuple($component);
 	}
 }

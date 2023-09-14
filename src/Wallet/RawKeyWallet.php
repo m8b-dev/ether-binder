@@ -9,6 +9,7 @@
 namespace M8B\EtherBinder\Wallet;
 
 use M8B\EtherBinder\Crypto\Key;
+use SensitiveParameter;
 
 /**
  * RawKeyWallet extends the AbstractWallet to allow wallet creation using raw keys.
@@ -22,7 +23,7 @@ class RawKeyWallet extends AbstractWallet
 	 *
 	 * @param string|Key $key Either a Key object or a raw key as a hex string.
 	 */
-	public function __construct(#[\SensitiveParameter] string|Key $key)
+	public function __construct(#[SensitiveParameter] string|Key $key)
 	{
 		if($key instanceof Key)
 			$this->key = $key;

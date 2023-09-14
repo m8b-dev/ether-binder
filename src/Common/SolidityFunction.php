@@ -18,6 +18,11 @@ class SolidityFunction
 	public Address $address;
 	public SolidityFunction4BytesSignature $signature;
 
+	/**
+	 * Serializes transaction to binary blob
+	 *
+	 * @return string binary blob
+	 */
 	public function toBin(): string
 	{
 		return $this->address->toBin() . $this->signature->toBin();

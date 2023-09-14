@@ -11,33 +11,50 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\SolidityFunction;
 use M8B\EtherBinder\Common\SolidityFunction4BytesSignature;
-use M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue;
+use M8B\EtherBinder\Exceptions\InvalidLengthException;
 
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
 class AbiFunction extends AbstractABIValue
 {
 
 	public function __construct(protected ?SolidityFunction $val)
 	{}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function isDynamic(): bool
 	{
 		return false;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function encodeBin(): string
 	{
 		return str_pad($this->val->toBin(), 32, chr(0), STR_PAD_LEFT);
 	}
 
+	/**
+	 * @inheritDoc
+	 * @throws InvalidLengthException
+	 */
 	public function decodeBin(string &$dataBin, $globalOffset): int
 	{
 		$this->val = new SolidityFunction();
 		// padding + address (20b) + selector (4b)
-		$this->val->address = Address::fromBin(substr($dataBin, $globalOffset+0, 20));
+		$this->val->address = Address::fromBin(substr($dataBin, $globalOffset, 20));
 		$this->val->signature = SolidityFunction4BytesSignature::fromBin(substr($dataBin, $globalOffset+20, 4));
 		return 32;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function unwrapToPhpFriendlyVals(?array $tuplerData): SolidityFunction
 	{
 		return $this->val;

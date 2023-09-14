@@ -10,6 +10,10 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
 class AbiArrayUnknownLength extends AbiArrayKnownLength
 {
 
@@ -18,27 +22,39 @@ class AbiArrayUnknownLength extends AbiArrayKnownLength
 		parent::__construct(-1, $children);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function isDynamic(): bool
 	{
 		return true;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function encodeBin(): string
 	{
 		$data = (new OOGmp(count($this->inner)))->toBin(32);
 		return $data . parent::encodeBin();
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function __toString(): string
 	{
 		$ret = "u[";
 		foreach($this->inner AS $k => $inr) {
-			$ret .= ($k > 0 ? ",":"").(string)$inr;
+			$ret .= ($k > 0 ? ",":"").$inr;
 		}
 		$ret .= "]";
 		return $ret;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
 		$this->length = (new OOGmp(bin2hex(substr($dataBin, $globalOffset, 32)), 16))->toInt();

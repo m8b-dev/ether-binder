@@ -8,13 +8,13 @@
 
 namespace M8B\EtherBinder\Common;
 
+use Exception;
 use kornrunner\Keccak;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
-use M8B\EtherBinder\Exceptions\InvalidLengthException;
 
 /**
  * Log represents an Ethereum log entry, emitted by smart contracts.
@@ -26,8 +26,7 @@ class Log
 	public Address $address;
 	/** @var Hash[] $topics */
 	public array $topics;
-	/** @var Hash[] $topics */
-	public array $data;
+	public string $data;
 
 	public int $blockNumber;
 	public Hash $transactionHash;
@@ -44,7 +43,7 @@ class Log
 	 * @throws BadAddressChecksumException
 	 * @throws InvalidHexException
 	 * @throws InvalidHexLengthException
-	 * @throws InvalidLengthException
+	 * @throws EthBinderLogicException
 	 */
 	public static function fromRPCArr(array $rpcArr): static
 	{
@@ -52,7 +51,7 @@ class Log
 
 		$static->address          = Address::fromHex($rpcArr["address"]);
 		$static->topics           = [];
-		$static->data             = [];
+		$static->data             = "";
 		$static->blockNumber      = hexdec($rpcArr["blockNumber"]);
 		$static->transactionHash  = Hash::fromHex($rpcArr["transactionHash"]);
 		$static->transactionIndex = hexdec($rpcArr["transactionIndex"]);
@@ -70,12 +69,7 @@ class Log
 			$data = hex2bin(substr($rpcArr["data"], 2));
 		else
 			$data = hex2bin($rpcArr["data"]);
-		if(strlen($data) == 0)
-			return $static;
-		foreach(str_split($data, 32) AS $unindexedParam) {
-			$static->data[] = Hash::fromBin($unindexedParam);
-		}
-
+		$static->data = $data;
 		return $static;
 	}
 
@@ -93,7 +87,7 @@ class Log
 			throw new EthBinderRuntimeException("cannot test log signature on empty object");
 		try {
 			return strtolower($this->topics[0]->toHex(false)) == strtolower(Keccak::hash($eventSignature, 256));
-		} catch(\Exception $e) {
+		} catch(Exception $e) {
 			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
 		}
 	}

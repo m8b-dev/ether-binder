@@ -8,8 +8,10 @@
 
 namespace M8B\EtherBinder\Common;
 
+use Exception;
 use kornrunner\Keccak;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 
@@ -31,6 +33,7 @@ class Address extends Hash
 	 * @throws BadAddressChecksumException
 	 * @throws InvalidHexException
 	 * @throws InvalidHexLengthException
+	 * @throws EthBinderLogicException
 	 */
 	public static function fromHex(string $hex): static
 	{
@@ -43,12 +46,16 @@ class Address extends Hash
 	 * Returns checksummed hex representation of the address.
 	 *
 	 * @return string Checksummed address.
+	 * @throws EthBinderLogicException
 	 */
 	public function checksummed(): string
 	{
 		return "0x".self::checksum($this->toHex(false));
 	}
 
+	/**
+	 * @throws EthBinderLogicException
+	 */
 	public function __toString(): string
 	{
 		return $this->checksummed();
@@ -60,6 +67,7 @@ class Address extends Hash
 	 *
 	 * @param string $hexAddr Hexadecimal address to test.
 	 * @return bool True if valid, false otherwise.
+	 * @throws EthBinderLogicException
 	 */
 	public static function testChecksum(string $hexAddr): bool
 	{
@@ -70,12 +78,19 @@ class Address extends Hash
 		return $hexAddr == self::checksum($hexAddr);
 	}
 
+	/**
+	 * @throws EthBinderLogicException
+	 */
 	private static function checksum(string $hexAddr): string
 	{
 		$hexAddr = strtolower($hexAddr);
 		// see https://eips.ethereum.org/EIPS/eip-55#specification
 		$checksummedBuffer = "";
-		$hashedAddress = Keccak::hash($hexAddr, 256);
+		try {
+			$hashedAddress = Keccak::hash($hexAddr, 256);
+		} catch(Exception $e) {
+			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
+		}
 
 		foreach(str_split($hexAddr) AS $numbleIndex => $character) {
 			if(ctype_digit($character)) {

@@ -9,6 +9,7 @@
 namespace M8B\EtherBinder\Crypto;
 
 use Elliptic\EC\KeyPair;
+use Exception;
 use kornrunner\Keccak;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Hash;
@@ -16,6 +17,7 @@ use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 use M8B\EtherBinder\Utils\OOGmp;
+use SensitiveParameter;
 
 /**
  * EC is a wrapper class for Elliptic Curve operations, specifically secp256k1 which is one specifically used for
@@ -68,7 +70,7 @@ class EC
 
 		} catch(InvalidLengthException $e) {
 			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
-		} catch(\Exception $e) {
+		} catch(Exception $e) {
 			throw new EthBinderRuntimeException("cryptographic error", $e->getCode(), $e);
 		}
 	}
@@ -79,7 +81,7 @@ class EC
 	 * @param string $key Hex-encoded private key.
 	 * @return KeyPair Elliptic Curve KeyPair.
 	 */
-	public static function keyFromPrivate(#[\SensitiveParameter] string $key): KeyPair
+	public static function keyFromPrivate(#[SensitiveParameter] string $key): KeyPair
 	{
 		self::init();
 		return self::$ec->keyFromPrivate($key, "hex");

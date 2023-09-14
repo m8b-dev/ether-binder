@@ -1,6 +1,6 @@
 # To contribute create a PR.
 
-Standard github contributing flow. Fork -> commit -> create PR.
+Standard GitHub contributing flow. Fork -> commit -> create PR.
 Don't PR to `master`, PR to `dev` branch.
 
 ### Code style
@@ -50,6 +50,8 @@ Try to stick to code style:
   }
   ```
 - Where applies use `?` and `??` operators instead of `if`, unless that would significantly decease readability
+- No `expression OR expression`, like `$foo or fooIsFalse();`  
+- Line limit is soft, but avoid exceeding 120 characters per line. \t counts as 4 characters.
 
 ### Other codebase rules
 
@@ -63,7 +65,7 @@ Try to stick to code style:
   ought to be implemented inside the library itself, to make it as independent as possible. Including alternative
   implementations of similar libraries is not allowed since this library aims for fostering independent implementations.
   This would be like implementing OpenEthereum \[\*\] with bindings from Geth for let's say EVM code.
-
+- Many parts could be replaced with regex. But regex is avoided for arbitrary reasons 
 
 ### Boilerplate
 

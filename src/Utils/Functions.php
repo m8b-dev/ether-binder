@@ -12,9 +12,12 @@ use M8B\EtherBinder\Common\Block;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Common\Receipt;
 use M8B\EtherBinder\Common\Transaction;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
+use M8B\EtherBinder\Exceptions\NotSupportedException;
+use M8B\EtherBinder\Exceptions\RpcException;
 use M8B\EtherBinder\Misc\EIP1559Config;
 use M8B\EtherBinder\RPC\AbstractRPC;
 
@@ -138,6 +141,8 @@ abstract class Functions {
 	 *
 	 * @return Receipt Transaction receipt
 	 * @throws EthBinderRuntimeException if timeout happens. It does not mean the transaction will not get confirmed!
+	 * @throws EthBinderLogicException
+	 * @throws NotSupportedException
 	 */
 	public static function waitForTxReceipt(Transaction|Hash $txHash, AbstractRPC $rpc, int $timeoutSeconds = 60, int $intervalMS = 500): Receipt
 	{
@@ -147,7 +152,7 @@ abstract class Functions {
 		while(true) {
 			try {
 				return $rpc->ethGetTransactionReceipt($txHash);
-			} catch(\M8B\EtherBinder\Exceptions\RpcException $exception) {
+			} catch(RpcException) {
 				if($startT + $timeoutSeconds < time())
 					throw new EthBinderRuntimeException("Timed out");
 				usleep(1000*$intervalMS);

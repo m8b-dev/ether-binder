@@ -10,6 +10,10 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 
 use M8B\EtherBinder\Utils\OOGmp;
 
+/**
+ * @author DubbaThony (structure, abstraction, bugs)
+ * @author gh/VOID404 (maths)
+ */
 class AbiBytes extends AbstractABIValue
 {
 	protected bool $dynamic;
@@ -22,11 +26,17 @@ class AbiBytes extends AbstractABIValue
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function isDynamic(): bool
 	{
 		return $this->dynamic;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{
 		if(!$this->isDynamic()) {
@@ -39,7 +49,9 @@ class AbiBytes extends AbstractABIValue
 		return $actualDataRead + 32;
 	}
 
-
+	/**
+	 * @inheritDoc
+	 */
 	public function encodeBin(): string
 	{
 		if(!$this->dynamic)
@@ -50,6 +62,9 @@ class AbiBytes extends AbstractABIValue
 			.str_pad($this->data, 32 * $slots, chr(0), STR_PAD_RIGHT);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function unwrapToPhpFriendlyVals(?array $tuplerData): string
 	{
 		return $this->data;

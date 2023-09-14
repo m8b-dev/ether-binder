@@ -11,7 +11,6 @@ namespace M8B\EtherBinder\RPC\Modules;
 use M8B\EtherBinder\Common\Block;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\RPC\BlockParam;
-use M8B\EtherBinder\Utils\OOGmp;
 
 /**
  * AbstractModule serves as the base class for specific modules, enabling them to access the runRpc() method.

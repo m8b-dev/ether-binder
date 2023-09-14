@@ -65,6 +65,9 @@ class Decoder
 		return $return;
 	}
 
+	/**
+	 * @throws EthBinderLogicException
+	 */
 	protected function getByteStr(int $len): string
 	{
 		if($len < 0) throw new EthBinderLogicException("impossible read");
@@ -115,6 +118,9 @@ class Decoder
 		throw new LogicException("unreachable reached");
 	}
 
+	/**
+	 * @throws EthBinderLogicException
+	 */
 	protected function decodeArray(int $size): array
 	{
 		$return = [];
