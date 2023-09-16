@@ -65,7 +65,7 @@ class EC
 				$v->toInt());
 			$pubKBin = hex2bin($pubK->encode("hex"));
 			$pubKBin = substr($pubKBin, 1);
-			$hash = Keccak::hash($pubKBin, 256, true);
+			$hash    = Keccak::hash($pubKBin, 256, true);
 			return Address::fromBin(substr($hash, 32 - 20));
 
 		} catch(InvalidLengthException $e) {

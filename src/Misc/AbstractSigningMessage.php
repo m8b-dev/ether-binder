@@ -72,8 +72,8 @@ abstract class AbstractSigningMessage
 	 */
 	public function sign(Key $key): Signature
 	{
-		$this->from = $key->toAddress();
-		$this->sig = $key->sign($this->getMessageHash());
+		$this->from   = $key->toAddress();
+		$this->sig    = $key->sign($this->getMessageHash());
 		$this->sig->v = $this->sig->v->mod(2)->add(27);
 		return clone($this->sig);
 	}

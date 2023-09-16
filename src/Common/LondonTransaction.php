@@ -41,29 +41,43 @@ class LondonTransaction extends Transaction
 
 	private function internalEncodeBin(bool $signing, ?int $signingChainID): string
 	{
-		$nonce      = "0x".dechex($this->nonce);
-		$gasPrice   = $this->gasPrice->toString(true);
-		$gasLimit   = "0x".dechex($this->gas);
-		$to         = $this->to->toHex();
-		$value      = $this->value->toString(true);
-		$data       = $this->dataHex();
-		$gasFeeTip  = $this->gasFeeTip->toString(true);
-		$chainId    = "0x".dechex($this->chainId);
-		$accessList = $this->accessList;
-		$v          = $this->v()->toString(true);
-		$r          = $this->r()->toString(true);
-		$s          = $this->s()->toString(true);
+		$nonce       = "0x".dechex($this->nonce);
+		$gasFeePrice = $this->gasPrice->toString(true);
+		$gasLimit    = "0x".dechex($this->gas);
+		$to          = $this->to?->toHex();
+		$value       = $this->value->toString(true);
+		$data        = $this->dataHex();
+		$gasFeeTip   = $this->gasFeeTip->toString(true);
+		$chainId     = "0x".dechex($this->chainId);
+		$accessList  = $this->accessList;
+		$v           = $this->v()->toString(true);
+		$r           = $this->r()->toString(true);
+		$s           = $this->s()->toString(true);
 
 		if($signingChainID !== null) {
 			$this->chainId = $signingChainID;
 			$chainId = $signingChainID;
 		}
+		/*
+		 * return prefixedRlpHash(
+		tx.Type(),
+		[]interface{}{
+			s.chainId,
+			tx.Nonce(),
+			tx.GasTipCap(),
+			tx.GasFeeCap(),
+			tx.Gas(),
+			tx.To(),
+			tx.Value(),
+			tx.Data(),
+			tx.AccessList(),
+		})*/
 		if($signing)
 			return Encoder::encodeBin([TransactionType::DYNAMIC_FEE->toTypeByte(), [
-				$chainId, $nonce, $gasFeeTip, $gasPrice, $gasLimit, $to, $value, $data, $accessList
+				$chainId, $nonce, $gasFeeTip, $gasFeePrice, $gasLimit, $to, $value, $data, $accessList
 			]]);
 		return Encoder::encodeBin([TransactionType::DYNAMIC_FEE->toTypeByte(), [
-			$chainId, $nonce, $gasFeeTip, $gasPrice, $gasLimit, $to, $value, $data, $accessList, $v, $r, $s
+			$chainId, $nonce, $gasFeeTip, $gasFeePrice, $gasLimit, $to, $value, $data, $accessList, $v, $r, $s
 		]]);
 	}
 
@@ -155,7 +169,7 @@ class LondonTransaction extends Transaction
 	{
 		if(!$this->isSigned())
 			return Address::NULL();
-		$hash = $this->getSigningHash(null);
+		$hash = $this->getSigningHash($this->chainId);
 		return EC::Recover($hash, $this->r, $this->s, $this->v->mod(2));
 	}
 
@@ -275,7 +289,7 @@ class LondonTransaction extends Transaction
 	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static
 	{
 		$gas   = ($rpc->ethEstimateGas($this, $from) * ($bumpFeePercentage + 100)) / 100;
-		$base  = Functions::GetNextBlockBaseFee($rpc->ethGetBlockByNumber(), EIP1559Config::sepolia() /* using sepolia as only difference
+		$base  = Functions::getNextBlockBaseFee($rpc->ethGetBlockByNumber(), EIP1559Config::sepolia() /* using sepolia as only difference
  				 for this config is start block, which is 0. This function is expected to be called on London transaction
                  for London-enabled chains, regardless of starting block */)
 			->mul($bumpFeePercentage + 100)->div(100);
@@ -284,5 +298,15 @@ class LondonTransaction extends Transaction
 		$this->setGasLimit($gas);
 		$this->setBaseFeeCap($base);
 		return $this->setGasFeeTip($tip);
+	}
+
+	/**
+	 * in london transactions, the chainID is part of transaction data, and V is "vanilla" ECDSA signature recovery
+	 * param, without any alteration. See https://eips.ethereum.org/EIPS/eip-2930
+	 * @inheritDoc
+	 */
+	public function calculateV(OOGmp $recovery): OOGmp
+	{
+		return $recovery->mod(2);
 	}
 }

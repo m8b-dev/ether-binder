@@ -76,8 +76,8 @@ class AbiTuple extends AbstractABIValue implements ArrayAccess
 		foreach($this->inner AS $inner) {
 			if($inner->isDynamic()) {
 				$tailPointer = (new OOGmp(bin2hex(substr($dataBin, $headSize+$globalOffset, 32)), 16))->toInt();
-				$headSize += 32;
-				$tailSize += $inner->decodeBin($dataBin, $globalOffset + $tailPointer);
+				$headSize   += 32;
+				$tailSize   += $inner->decodeBin($dataBin, $globalOffset + $tailPointer);
 			} else {
 				$headSize += $inner->decodeBin($dataBin, $headSize+$globalOffset);
 			}
@@ -103,6 +103,9 @@ class AbiTuple extends AbstractABIValue implements ArrayAccess
 		return strlen($val->encodeBin());
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function __toString(): string
 	{
 		$ret = "(";
@@ -128,7 +131,7 @@ class AbiTuple extends AbstractABIValue implements ArrayAccess
 			   $tuplerData !== null         // There is typed tuple logic needed
 			&& !empty($tuplerData["tuple"]) // I am not root-level tuple, which is not solidity struct
 		) {
-			$o = new $tuplerData["tuple"](); // Therefore, I am solidity struct
+			$o          = new $tuplerData["tuple"](); // Therefore, I am solidity struct
 			$tuplerData = $tuplerData["children"];
 		}
 		foreach($this->inner as $k => $item) {

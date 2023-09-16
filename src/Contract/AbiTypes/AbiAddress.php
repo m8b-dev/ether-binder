@@ -53,4 +53,12 @@ class AbiAddress extends AbstractABIValue
 	{
 		return $this->data;
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __toString(): string
+	{
+		return $this->data?->checksummed() ?? Address::NULL();
+	}
 }

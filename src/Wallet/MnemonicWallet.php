@@ -50,13 +50,15 @@ class MnemonicWallet extends AbstractWallet
 	) {
 		if(is_array($words))
 			$words = implode(" ", $words);
+
 		if($language instanceof MnemonicLanguage)
 			$language = $language->toString();
 
 		try {
 			$words = BIP39::Words($words, $language);
-			$seed = (new Mnemonic(WordList::English(), $words->entropy, $words->binaryChunks))->generateSeed($passPhrase);
-			$key  = hex2bin(hash_hmac('sha512', $seed, "Bitcoin seed"));
+			$seed  = (new Mnemonic(WordList::English(), $words->entropy, $words->binaryChunks))
+				     ->generateSeed($passPhrase);
+			$key   = hex2bin(hash_hmac('sha512', $seed, "Bitcoin seed"));
 		} catch(WordListException|MnemonicException $e) {
 			throw new MnemonicWalletInternalException($e->getMessage(), $e->getCode(), $e);
 		}
@@ -124,11 +126,11 @@ class MnemonicWallet extends AbstractWallet
 		} else {
 			$blob = $this->serializeCurvePoint($keyPair);
 		}
-		$blob .= hex2bin(str_pad(dechex($childNum), 8, "0", STR_PAD_LEFT));
 
+		$blob   .= hex2bin(str_pad(dechex($childNum), 8, "0", STR_PAD_LEFT));
 		$hmacOut = hash_hmac('sha512', $blob, $chainCodeBin, true);
-		$l = substr($hmacOut, 0, 32);
-		$r = substr($hmacOut, 32);
+		$l       = substr($hmacOut, 0, 32);
+		$r       = substr($hmacOut, 32);
 
 		return [(new OOGmp(bin2hex($l), 16))
 			->add(new OOGmp(bin2hex($privateKeyBin), 16))

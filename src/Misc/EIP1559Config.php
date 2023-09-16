@@ -8,6 +8,11 @@
 
 namespace M8B\EtherBinder\Misc;
 
+/**
+ * EIP1559Config for base fee estimator. Not full chain config
+ * @see Functions::getNextBlockBaseFee()
+ * @internal
+ */
 class EIP1559Config
 {
 	public const ELASTICITY_MULTIPLIER = 2;

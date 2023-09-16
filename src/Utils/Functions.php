@@ -98,7 +98,7 @@ abstract class Functions {
 	 * @param EIP1559Config $config The EIP1559 configuration. Only required field is $config->activationBlockNumber
 	 * @return OOGmp The calculated base fee.
 	 */
-	public static function GetNextBlockBaseFee(Block $previous, EIP1559Config $config): OOGmp
+	public static function getNextBlockBaseFee(Block $previous, EIP1559Config $config): OOGmp
 	{
 		if($previous->number <= $config->activationBlockNumber) {
 			return new OOGmp(EIP1559Config::INITIAL_BASE_FEE);
@@ -144,7 +144,8 @@ abstract class Functions {
 	 * @throws EthBinderLogicException
 	 * @throws NotSupportedException
 	 */
-	public static function waitForTxReceipt(Transaction|Hash $txHash, AbstractRPC $rpc, int $timeoutSeconds = 60, int $intervalMS = 500): Receipt
+	public static function waitForTxReceipt(
+		Transaction|Hash $txHash, AbstractRPC $rpc, int $timeoutSeconds = 60, int $intervalMS = 500): Receipt
 	{
 		if($txHash instanceof Transaction)
 			$txHash = $txHash->hash();

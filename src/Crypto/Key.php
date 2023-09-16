@@ -36,7 +36,7 @@ class Key
 	{
 		if(str_starts_with($this->keyHex, "0x"))
 			$this->keyHex = substr($this->keyHex, 2);
-		$this->key = EC::keyFromPrivate($this->keyHex);
+		$this->key  = EC::keyFromPrivate($this->keyHex);
 		$this->addr = null;
 	}
 
@@ -113,8 +113,8 @@ class Key
 	 */
 	public function sign(Hash $hash): Signature
 	{
-		$got = $this->key->sign($hash->toHex(false), ["canonical" => true]);
-		$sig = new Signature();
+		$got    = $this->key->sign($hash->toHex(false), ["canonical" => true]);
+		$sig    = new Signature();
 		$sig->r = new OOGmp($got->r->toString(16), 16);
 		$sig->s = new OOGmp($got->s->toString(16), 16);
 		$sig->v = new OOGmp($got->recoveryParam);

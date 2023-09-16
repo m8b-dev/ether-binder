@@ -72,7 +72,7 @@ class Decoder
 	{
 		if($len < 0) throw new EthBinderLogicException("impossible read");
 		if($len == 0) return "0x";
-		$data = substr($this->dataBin, $this->pointer, $len);
+		$data           = substr($this->dataBin, $this->pointer, $len);
 		$this->pointer += $len;
 		return "0x".bin2hex($data);
 	}
@@ -87,7 +87,7 @@ class Decoder
 			$this->pointer++;
 			return unpack("C", $this->dataBin[$this->pointer - 1])[1];
 		}
-		$data = substr($this->dataBin, $this->pointer, $len);
+		$data           = substr($this->dataBin, $this->pointer, $len);
 		$this->pointer += $len;
 		return unpack("J", str_repeat("\0", 8-$len).$data)[1];
 	}
@@ -124,7 +124,7 @@ class Decoder
 	protected function decodeArray(int $size): array
 	{
 		$return = [];
-		$start = $this->pointer;
+		$start  = $this->pointer;
 		while($this->pointer < $start + $size)
 			$return[] = $this->decodeEntry();
 		return $return;

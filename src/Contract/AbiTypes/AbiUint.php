@@ -22,7 +22,7 @@ class AbiUint extends AbstractABIValue
 	/**
 	 * @throws EthBinderArgumentException
 	 */
-	public function __construct(null|int|OOGmp $val, int $maxBits)
+	public function __construct(null|int|OOGmp $val, protected int $maxBits)
 	{
 		if(!($val instanceof OOGmp))
 			$val = new OOGmp($val);
@@ -43,9 +43,12 @@ class AbiUint extends AbstractABIValue
 		return 32;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function __toString(): string
 	{
-		return $this->value->toString();
+		return $this->value?->toString() ?? "uint".$this->maxBits;
 	}
 
 	/**

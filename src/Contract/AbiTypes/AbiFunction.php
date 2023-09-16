@@ -45,9 +45,9 @@ class AbiFunction extends AbstractABIValue
 	 */
 	public function decodeBin(string &$dataBin, $globalOffset): int
 	{
-		$this->val = new SolidityFunction();
-		// padding + address (20b) + selector (4b)
-		$this->val->address = Address::fromBin(substr($dataBin, $globalOffset, 20));
+		// address (20b) + selector (4b) + padding
+		$this->val            = new SolidityFunction();
+		$this->val->address   = Address::fromBin(substr($dataBin, $globalOffset, 20));
 		$this->val->signature = SolidityFunction4BytesSignature::fromBin(substr($dataBin, $globalOffset+20, 4));
 		return 32;
 	}
@@ -58,5 +58,14 @@ class AbiFunction extends AbstractABIValue
 	public function unwrapToPhpFriendlyVals(?array $tuplerData): SolidityFunction
 	{
 		return $this->val;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __toString(): string
+	{
+		return $this->val == null ? "null.null" :
+			$this->val->address->checksummed().".".$this->val->signature->toHex();
 	}
 }

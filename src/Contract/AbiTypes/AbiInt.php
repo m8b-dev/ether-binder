@@ -21,7 +21,7 @@ class AbiInt extends AbiUint
 	 * @throws EthBinderArgumentException
 	 * @noinspection PhpMissingParentConstructorInspection
 	 */
-	public function __construct(null|int|OOGmp $val, int $maxBits)
+	public function __construct(null|int|OOGmp $val, protected int $maxBits)
 	{
 		if(!($val instanceof OOGmp))
 			$val = new OOGmp($val);
@@ -29,5 +29,13 @@ class AbiInt extends AbiUint
 			throw new EthBinderArgumentException("value is too big for size of the variable");
 		}
 		$this->value = $val;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __toString(): string
+	{
+		return $this->value?->toString() ?? "int".$this->maxBits;
 	}
 }

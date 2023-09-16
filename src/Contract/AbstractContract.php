@@ -248,7 +248,7 @@ abstract class AbstractContract
 		if(str_starts_with($output, "0x"))
 			$output = substr($output, 2);
 		$output = hex2bin($output);
-		$ret = ABIEncoder::decode($type, $output)->unwrapToPhpFriendlyVals($tupleReplacements);
+		$ret    = ABIEncoder::decode($type, $output)->unwrapToPhpFriendlyVals($tupleReplacements);
 		if(!is_array($ret))
 			throw new EthBinderLogicException("got parse output without top level tuple");
 

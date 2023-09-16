@@ -1,10 +1,32 @@
-# Eth Binder
+# Ether Binder
 
-The goal is to get something that will be like ethers.js for PHP.
+A library to interact with Ethereum and Ethereum based blockchains. It allows to send transactions, wraps RPC, introduces
+Ethereum-friendly types and includes ABIGen tool, similar to [geth's abigen](https://geth.ethereum.org/docs/tools/abigen).  
+Library is typed and makes use of modern PHP 8.2 goodies (therefore, it requires PHP 8.2). 
+
+# Requirements
+
+- PHP 8.2+
+- Composer 2.2+
+
+# Installation
+
+Just use composer ;)
+
+```shell
+composer require m8b/ether-binder 
+```
+
+# Documentation
+
+For quick start, and some code to quickly copy, edit and use, see [examples](examples)
+
+For documentation, see [docs](docs)
 
 # Status
 
-Early, but should be nearly feature-complete. Don't use yet for production purposes. Feel free to experiment around.
+Early, but should be nearly feature-complete. The API shouldn't change *too much*
+Don't use yet for production purposes. Feel free to experiment around.
 
 The headline feature to be used is contract binding, which you can look at `bin/abigen.php --help`
 This will generate bunch of files, for example if you have ERC20 contract:

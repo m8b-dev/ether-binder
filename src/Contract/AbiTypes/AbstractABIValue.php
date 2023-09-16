@@ -109,4 +109,14 @@ abstract class AbstractABIValue
 	 * @return mixed The PHP-friendly value.
 	 */
 	abstract public function unwrapToPhpFriendlyVals(?array $tuplerData);
+
+	/**
+	 * Returns string representation of structure, for known sized arrays with prefix k, for unknown size u,
+	 * works recursively. The stringified representation purpose is debugging - to see what data and structure was
+	 * created by bindings etc. It's often more useful representation than print_r or var_dump (with or without XDebug).
+	 * It's meant to be called on top level tuple, but should work just fine on any part of tree
+	 *
+	 * @return string stringified structure, for example (u[k[123,0xabcd],k[456,0x1234]],256)
+	 */
+	abstract public function __toString(): string;
 }

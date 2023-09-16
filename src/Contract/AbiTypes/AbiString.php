@@ -18,4 +18,12 @@ class AbiString extends AbiBytes
 	{
 		parent::__construct($data, 0);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __toString(): string
+	{
+		return $this->data;
+	}
 }

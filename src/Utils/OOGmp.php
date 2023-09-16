@@ -9,7 +9,7 @@
 namespace M8B\EtherBinder\Utils;
 
 use GMP;
-use RuntimeException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 
 /**
  * OOGmp is a utility class that wraps PHP's GMP library for working with arbitrary-size integers.
@@ -72,7 +72,7 @@ class OOGmp
 	 */
 	public static function wrap(GMP $raw): static
 	{
-		$static = new static();
+		$static      = new static();
 		$static->gmp = $raw;
 		return $static;
 	}
@@ -81,12 +81,12 @@ class OOGmp
 	 * Converts the internal GMP number to an integer.
 	 *
 	 * @return int The integer representation of the GMP number.
-	 * @throws RuntimeException If the GMP number is larger than PHP_INT_MAX.
+	 * @throws EthBinderRuntimeException If the GMP number is larger than PHP_INT_MAX.
 	 */
 	public function toInt(): int
 	{
 		if(gmp_cmp($this->gmp, PHP_INT_MAX) > 0) {
-			throw new RuntimeException("number is bigger than PHP_INT_MAX and toInt is not available");
+			throw new EthBinderRuntimeException("number is bigger than PHP_INT_MAX and toInt is not available");
 		}
 		return gmp_intval($this->gmp);
 	}
@@ -202,28 +202,28 @@ class OOGmp
 
 	public function add(OOGmp|int|GMP $b): static
 	{
-		$static = new static();
+		$static      = new static();
 		$static->gmp = gmp_add($this->gmp, $this->inNormalize($b)->gmp);
 		return $static;
 	}
 
 	public function sub(OOGmp|int|GMP $b): static
 	{
-		$static = new static();
+		$static      = new static();
 		$static->gmp = gmp_sub($this->gmp, $this->inNormalize($b)->gmp);
 		return $static;
 	}
 
 	public function mul(OOGmp|int|GMP $b): static
 	{
-		$static = new static();
+		$static      = new static();
 		$static->gmp = gmp_mul($this->gmp, $this->inNormalize($b)->gmp);
 		return $static;
 	}
 
 	public function div(OOGmp|int|GMP $b): static
 	{
-		$static = new static();
+		$static      = new static();
 		$static->gmp = gmp_div($this->gmp, $this->inNormalize($b)->gmp);
 		return $static;
 	}

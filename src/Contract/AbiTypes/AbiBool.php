@@ -49,4 +49,16 @@ class AbiBool extends AbstractABIValue
 	{
 		return $this->val;
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __toString(): string
+	{
+		return match ($this->val) {
+			null  => "bool",
+			true  => "true",
+			false => "false"
+		};
+	}
 }

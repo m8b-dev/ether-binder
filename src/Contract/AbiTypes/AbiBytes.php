@@ -43,8 +43,8 @@ class AbiBytes extends AbstractABIValue
 			$this->data = substr($globalOffset, $this->size);
 			return 32;
 		}
-		$length = (new OOGmp(bin2hex(substr($dataBin, $globalOffset, 32)), 16))->toInt();
-		$this->data = substr($dataBin, $globalOffset+32, $length);
+		$length         = (new OOGmp(bin2hex(substr($dataBin, $globalOffset, 32)), 16))->toInt();
+		$this->data     = substr($dataBin, $globalOffset+32, $length);
 		$actualDataRead = (int)(ceil($length/32)*32);
 		return $actualDataRead + 32;
 	}
@@ -68,5 +68,13 @@ class AbiBytes extends AbstractABIValue
 	public function unwrapToPhpFriendlyVals(?array $tuplerData): string
 	{
 		return $this->data;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __toString(): string
+	{
+		return "0x".bin2hex($this->data ?? "");
 	}
 }

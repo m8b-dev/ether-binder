@@ -34,10 +34,10 @@ enum BlockParam
 	public function toString(): string
 	{
 		return match($this){
-			self::LATEST => "latest",
-			self::EARLIEST => "earliest",
-			self::PENDING => "pending",
-			self::SAFE => "safe",
+			self::LATEST    => "latest",
+			self::EARLIEST  => "earliest",
+			self::PENDING   => "pending",
+			self::SAFE      => "safe",
 			self::FINALIZED => "finalized",
 		};
 	}

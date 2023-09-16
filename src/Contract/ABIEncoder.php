@@ -92,7 +92,7 @@ class ABIEncoder
 	{
 		if(str_ends_with($type, "[]")) {
 			$elementType = substr($type, 0, -2);
-			$arrayObj = new AbiArrayUnknownLength(self::createEncodingFromType($elementType, null));
+			$arrayObj    = new AbiArrayUnknownLength(self::createEncodingFromType($elementType, null));
 			if($data === null)
 				return $arrayObj;
 			foreach($data as $element) {
@@ -100,12 +100,12 @@ class ABIEncoder
 			}
 			return $arrayObj;
 		}  elseif(str_ends_with($type, "]")) {
-			$openBracketPos = strrpos($type, "[");
+			$openBracketPos  = strrpos($type, "[");
 			$closeBracketPos = strrpos($type, "]");
 			if($closeBracketPos === false)
 				throw new EthBinderLogicException("type $type does not contain [, this should be caught by validator, but wasn't");
 			$elementType = substr($type, 0, $openBracketPos);
-			$length = (int) substr($type, $openBracketPos + 1, $closeBracketPos - $openBracketPos - 1);
+			$length      = (int) substr($type, $openBracketPos + 1, $closeBracketPos - $openBracketPos - 1);
 
 			if($length === 0) {
 				throw new EthBinderArgumentException("got 0 length array that's typed for known length array");
@@ -126,10 +126,10 @@ class ABIEncoder
 			}
 			return $arrayObj;
 		} elseif(str_starts_with($type, "(")) {
-			$tupleObj = new AbiTuple();
+			$tupleObj     = new AbiTuple();
 			$elementTypes = self::explodeTuple($type);
 			foreach($elementTypes as $index => $elementType) {
-				$itm = $data === null ? null : $data[$index];
+				$itm        = $data === null ? null : $data[$index];
 				$tupleObj[] = self::createEncodingFromType($elementType, $itm);
 			}
 			return $tupleObj;
@@ -155,7 +155,7 @@ class ABIEncoder
 			return [];
 		$result = [];
 		$buffer = "";
-		$count = 0;
+		$count  = 0;
 
 		foreach(str_split($types) AS $char) {
 			if($char === "(") {
@@ -189,8 +189,8 @@ class ABIEncoder
 		if($whitespace !== false)
 			throw new EthBinderArgumentException("signature contains white space, which renders it as invalid signature. Space was found in position $whitespace in signature '$signature'");
 
-		$stack = [];
-		$numStack = [];
+		$stack              = [];
+		$numStack           = [];
 		$passedFunctionName = false;
 
 		for($i = 0, $len = strlen($signature); $i < $len; $i++) {
@@ -198,14 +198,14 @@ class ABIEncoder
 
 			if($char === "(") {
 				$passedFunctionName = true;
-				$stack[] = $char;
+				$stack[]            = $char;
 			} elseif($char === ")") {
 				if(end($stack) !== "(") {
 					throw new EthBinderArgumentException("Mismatched brackets in the signature");
 				}
 				array_pop($stack);
 			} elseif($char === "[") {
-				$stack[] = $char;
+				$stack[]    = $char;
 				$numStack[] = "";
 			} elseif($char === "]") {
 				if(end($stack) !== "[") {

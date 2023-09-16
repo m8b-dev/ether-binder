@@ -40,7 +40,8 @@ class WeiFormatter
 	 * @param int|string|EtherFormats $format The output format.
 	 * @return string The converted value.
 	 */
-	public static function fromWei(int|string|OOGmp $wei, int $finalDecimals, int|string|EtherFormats $format = EtherFormats::ETHER): string
+	public static function fromWei(
+		int|string|OOGmp $wei, int $finalDecimals, int|string|EtherFormats $format = EtherFormats::ETHER): string
 	{
 		$dec = EtherFormats::fromAny($format)->factor();
 		$wei = self::normalizeNumberString($wei, 0);
@@ -99,7 +100,7 @@ class WeiFormatter
 		$decimalsTrim0 = false;
 		if($decimals < 0) {
 			$decimalsTrim0 = true;
-			$decimals = abs($decimals);
+			$decimals      = abs($decimals);
 		}
 		if(strlen($valDecimals) > $decimals) {
 			$valDecimals = substr($valDecimals, 0, $decimals);

@@ -442,7 +442,8 @@ abstract class Transaction
 	public function getSigningHash(?int $chainId): Hash
 	{
 		try {
-			$bin = Keccak::hash($this->encodeBinForSigning($chainId), 256, true);
+			$data = $this->encodeBinForSigning($chainId);
+			$bin  = Keccak::hash($data, 256, true);
 		} catch(Exception $e) {
 			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
 		}
@@ -479,7 +480,10 @@ abstract class Transaction
 	{
 		if($this->chainId === null)
 			return $recovery->add(27);
-		return $recovery->add($this->chainId * 2)->add(35);
+		return $recovery
+			->mod(2)
+			->add($this->chainId * 2)
+			->add(35);
 	}
 
 	/**
@@ -539,5 +543,19 @@ abstract class Transaction
 		$s->r = $this->r;
 		$s->s = $this->s;
 		return $s;
+	}
+
+	/**
+	 * Sets the signature. Note that there is no guarantee the signature will work correctly.
+	 * This is for advanced use only. Ensure to properly account for EIP 155 in signature's V.
+	 *
+	 * @return static The updated Transaction object.
+	 */
+	public function setSignature(Signature $s): static
+	{
+		$this->v = $s->v;
+		$this->r = $s->r;
+		$this->s = $s->s;
+		return $this;
 	}
 }

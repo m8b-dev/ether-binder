@@ -52,7 +52,7 @@ HDC;
 	/**
 	 * @throws EthBinderArgumentException
 	 */
-	public function __construct(array $abi, protected ?string $compiledBlob = null)
+	protected function __construct(array $abi, protected ?string $compiledBlob = null)
 	{
 		$this->abiFunctions   = [];
 		$this->abiEvents      = [];
@@ -70,10 +70,43 @@ HDC;
 	}
 
 	/**
+	 * This function returns array of generated bindings code. Bindings include tuples, events and contract.
+	 *
+	 * Output array shape is:
+	 * [
+	 *     "contract" => "<?php root source code",
+	 *     "events"   => [
+	 *         "PHPClassName" => "<?php event source code",
+	 *         "PHPClassName" => "<?php event source code"
+	 *     ]
+	 *     "tuples"   => [
+	 *         "PHPClassName" => "<?php tuple source code"
+	 *     ]
+	 * ]
+	 *
+	 * ABIGen accepts 2 files, one is ABI JSON file, which is required, and should be sourced from solidity
+	 *
+	 * LIMITATIONS:
+	 *  currently event allows parsing event data into appropriate object (to "events" sub-array class). There is a rare
+	 *  case of having events that emit indexed dynamic data such as strings, arrays or tuples. Solidity in such case
+	 *  returns keccak256 hash of such data, not the data itself, making the data itself unrecoverable. If the ABIGen
+	 *  stumbles upon such event, it will throw NotSupportedException. Such events are not supported. In pinch, it's
+	 *  OK to remove the event from ABI JSON manually, but of course, such events will not be parsed.
+	 *
 	 * @throws NotSupportedException
 	 * @throws EthBinderArgumentException
 	 */
-	public function gen(string $fullyQualifiedClassName): array
+	public static function generate(string $fullyQualifiedClassName, array $abi, ?string $compiledBlob = null): array
+	{
+		$generator = new static($abi, $compiledBlob);
+		return $generator->gen($fullyQualifiedClassName);
+	}
+
+	/**
+	 * @throws NotSupportedException
+	 * @throws EthBinderArgumentException
+	 */
+	protected function gen(string $fullyQualifiedClassName): array
 	{
 		$this->tuplesRegistry = [];
 		if(empty($fullyQualifiedClassName))
@@ -88,7 +121,7 @@ HDC;
 			if($fullyQualifiedClassName[0] !== "\\")
 				// prohibit namespace\class as someone might mistake it for \current\namespace\class etc.
 				throw new EthBinderArgumentException("first character of FQCN must be '\\', at least in this implementation");
-			$exploded = explode("\\", $fullyQualifiedClassName);
+			$exploded  = explode("\\", $fullyQualifiedClassName);
 			$className = array_pop($exploded);
 			$namespace = implode("\\", $exploded);
 		}
@@ -159,7 +192,7 @@ HDC;
 			// return signature is needed for ABI decoding response from contract. Right now ABI decoder uses function
 			// signatures such as "foo(uint256,(uint256,uint256[])[3])" while building types tree. Name of "function" is
 			// ignored and can whatever non-empty [a-zA-Z\d] string
-			$retSignature       = $this->buildMethodParams($fname, $outs, $bld)["signature"];
+			$retSignature = $this->buildMethodParams($fname, $outs, $bld)["signature"];
 
 			if($abstractCall === "mkCall") {
 				$retType = $this->getPhpTypingFromOutputs($outs);
@@ -283,10 +316,9 @@ HDC;
 	{
 		$o = [];
 		foreach($this->abiEvents AS $event) {
-			$className = $this->className . "Event" . ucfirst($event["name"]);
-			$bld = new BuilderFactory();
-
-			$eventAsFnPrms = $this->buildMethodParams($event["name"], $event["inputs"], $bld);
+			$className      = $this->className . "Event" . ucfirst($event["name"]);
+			$bld            = new BuilderFactory();
+			$eventAsFnPrms  = $this->buildMethodParams($event["name"], $event["inputs"], $bld);
 			$rawSignatureID = Keccak::hash($eventAsFnPrms["signature"], 256, true);
 
 			$class = $bld->class($className)
@@ -305,28 +337,30 @@ HDC;
 					->addStmt(
 						new Return_($bld->funcCall("hex2bin", [$bld->val(bin2hex($rawSignatureID))]))
 					));
-			$offsetIndexed = 0;
+			$offsetIndexed    = 0;
 			$offsetNonIndexed = 0;
 			// these 2 variables are used to create 2 signatures of event for decoder, decoder works universally on
 			//  function-like signatures for typing. This allows shifting complexity from logic in parser (supports only one
 			//  approach) to abigen. And signatures are nicest as they allow dynamic usage without generating bindings
 			//  which may come in handy time to time.
-			$evInputsData = [];
+			$evInputsData    = [];
 			$evInputsIndexed = [];
 
 			foreach($event["inputs"] AS $eventInputs) {
 				list("indexed"=>$indexed, "internalType"=>$internalType, "name"=>$name, "type"=>$type) = $eventInputs;
+				// check if type will return keccak256 hash of data or data while parsing event.
 				if(
 					   $indexed
 					&& (   // bytesNUM are OK, since they are static
 					       !(str_starts_with("bytes", $type) && rtrim($type, "1234567890" != $type))
 						&& !in_array(rtrim($type, "1234567890"), ["int", "uint", "address", "bool"]))
 				) {
-					throw new NotSupportedException("Indexed event contains type $type, which is not supported."
-					." This is because decoding indexed complex type is not really a thing. See solidity abi-spec documentation,"
-					." section \"events\". This library assumes that all event data is always decodable, and this would"
-					." break PHP typings. In short, the indexed field will contain Keccak hash of data. Consider changing"
-					." solidity code to contain dynamic data in non-indexed values of event.");
+					throw new NotSupportedException("Event ".$event["name"]." contains indexed type $type, which"
+						." is not supported. This is because decoding indexed complex type is not really a thing. See"
+						." solidity abi-spec documentation, section \"events\". This library assumes that all event data"
+						." is always decodable, and this would break PHP typings. In short, the indexed field will "
+						."contain Keccak hash of data. Consider changing solidity code to contain dynamic data in".
+						" non-indexed values of event.");
 				}
 
 				$reference = new ArrayDimFetch(new Variable("this"),
@@ -466,11 +500,11 @@ HDC;
 	protected function buildMethodParams(string $fnName, array $inputs, BuilderFactory $bld): array
 	{
 		// see https://docs.soliditylang.org/en/latest/abi-spec.html
-		$signature = $fnName."(";
+		$signature  = $fnName."(";
 		$validators = [];
-		$names = [];
-		$params = [];
-		$firstIt = true;
+		$names      = [];
+		$params     = [];
+		$firstIt    = true;
 
 		$fallbackNameMissingCounter = 0;
 
@@ -496,7 +530,7 @@ HDC;
 			} elseif(str_starts_with($type, "uint") || str_starts_with($type, "int")) {
 				// remove characters, to get bits count
 				$bitsCount = (int)ltrim($type, "uint");
-				$arr = false;
+				$arr       = false;
 				if(str_contains($type, "[")) {
 					$param->setType("array");
 					$arr = true;
@@ -546,7 +580,7 @@ HDC;
 				throw new NotSupportedException("type $type was not recognized abi type");
 			}
 			$params[] = $param;
-			$names[] = $name;
+			$names[]  = $name;
 		}
 		return ["params" => $params, "names" => $names, "validators" => $validators, "signature" => $signature . ")"];
 	}
@@ -634,7 +668,7 @@ HDC;
 
 		$result["tuple"] = rtrim($namespace, "\\")."\\".$this->tupleInternalTypeToType($abiOutputs["internalType"]);
 		foreach($abiOutputs["components"] AS $output) {
-			$res = $this->innerPrepareOutputTupleInfo($output, $namespace);
+			$res                  = $this->innerPrepareOutputTupleInfo($output, $namespace);
 			$result["children"][] = $this->emptyr($res) ? null : $res;
 		}
 		return $result;

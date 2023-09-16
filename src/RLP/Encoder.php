@@ -72,8 +72,9 @@ class Encoder
 	{
 		if(count($input) == 0)
 			return pack("C", 0xc0);
+
 		$encoded = static::encodeBin($input);
-		$len = strlen($encoded);
+		$len     = strlen($encoded);
 		if($len < 56)
 			return pack("C", 0xc0+$len).$encoded;
 		return self::encodeLength($len, 0xf7).$encoded;

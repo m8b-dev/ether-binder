@@ -37,9 +37,9 @@ class HttpRPC extends AbstractRPC
 			throw new InvalidURLException("ws and wss protocols are not supported yet");
 		if(!filter_var($url, FILTER_VALIDATE_URL))
 			throw new InvalidURLException("provided url is not valid");
-		$this->headers = $extraHeaders;
+		$this->headers                 = $extraHeaders;
 		$this->headers["Content-Type"] = "application/json";
-		$this->ch = curl_init($url);
+		$this->ch                      = curl_init($url);
 	}
 
 	/**

@@ -75,8 +75,7 @@ if(is_file($outPath)) {
     exit(-1);
 }
 try {
-	$ag = new \M8B\EtherBinder\Contract\ABIGen($abi, $bin);
-	$output = $ag->gen($className);
+	$output = \M8B\EtherBinder\Contract\ABIGen::generate($className, $abi, $bin);
 } catch(\M8B\EtherBinder\Exceptions\EthBinderException $e) {
     echo "Operation failed with internal exception: ".$e::class.PHP_EOL.$e->getMessage().PHP_EOL;
     exit(-2);

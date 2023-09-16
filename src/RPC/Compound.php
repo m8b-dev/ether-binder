@@ -24,7 +24,7 @@ use M8B\EtherBinder\Utils\WeiFormatter;
  */
 abstract class Compound extends Web3
 {
-	const DEFAULT_TIP_GWEI = 1;
+	const DEFAULT_TIP_WEI = 1;
 	private ?bool $seemsLondon = null;
 
 	/**
@@ -57,7 +57,7 @@ abstract class Compound extends Web3
 			}
 		}
 		if(empty($tips))
-			return WeiFormatter::fromHuman(self::DEFAULT_TIP_GWEI, EtherFormats::GWEI);
+			return WeiFormatter::fromHuman(self::DEFAULT_TIP_WEI, EtherFormats::WEI);
 		$tmp = new OOGmp(0);
 		foreach($tips AS $tip) {
 			$tmp = $tmp->add($tip);
