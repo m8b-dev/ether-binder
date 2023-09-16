@@ -21,7 +21,7 @@ composer require m8b/ether-binder
 
 For quick start, and some code to quickly copy, edit and use, see [examples](examples)
 
-For documentation, see [docs](docs)
+For documentation, see [docs](docs/index.md)
 
 # Status
 
