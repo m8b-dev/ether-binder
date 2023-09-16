@@ -1,6 +1,6 @@
 {
     "name": "m8b/ether-binder",
-    "description": "Set of utilities for interacting with ethereum and it's smart contracts with PHP, with generating ABI bindings and Ethereum-related types",
+    "description": "Set of utilities for interacting with Ethereum and it's smart contracts with PHP, with generating ABI bindings and Ethereum-related types",
     "type": "library",
     "license": "MPL-2.0",
     "autoload": {
