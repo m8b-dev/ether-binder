@@ -24,7 +24,6 @@
         "ext-curl": "*",
         "ext-ctype": "*",
         "ext-gmp": "*",
-        "kornrunner/secp256k1": "^0.2.0",
         "kornrunner/keccak": "^1.1",
         "simplito/elliptic-php": "^1.0",
         "furqansiddiqui/bip39-mnemonic-php": "^0.1.7",

@@ -2,7 +2,7 @@
 
 A library to interact with Ethereum and Ethereum based blockchains. It allows to send transactions, wraps RPC, introduces
 Ethereum-friendly types and includes ABIGen tool, similar to [geth's abigen](https://geth.ethereum.org/docs/tools/abigen).  
-Library is typed and makes use of modern PHP 8.2 goodies (therefore, it requires PHP 8.2). 
+Library is typed and makes use of modern PHP 8.2 goodies (therefore, it requires PHP 8.2).
 
 # Requirements
 
@@ -12,9 +12,10 @@ Library is typed and makes use of modern PHP 8.2 goodies (therefore, it requires
 # Installation
 
 Just use composer ;)
+Note: not including version may not work for you, since current release isn't stable yet.
 
 ```shell
-composer require m8b/ether-binder:dev-master
+composer require m8b/ether-binder:v0.0.3-alpha
 ```
 
 # Documentation
@@ -58,10 +59,10 @@ fqcn instead of `use` so it's clear what to import):
 | Wallet (pk mnemonic)                      | done                    |
 | Signing msg                               | done                    |
 | Contract bindings (akin to abigen)        | done                    |
-| RPC Net_ filters                          | planned                 |
+| RPC Net_ filters                          | in progress             |
 | Documentation (in-code)                   | done                    |
 | Documentation (generated from in-code)    | planned                 |
-| Documentation (standalone)                | wishlist                |
+| Documentation (standalone)                | in progress             |
 | Wallet (pk .json)                         | planned as separate lib |
 
 JSON keystore is dropped due to fact it requires scrypt. Scrypt kdf in pure php is extremly slow, and there are 2 solutions:

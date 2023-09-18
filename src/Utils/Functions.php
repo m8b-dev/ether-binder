@@ -92,6 +92,18 @@ abstract class Functions {
 	}
 
 	/**
+	 * Converts hex string to integer
+	 *
+	 * @param string $val The hexadecimal string
+	 * @return int The integer value
+	 * @throws EthBinderRuntimeException when number exceeds PHP_INT_MAX
+	 */
+	public static function hex2int(string $val): int
+	{
+		return (new OOGmp($val, 16))->toInt();
+	}
+
+	/**
 	 * Calculates the base fee for the next block in an EIP1559 compatible chain.
 	 *
 	 * @param Block $previous The previous block.

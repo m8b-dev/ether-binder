@@ -5,9 +5,10 @@ Documentation is WIP. Missing clickable links means documentation is not written
 Index:
 1. [Bindings and Contracts](contracts.md)
 2. [Transactions](transactions.md)
-3. RPC
+3. [RPC](rpc.md)
 4. Ethereum friendly types
-5. RLP en/de-coder
-6. Exceptions
-7. Signing mesages
-8. Utils
+5. [RLP en/de-coder](rlp.md)
+6. [Exceptions](exceptions.md)
+7. Signing messages
+8. [Utils](utils.md)
+9. [A note on JSON keystore](jsonkeystore.md)
