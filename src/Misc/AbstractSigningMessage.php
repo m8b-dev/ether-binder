@@ -9,14 +9,18 @@
 namespace M8B\EtherBinder\Misc;
 
 use Exception;
+use JsonException;
 use kornrunner\Keccak;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Crypto\EC;
 use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Crypto\Signature;
+use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 
 /**
@@ -137,7 +141,7 @@ abstract class AbstractSigningMessage
 	 */
 	public function validateSignature(): bool
 	{
-		return $this->from->eq(EC::Recover($this->getMessageHash(), $this->sig->r, $this->sig->s, $this->sig->v));
+		return $this->from->eq(EC::Recover($this->getMessageHash(), $this->sig->r, $this->sig->s, $this->sig->v->add(1)->mod(2)));
 	}
 
 	/**
@@ -151,6 +155,31 @@ abstract class AbstractSigningMessage
 		} catch(InvalidLengthException|Exception $e) {
 			throw new EthBinderLogicException($e->getMessage(), $e->getCode(), $e);
 		}
+	}
+
+	/**
+	 * Creates signed message from JSON string. Does not on its own validate the message, just parses it into object.
+	 *
+	 * @param string $json JSON object of message
+	 * @return static parsed message object
+	 * @throws BadAddressChecksumException
+	 * @throws EthBinderLogicException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 * @throws JsonException
+	 */
+	public static function fromJSON(string $json): static
+	{
+		if(self::class === static::class) {
+			throw new EthBinderLogicException("Cannot call fromJSON on AbstractSigningMessage");
+		}
+		$msg    = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+		$msgObj = new static(hex2bin(
+			str_starts_with($msg["msg"], "0x") ? substr($msg["msg"], 2) : $msg["msg"]
+		));
+		$msgObj->sig  = Signature::fromHex($msg["sig"]);
+		$msgObj->from = Address::fromHex($msg["address"]);
+		return $msgObj;
 	}
 
 	/**

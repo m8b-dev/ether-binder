@@ -11,6 +11,7 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 use ArrayAccess;
 use M8B\EtherBinder\Contract\AbstractTuple;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**
@@ -67,6 +68,7 @@ class AbiTuple extends AbstractABIValue implements ArrayAccess
 
 	/**
 	 * @inheritDoc
+	 * @throws EthBinderRuntimeException
 	 */
 	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{

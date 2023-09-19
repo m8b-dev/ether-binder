@@ -16,7 +16,9 @@ use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\RLP\Decoder;
 use M8B\EtherBinder\RPC\BlockParam;
 
@@ -31,6 +33,9 @@ abstract class Debug extends AbstractModule
 
 	/**
 	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 */
 	public function debugGetRawBlock(int|BlockParam $blockParam = BlockParam::LATEST): array
 	{
@@ -41,6 +46,9 @@ abstract class Debug extends AbstractModule
 
 	/**
 	 * @throws EthBinderLogicException
+	 * @throws RPCGeneralException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function  debugGetRawHeader(int|BlockParam $blockParam = BlockParam::LATEST): array
 	{
@@ -51,7 +59,9 @@ abstract class Debug extends AbstractModule
 
 	/**
 	 * @throws EthBinderLogicException
+	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function debugGetRawReceipts(int|BlockParam $blockParam = BlockParam::LATEST): array
 	{
@@ -68,8 +78,11 @@ abstract class Debug extends AbstractModule
 	}
 
 	/**
-	 * @throws NotSupportedException
 	 * @throws EthBinderLogicException
+	 * @throws NotSupportedException
+	 * @throws RPCGeneralException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function debugGetRawTransaction(Hash $h): Transaction
 	{

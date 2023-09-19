@@ -10,6 +10,7 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
 
 /**
@@ -99,6 +100,7 @@ abstract class AbstractABIValue
 	 * @param string &$dataBin The binary data to be decoded.
 	 * @param int $globalOffset The global offset in the binary data.
 	 * @return int The new global offset.
+	 * @throws EthBinderRuntimeException
 	 */
 	abstract public function decodeBin(string &$dataBin, int $globalOffset): int;
 

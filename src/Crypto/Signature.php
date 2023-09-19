@@ -8,6 +8,7 @@
 
 namespace M8B\EtherBinder\Crypto;
 
+use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**
@@ -43,5 +44,33 @@ class Signature
 	public function toBin(): string
 	{
 		return hex2bin($this->toHex());
+	}
+
+	/**
+	 * Instantiates signature from hex representation. Required order of signature is `r`, `s`, `v`
+	 *
+	 * @param string $hex Hex-encoded signature
+	 * @return static Signature object
+	 */
+	public static function fromHex(string $hex): static
+	{
+		return static::fromBin(hex2bin(
+			str_starts_with($hex, "0x") ? substr($hex, 2) : $hex
+		));
+	}
+
+	/**
+	 * Instantiates signature from binary data. Required order of signature is `r`, `s`, `v`
+	 *
+	 * @param string $bin Binary blob of signature
+	 * @return static Signature object
+	 */
+	public static function fromBin(string $bin): static
+	{
+		$sig = new static();
+		$sig->r = new OOGmp(bin2hex(substr($bin, 0, 32)), 16);
+		$sig->s = new OOGmp(bin2hex(substr($bin, 32, 32)), 16);
+		$sig->v = new OOGmp(bin2hex(substr($bin, 64)), 16);
+		return $sig;
 	}
 }

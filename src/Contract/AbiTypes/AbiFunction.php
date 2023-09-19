@@ -11,6 +11,7 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\SolidityFunction;
 use M8B\EtherBinder\Common\SolidityFunction4BytesSignature;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 
 /**
@@ -62,6 +63,7 @@ class AbiFunction extends AbstractABIValue
 
 	/**
 	 * @inheritDoc
+	 * @throws EthBinderLogicException
 	 */
 	public function __toString(): string
 	{

@@ -8,6 +8,7 @@
 
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**
@@ -54,6 +55,7 @@ class AbiArrayUnknownLength extends AbiArrayKnownLength
 
 	/**
 	 * @inheritDoc
+	 * @throws EthBinderRuntimeException
 	 */
 	public function decodeBin(string &$dataBin, int $globalOffset): int
 	{

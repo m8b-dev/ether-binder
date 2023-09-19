@@ -19,7 +19,9 @@ use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\RLP\Decoder;
 use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\RPC\AbstractRPC;
@@ -144,12 +146,12 @@ abstract class Transaction
 	 */
 	public static function fromRPCArr(array $rpcArr): static
 	{
-		$static = TransactionType::numericToEnum($rpcArr["type"] ?? 0)->spawnSuchTransaction();
-		$static->nonce             = hexdec($rpcArr["nonce"]);
-		$static->gas               = hexdec($rpcArr["gas"]);
+		$static           = TransactionType::numericToEnum($rpcArr["type"] ?? 0)->spawnSuchTransaction();
+		$static->nonce    = hexdec($rpcArr["nonce"]);
+		$static->gas      = hexdec($rpcArr["gas"]);
 		$static->gasPrice = new OOGmp($rpcArr["gasPrice"]);
-		$static->value             = new OOGmp($rpcArr["value"]);
-		$static->to                = $rpcArr["to"] === null ? null : Address::fromHex($rpcArr["to"]);
+		$static->value    = new OOGmp($rpcArr["value"]);
+		$static->to       = $rpcArr["to"] === null ? null : Address::fromHex($rpcArr["to"]);
 
 		if(!empty($rpcArr["data"]))
 			$static->setDataHex($rpcArr["data"]);
@@ -493,6 +495,8 @@ abstract class Transaction
 	 * @param AbstractRPC $rpc The RPC client.
 	 * @param Address $from The sender address.
 	 * @return static The updated Transaction object.
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws EthBinderLogicException
 	 */

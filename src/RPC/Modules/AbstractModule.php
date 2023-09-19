@@ -10,6 +10,9 @@ namespace M8B\EtherBinder\RPC\Modules;
 
 use M8B\EtherBinder\Common\Block;
 use M8B\EtherBinder\Common\Hash;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
+use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\RPC\BlockParam;
 
 /**
@@ -21,19 +24,23 @@ use M8B\EtherBinder\RPC\BlockParam;
 abstract class AbstractModule
 {
 	/**
-	 *  Executes an RPC call with the given method and parameters.
+	 * Executes an RPC call with the given method and parameters.
 	 *
-	 *  @param string $method the RPC method name
-	 *  @param array|null $params optional array of parameters for the RPC call
-	 *  @return array result of the RPC call
+	 * @param string $method the RPC method name
+	 * @param array|null $params optional array of parameters for the RPC call
+	 * @return array result of the RPC call
+	 * @return array 'result' field of the RPC response. If the result is not an array, it's wrapped in an array under key 0.
+	 * @throws RPCGeneralException if any unexpected error is present in RPC response
+	 * @throws RPCInvalidResponseParamException if the 'result' field is missing in the response
+	 * @throws RPCNotFoundException if the method is not found
 	 */
 	abstract public function runRpc(string $method, ?array $params = null): array;
 
 	/**
-	 *  Normalizes a block number parameter for RPC calls.
+	 * Normalizes a block number parameter for RPC calls.
 	 *
-	 *  @param int|BlockParam $blockNumber the block number or a BlockParam object
-	 *  @return string hexadecimal representation of the block number or RPC alias string, such as "latest"
+	 * @param int|BlockParam $blockNumber the block number or a BlockParam object
+	 * @return string hexadecimal representation of the block number or RPC alias string, such as "latest"
 	 */
 	protected function blockParam(int|BlockParam $blockNumber): string
 	{

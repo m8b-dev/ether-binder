@@ -11,17 +11,26 @@ namespace M8B\EtherBinder\RPC\Modules;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 
 abstract class Web3 extends Net
 {
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function web3ClientVersion(): string
 	{
 		return $this->runRpc("web3_clientVersion", [])[0];
 	}
 
 	/**
+	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function web3Sha3Keccak(string $inputHex): Hash
 	{
@@ -33,7 +42,9 @@ abstract class Web3 extends Net
 	}
 
 	/**
+	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function web3Sha3KeccakBin(string $inputBin): Hash
 	{

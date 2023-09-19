@@ -10,13 +10,16 @@ namespace M8B\EtherBinder\Common;
 
 use M8B\EtherBinder\Crypto\EC;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\Misc\EIP1559Config;
 use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\RPC\AbstractRPC;
@@ -39,6 +42,9 @@ class LondonTransaction extends Transaction
 		parent::__construct();
 	}
 
+	/**
+	 * @throws EthBinderArgumentException
+	 */
 	private function internalEncodeBin(bool $signing, ?int $signingChainID): string
 	{
 		$nonce       = "0x".dechex($this->nonce);
@@ -58,20 +64,11 @@ class LondonTransaction extends Transaction
 			$this->chainId = $signingChainID;
 			$chainId = $signingChainID;
 		}
-		/*
-		 * return prefixedRlpHash(
-		tx.Type(),
-		[]interface{}{
-			s.chainId,
-			tx.Nonce(),
-			tx.GasTipCap(),
-			tx.GasFeeCap(),
-			tx.Gas(),
-			tx.To(),
-			tx.Value(),
-			tx.Data(),
-			tx.AccessList(),
-		})*/
+
+		if($chainId === null) {
+			throw new EthBinderArgumentException("chain ID cannot be null for typed transaction");
+		}
+
 		if($signing)
 			return Encoder::encodeBin([TransactionType::DYNAMIC_FEE->toTypeByte(), [
 				$chainId, $nonce, $gasFeeTip, $gasFeePrice, $gasLimit, $to, $value, $data, $accessList
@@ -85,8 +82,9 @@ class LondonTransaction extends Transaction
 	 *  Encodes the transaction for signing with optional chain ID (which differs from encoding for storage
 	 *  or transfer. Difference is for example missing fields).
 	 *
-	 *  @param int|null $chainId The chain ID to use for signing. If null, the transaction's current chain ID will be used.
-	 *  @return string The encoded transaction.
+	 * @param int|null $chainId The chain ID to use for signing. If null, the transaction's current chain ID will be used.
+	 * @return string The encoded transaction.
+	 * @throws EthBinderArgumentException
 	 */
 	public function encodeBinForSigning(?int $chainId): string
 	{
@@ -96,7 +94,8 @@ class LondonTransaction extends Transaction
 	/**
 	 *  RLP-encodes the transaction into binary format.
 	 *
-	 *  @return string The encoded transaction.
+	 * @return string The encoded transaction.
+	 * @throws EthBinderArgumentException
 	 */
 	public function encodeBin(): string
 	{
@@ -278,13 +277,16 @@ class LondonTransaction extends Transaction
 	 * added, so if 120% of minimal value is required, param should be 20, not 120.
 	 *   This invalidates signature if data differs from existing data.
 	 *
-	 *  @param AbstractRPC $rpc The RPC client.
-	 *  @param Address|null $from The sender's address.
-	 *  @param int $bumpGasPercentage Increase in gas limit as a percentage.
-	 *  @param int $bumpFeePercentage Increase in fee as a percentage.
-	 *  @return static
-	 *  @throws EthBinderLogicException
-	 *  @throws RPCInvalidResponseParamException
+	 * @param AbstractRPC $rpc The RPC client.
+	 * @param Address|null $from The sender's address.
+	 * @param int $bumpGasPercentage Increase in gas limit as a percentage.
+	 * @param int $bumpFeePercentage Increase in fee as a percentage.
+	 * @return static
+	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws EthBinderRuntimeException
 	 */
 	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static
 	{
@@ -301,7 +303,7 @@ class LondonTransaction extends Transaction
 	}
 
 	/**
-	 * in london transactions, the chainID is part of transaction data, and V is "vanilla" ECDSA signature recovery
+	 * in typed transactions, the chainID is part of transaction data, and V is "vanilla" ECDSA signature recovery
 	 * param, without any alteration. See https://eips.ethereum.org/EIPS/eip-2930
 	 * @inheritDoc
 	 */

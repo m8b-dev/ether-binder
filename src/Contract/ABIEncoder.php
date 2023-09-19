@@ -16,6 +16,7 @@ use M8B\EtherBinder\Contract\AbiTypes\AbiTuple;
 use M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 
 /**
  * ABIEncoder handles the encoding and decoding of ABI data in Ethereum smart contracts.
@@ -64,8 +65,9 @@ class ABIEncoder
 	 * @param string $signature The function signature including the function name and its parameters.
 	 * @param string $dataBin The ABI-encoded binary data.
 	 * @return AbiTuple The decoded ABI data as an AbiTuple.
-	 * @throws EthBinderLogicException Thrown if function name end is not found or if other logic error occurs.
 	 * @throws EthBinderArgumentException Thrown if validation of signature fails.
+	 * @throws EthBinderLogicException Thrown if function name end is not found or if other logic error occurs.
+	 * @throws EthBinderRuntimeException Thrown if decoder fails
 	 */
 	public static function decode(string $signature, string $dataBin): AbiTuple
 	{

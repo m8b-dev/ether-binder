@@ -10,7 +10,10 @@ namespace M8B\EtherBinder\RPC;
 
 use M8B\EtherBinder\Common\LondonTransaction;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\RPC\Modules\Web3;
 use M8B\EtherBinder\Utils\EtherFormats;
 use M8B\EtherBinder\Utils\OOGmp;
@@ -35,6 +38,7 @@ abstract class Compound extends Web3
 	 * @return OOGmp average tip across considered blocks
 	 * @throws EthBinderLogicException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
 	 */
 	public function calcAvgTip(int $blockNumbers = 3): OOGmp
 	{
@@ -71,6 +75,8 @@ abstract class Compound extends Web3
 	 *
 	 * @return bool true if network seems to be post-London fork, false otherwise
 	 * @throws EthBinderLogicException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 */
 	public function isLookingLikeLondon(): bool

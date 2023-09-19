@@ -7,9 +7,8 @@ specific type of transaction is expected.
 
 Ether binder right now supports Legacy transactions and London transactions.
 Blob transactions will be added when the spec will be finalized.
-Access list transactions will not be supported for generation in bindings, but support for parsing them from RPC
-is planned. Right now EIP2930 Access List transaction cannot be instantiated (Legacy transaction but Access List one).
-Bear in mind, London transactions support Access List, but again, access list is not filled in from bindings.
+Access list transactions will not be supported for generation in bindings
+Bear in mind, London transactions support Access List, but access list is not filled in from bindings.
 
 ## Transaction types
 

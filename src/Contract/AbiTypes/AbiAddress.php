@@ -9,6 +9,7 @@
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
 use M8B\EtherBinder\Common\Address;
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 
 /**
@@ -56,6 +57,7 @@ class AbiAddress extends AbstractABIValue
 
 	/**
 	 * @inheritDoc
+	 * @throws EthBinderLogicException
 	 */
 	public function __toString(): string
 	{

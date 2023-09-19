@@ -7,6 +7,7 @@ use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Common\Log;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 
 /**
@@ -28,10 +29,11 @@ abstract class AbstractEvent extends AbstractArrayAccess
 	 * Parses an Ethereum contract event from a Log object grabbed from Receipt.
 	 *
 	 * @param Log $log The log data to parse.
-	 * @throws EthBinderLogicException
-	 * @throws InvalidLengthException
-	 * @throws EthBinderArgumentException
 	 * @return static|null Returns an instance of the concrete class that extends AbstractEvent or null.
+	 * @throws InvalidLengthException
+	 * @throws EthBinderArgumentException*@throws EthBinderRuntimeException
+	 * @throws EthBinderLogicException
+	 * @throws EthBinderRuntimeException
 	 */
 	public static function parseEventFromLog(Log $log): ?static
 	{

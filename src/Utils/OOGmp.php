@@ -49,8 +49,15 @@ class OOGmp
 			$this->gmp = $number;
 			return;
 		}
+		// RPCs like to return "0x" for 0x0.
+		if($number == "0x" || $number == "") {
+			$this->gmp = gmp_init(0, 10);
+			return;
+		}
 
 		if($base !== null) {
+			if($base == 16 && str_starts_with($number, "0x"))
+				$number = substr($number, 2);
 			$this->gmp = gmp_init($number, $base);
 		} else {
 			if(str_starts_with($number, "0x"))

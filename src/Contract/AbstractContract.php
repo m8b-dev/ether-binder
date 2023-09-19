@@ -16,8 +16,11 @@ use M8B\EtherBinder\Common\Transaction;
 use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\Exceptions\UnexpectedUnsignedException;
 use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\OOGmp;
@@ -171,11 +174,14 @@ abstract class AbstractContract
 	 * @param AbstractRPC $rpc RPC interface for Ethereum.
 	 * @param array $params ABI encoded constructor params.
 	 * @return Transaction The resulting transaction.
-	 * @throws UnexpectedUnsignedException
-	 * @throws EthBinderLogicException
-	 * @throws InvalidLengthException
 	 * @throws EthBinderArgumentException
+	 * @throws EthBinderLogicException
+	 * @throws EthBinderRuntimeException
+	 * @throws InvalidLengthException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws UnexpectedUnsignedException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 */
 	protected static function runNonPayableDeploy(
 		string                    $constructorParamsSig,
@@ -195,6 +201,7 @@ abstract class AbstractContract
 	 * @throws UnexpectedUnsignedException
 	 * @throws EthBinderArgumentException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
 	 */
 	protected static function runPayableDeploy(
 		string                    $constructorParamsSig,
@@ -214,6 +221,7 @@ abstract class AbstractContract
 	 * @throws InvalidLengthException
 	 * @throws EthBinderArgumentException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
 	 */
 	private static function getDeployTransaction(
 		string                    $constructorParamsSig,
@@ -242,6 +250,7 @@ abstract class AbstractContract
 	/**
 	 * @throws EthBinderLogicException
 	 * @throws EthBinderArgumentException
+	 * @throws EthBinderRuntimeException
 	 */
 	protected function parseOutput(string $output, string $type, ?array $tupleReplacements = null): mixed
 	{
@@ -261,6 +270,7 @@ abstract class AbstractContract
 	 * @throws EthBinderArgumentException
 	 * @throws EthBinderLogicException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
 	 */
 	protected function mkCall(string $signature, array $params = []): string
 	{
@@ -274,6 +284,7 @@ abstract class AbstractContract
 	 * @throws UnexpectedUnsignedException
 	 * @throws EthBinderArgumentException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
 	 */
 	protected function mkTxn(string $signature, array $params = []): Transaction
 	{
@@ -290,6 +301,7 @@ abstract class AbstractContract
 	 * @throws EthBinderLogicException
 	 * @throws EthBinderArgumentException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
 	 */
 	private function _mkTxn(string $signature, array $params, bool $careAboutEstims, bool $trimmedSignature = false): Transaction
 	{
@@ -315,6 +327,7 @@ abstract class AbstractContract
 	 * @throws EthBinderArgumentException
 	 * @throws EthBinderLogicException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
 	 */
 	protected function mkPayableTxn(string $signature, OOGmp $value, array $params): Transaction
 	{

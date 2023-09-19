@@ -15,11 +15,14 @@ use M8B\EtherBinder\Common\Receipt;
 use M8B\EtherBinder\Common\Transaction;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
 use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\Exceptions\UnexpectedUnsignedException;
 use M8B\EtherBinder\RPC\BlockParam;
 use M8B\EtherBinder\Utils\Functions;
@@ -27,11 +30,21 @@ use M8B\EtherBinder\Utils\OOGmp;
 
 abstract class Eth extends Debug
 {
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 */
 	public function ethProtocolVersion(): int
 	{
 		return $this->runRpc("eth_protocolVersion")[0];
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethSyncing(): false|array
 	{
 		$d = $this->runRpc("eth_syncing");
@@ -48,7 +61,9 @@ abstract class Eth extends Debug
 	}
 
 	/**
+	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 * @throws EthBinderLogicException
 	 */
 	public function ethCoinbase(): Address
@@ -61,6 +76,12 @@ abstract class Eth extends Debug
 	}
 
 	private ?int $cachedChainId = null;
+
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethChainID(): int
 	{
 		if($this->cachedChainId === null)
@@ -68,16 +89,31 @@ abstract class Eth extends Debug
 		return $this->cachedChainId;
 	}
 
+	/**
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 */
 	public function ethMining(): bool
 	{
 		return $this->runRpc("eth_mining")[0];
 	}
 
+	/**
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 */
 	public function ethHashrate(): OOGmp
 	{
 		return new OOGmp($this->runRpc("eth_hashrate")[0]);
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethGasPrice(): OOGmp
 	{
 		return new OOGmp($this->runRpc("eth_gasPrice")[0]);
@@ -85,8 +121,10 @@ abstract class Eth extends Debug
 
 	/**
 	 * @return Address[]
-	 * @throws RPCInvalidResponseParamException
 	 * @throws EthBinderLogicException
+	 * @throws RPCGeneralException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function ethAccounts(): array
 	{
@@ -102,11 +140,22 @@ abstract class Eth extends Debug
 		return $return;
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
+	 */
 	public function ethBlockNumber(): int
 	{
 		return (new OOGmp($this->runRpc("eth_blockNumber")[0]))->toInt();
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethGetBalance(Address $address, int|BlockParam $blockParam = BlockParam::LATEST): OOGmp
 	{
 		return new OOGmp($this->runRpc(
@@ -115,6 +164,11 @@ abstract class Eth extends Debug
 		)[0]);
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 */
 	public function ethGetStorageAt(Address $address, OOGmp $position, int|BlockParam $blockParam = BlockParam::LATEST): OOGmp
 	{
 		return new OOGmp($this->runRpc(
@@ -123,6 +177,11 @@ abstract class Eth extends Debug
 		)[0]);
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethGetTransactionCount(Address $address, int|BlockParam $blockParam = BlockParam::LATEST): OOGmp
 	{
 		return new OOGmp($this->runRpc(
@@ -130,6 +189,12 @@ abstract class Eth extends Debug
 		)[0]);
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
+	 */
 	public function ethGetBlockTransactionCountByHash(Hash|Block $block): int
 	{
 		return (new OOGmp($this->runRpc(
@@ -137,6 +202,12 @@ abstract class Eth extends Debug
 		)[0]))->toInt();
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
+	 */
 	public function ethGetBlockTransactionCountByNumber(int|BlockParam $blockParam = BlockParam::LATEST): int
 	{
 		return (new OOGmp($this->runRpc(
@@ -144,6 +215,12 @@ abstract class Eth extends Debug
 		)[0]))->toInt();
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
+	 */
 	public function ethGetUncleCountByBlockHash(Hash|Block $block): int
 	{
 		return (new OOGmp($this->runRpc(
@@ -151,6 +228,12 @@ abstract class Eth extends Debug
 		)[0]))->toInt();
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
+	 */
 	public function ethGetUncleCountByBlockNumber(int|BlockParam $blockParam = BlockParam::LATEST): int
 	{
 		return (new OOGmp($this->runRpc(
@@ -158,6 +241,11 @@ abstract class Eth extends Debug
 		)[0]))->toInt();
 	}
 
+	/**
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 */
 	public function ethGetCode(Address $address, int|BlockParam $blockParam = BlockParam::LATEST): string
 	{
 		return $this->runRpc(
@@ -165,6 +253,11 @@ abstract class Eth extends Debug
 		)[0];
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethSign(Address $address, string $dataHex): string
 	{
 		return $this->runRpc(
@@ -172,12 +265,20 @@ abstract class Eth extends Debug
 		)[0];
 	}
 
+	/**
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 */
 	public function ethSignTransaction(Transaction $txn, Address $from): string
 	{
 		return $this->runRpc("eth_signTransaction", [$this->transactionToRPCArr($txn, $from)])[0];
 	}
 
 	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
 	 * @throws RPCInvalidResponseParamException
 	 */
 	public function ethSendTransaction(Transaction $txn, Address $from): Hash
@@ -190,8 +291,10 @@ abstract class Eth extends Debug
 	}
 
 	/**
-	 * @throws UnexpectedUnsignedException
+	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
+	 * @throws UnexpectedUnsignedException
 	 */
 	public function ethSendRawTransaction(Transaction $signedTransaction): Hash
 	{
@@ -205,7 +308,11 @@ abstract class Eth extends Debug
 	}
 
 	/**
+	 * @param string $rawTransactionHex
+	 * @return Hash
+	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function ethSendRawTransactionHex(string $rawTransactionHex): Hash
 	{
@@ -218,19 +325,34 @@ abstract class Eth extends Debug
 		}
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethCall(Transaction $message, ?Address $from = null, int|BlockParam $blockParam = BlockParam::LATEST): string
 	{
 		return $this->runRpc("eth_call", [$this->transactionToRPCArr($message, $from, true), $this->blockParam($blockParam)])[0];
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethEstimateGas(Transaction $txn, ?Address $from): int
 	{
 		return hexdec($this->runRpc("eth_estimateGas", [$this->transactionToRPCArr($txn, $from, true)])[0]);
 	}
 
 	/**
-	 * @throws RPCInvalidResponseParamException
+	 * @param Hash $hash
+	 * @param bool $fullBlock
+	 * @return Block
 	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 */
 	public function ethGetBlockByHash(Hash $hash, bool $fullBlock = false): Block
 	{
@@ -242,6 +364,8 @@ abstract class Eth extends Debug
 	}
 
 	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws EthBinderLogicException
 	 */
@@ -255,9 +379,11 @@ abstract class Eth extends Debug
 	}
 
 	/**
-	 * @throws NotSupportedException
 	 * @throws EthBinderLogicException
+	 * @throws NotSupportedException
+	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function ethGetTransactionByHash(Hash $hash): Transaction
 	{
@@ -271,6 +397,8 @@ abstract class Eth extends Debug
 	/**
 	 * @throws NotSupportedException
 	 * @throws EthBinderLogicException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 */
 	public function ethGetTransactionByBlockHashAndIndex(Hash $hash, int $index): Transaction
@@ -287,6 +415,8 @@ abstract class Eth extends Debug
 	/**
 	 * @throws NotSupportedException
 	 * @throws EthBinderLogicException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 */
 	public function ethGetTransactionByBlockNumberAndIndex(int|BlockParam $blockParam, int $index): Transaction
@@ -301,6 +431,8 @@ abstract class Eth extends Debug
 
 	/**
 	 * @throws NotSupportedException
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws EthBinderLogicException
 	 */
@@ -314,6 +446,8 @@ abstract class Eth extends Debug
 	}
 
 	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws EthBinderLogicException
 	 */
@@ -327,6 +461,8 @@ abstract class Eth extends Debug
 	}
 
 	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws EthBinderLogicException
 	 */
@@ -341,6 +477,11 @@ abstract class Eth extends Debug
 		}
 	}
 
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
 	public function ethMaxPriorityFeePerGas(): OOGmp
 	{
 		return new OOGmp($this->runRpc(

@@ -52,7 +52,7 @@ enum TransactionType
 	{
 		return match ($this) {
 			self::LEGACY      => new LegacyTransaction(),
-			self::ACCESS_LIST => throw new NotSupportedException("transaction access list type is not supported yet"),
+			self::ACCESS_LIST => new AccessListTransaction(),
 			self::DYNAMIC_FEE => new LondonTransaction(),
 			self::BLOB        => throw new NotSupportedException("transaction blob type is not supported yet"),
 		};

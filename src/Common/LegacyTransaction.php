@@ -16,6 +16,9 @@ use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
+use M8B\EtherBinder\Exceptions\RPCGeneralException;
+use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
+use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\OOGmp;
@@ -164,6 +167,9 @@ class LegacyTransaction extends Transaction
 	 * @param int $bumpGasPercentage Percentage to bump the estimated gas.
 	 * @param int $bumpFeePercentage Percentage to bump the estimated fee.
 	 * @return static Returns the instance of the class.
+	 * @throws RPCGeneralException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
 	 */
 	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static
 	{
