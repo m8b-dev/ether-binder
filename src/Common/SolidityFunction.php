@@ -8,8 +8,11 @@
 
 namespace M8B\EtherBinder\Common;
 
+use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+
 /**
- * SolidityFunction represents a Solidity function type, consisting with its address and 4-byte signature.
+ * SolidityFunction represents a Solidity function type, consisting with its address and 4-byte signature, uniquely
+ * pointing to address and selector.
  *
  * @author DubbaThony
  */
@@ -17,6 +20,18 @@ class SolidityFunction
 {
 	public Address $address;
 	public SolidityFunction4BytesSignature $signature;
+
+	/**
+	 * Constructs new instance using Address
+	 *
+	 * @throws EthBinderLogicException
+	 */
+	public function __construct(Address $address, string|SolidityFunction4BytesSignature $sig) {
+		$this->address = $address;
+		if(is_string($sig))
+			$sig = SolidityFunction4BytesSignature::fromSignature($sig);
+		$this->signature = $sig;
+	}
 
 	/**
 	 * Serializes transaction to binary blob

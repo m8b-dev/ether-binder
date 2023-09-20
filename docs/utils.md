@@ -175,8 +175,8 @@ $block->gasUsed = $previousBlock->gasLimit;
 ```
 
 The second parameter is internal type EIP1559Config, which as of now, simply defines some constants and concrete chains
-only inform about eip 1559 activation block. If your chain isn't on the static functions list, just use `sepolia`, if you
-are sure that you always call on EIP 1559 enabled chain. 
+only inform about EIP-1559 activation block. If your chain isn't on the static functions list, just use `sepolia`, if you
+are sure that you always call on EIP-1559 enabled chain. 
 
 Usage:
 ```php

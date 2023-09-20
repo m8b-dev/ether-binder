@@ -43,13 +43,15 @@ class AbiFunction extends AbstractABIValue
 	/**
 	 * @inheritDoc
 	 * @throws InvalidLengthException
+	 * @throws EthBinderLogicException
 	 */
 	public function decodeBin(string &$dataBin, $globalOffset): int
 	{
 		// address (20b) + selector (4b) + padding
-		$this->val            = new SolidityFunction();
-		$this->val->address   = Address::fromBin(substr($dataBin, $globalOffset, 20));
-		$this->val->signature = SolidityFunction4BytesSignature::fromBin(substr($dataBin, $globalOffset+20, 4));
+		$this->val            = new SolidityFunction(
+			Address::fromBin(substr($dataBin, $globalOffset, 20)),
+			SolidityFunction4BytesSignature::fromBin(substr($dataBin, $globalOffset+20, 4))
+		);
 		return 32;
 	}
 

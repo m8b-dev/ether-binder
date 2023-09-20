@@ -8,7 +8,6 @@
 
 namespace M8B\EtherBinder\Crypto;
 
-use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**

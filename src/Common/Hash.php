@@ -19,7 +19,7 @@ use M8B\EtherBinder\Utils\Functions;
  *
  * @author DubbaThony
  */
-class Hash
+class Hash implements BinarySerializableInterface
 {
 	protected const dataSizeBytes = 32;
 	protected string $bytes;

@@ -48,6 +48,7 @@ class ABIEncoder
 			$signature = str_replace("int,", "int256,", $signature);
 			$signature = str_replace("int)", "int256)", $signature);
 			$signature = str_replace("int]", "int256]", $signature);
+			$signature = str_replace("int[", "int256[", $signature);
 			try {
 				$signatureHash = Keccak::hash($signature, 256, true);
 			} catch(Exception $e) {

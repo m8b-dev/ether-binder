@@ -17,7 +17,8 @@ There is Enum for transaction types `TransactionType` that allows to select tran
 in post-london format of transaction encoding - the first number of RLP, before transaction array), and it allows to
 instantiate it.
 
-RPC has helper method to check if EIP1559 transaction could be used on current chain.
+RPC has helper method to check if [EIP1559](https://eips.ethereum.org/EIPS/eip-1559) transaction could be used on
+current chain.
 
 # Preparing Transaction
 

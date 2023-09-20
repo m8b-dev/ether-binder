@@ -14,6 +14,7 @@ use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Crypto\Signature;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
@@ -35,7 +36,7 @@ use M8B\EtherBinder\Utils\WeiFormatter;
  *
  * @author DubbaThony
  */
-abstract class Transaction
+abstract class Transaction implements BinarySerializableInterface
 {
 	protected bool $signed = false;
 
@@ -109,6 +110,48 @@ abstract class Transaction
 		$tx->setInnerFromRLPValues($txData);
 		return $tx;
 	}
+
+	/**
+	 * Alias function for decodeHex()
+	 *
+	 * @see static::decodeHex()
+	 * @param string $hex
+	 * @return static
+	 * @throws EthBinderLogicException
+	 * @throws NotSupportedException
+	 */
+	public static function fromHex(string $hex): static
+	{ return static::decodeHex($hex); }
+
+	/**
+	 * Alias function for decodeBin()
+	 *
+	 * @see static::decodeBin()
+	 * @param string $bin
+	 * @return static
+	 * @throws EthBinderLogicException
+	 * @throws NotSupportedException
+	 */
+	public static function fromBin(string $bin): static
+	{ return static::decodeBin($bin); }
+
+	/**
+	 * Alias function for encodeBin()
+	 *
+	 * @see static::encodeBin()
+	 * @return string
+	 */
+	public function toBin(): string
+	{ return $this->encodeBin(); }
+
+	/**
+	 * Alias function for encodeHex()
+	 *
+	 * @see static::encodeHex()
+	 * @return string
+	 */
+	public function toHex(): string
+	{ return $this->encodeHex(); }
 
 	/**
 	 * Encodes the transaction into a hexadecimal string for signing purposes (which differs from encoding for storage
@@ -561,5 +604,22 @@ abstract class Transaction
 		$this->r = $s->r;
 		$this->s = $s->s;
 		return $this;
+	}
+
+	/**
+	 * Convenience function that fetches nonce from RPC and places it into transaction.
+	 *  If new nonce mismatches currently set nonce, it invalidates signature.
+	 *
+	 * @param Address $from Address of which to set next nonce.
+	 * @param AbstractRPC $rpc RPC to query transaction count from.
+	 * @return Transaction self for chainable API.
+	 * @throws EthBinderRuntimeException
+	 * @throws RPCGeneralException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
+	 */
+	public function nonceFromRPC(Address $from, AbstractRPC $rpc): static
+	{
+		return $this->setNonce($rpc->ethGetTransactionCount($from)->toInt());
 	}
 }
