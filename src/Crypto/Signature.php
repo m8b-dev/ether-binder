@@ -8,6 +8,7 @@
 
 namespace M8B\EtherBinder\Crypto;
 
+use M8B\EtherBinder\Common\BinarySerializableInterface;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**
@@ -15,7 +16,7 @@ use M8B\EtherBinder\Utils\OOGmp;
  *
  * @author DubbaThony
  */
-class Signature
+class Signature implements BinarySerializableInterface
 {
 	public OOGmp $v;
 	public OOGmp $r;
