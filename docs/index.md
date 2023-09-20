@@ -1,6 +1,7 @@
 # Abi Binder
 
-Documentation is WIP. Missing clickable links means documentation is not written yet but planned  
+In usage examples, fully qualified class names (FQCN) will be used instead of `use` clause, so it's easier to understand
+to which class usage refers to.
 
 Index:
 1. [Bindings and Contracts](contracts.md)

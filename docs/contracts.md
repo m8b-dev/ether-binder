@@ -88,9 +88,6 @@ adjust ABI or contract.
 
 # Usage notes
 
-In usage examples, fully qualified class names (FQCN) will be used instead of `use` clause, so it's easier to understand
-to which class usage refers to.
-
 Usage code samples will assume you have defined private key and RPC
 ```php
 $key = \M8B\EtherBinder\Crypto\Key::fromHex("0x...");
@@ -135,7 +132,7 @@ $token->loadPrivK($key);
 
 To remove private key:
 ```php
-$token->unloadPrivK($key);
+$token->unloadPrivK();
 ```
 
 To supply fallback address, and get unsigned transactions:
