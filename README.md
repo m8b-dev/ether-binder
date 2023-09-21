@@ -25,7 +25,7 @@ composer require m8b/ether-binder:v0.0.3-alpha
 ## 📖 Documentation
 
 - **Quick Start**: Grab code snippets from [examples](examples).
-- **Read About Components**: Check out the [docs](docs/index.md) for the full docs.
+- **Read About Components**: Check out the [docs](https://m8b-dev.github.io/ether-binder/) for the full docs.
 
 ## 🚧 Status
 
@@ -46,15 +46,16 @@ composer require m8b/ether-binder:v0.0.3-alpha
 | Wallet (pk mnemonic)                      | ✅ Done                     |
 | Signing msg                               | ✅ Done                     |
 | Contract bindings (akin to abigen)        | ✅ Done                     |
-| RPC Net_ filters                          | ⏳ In progress              |
 | Documentation (in-code)                   | ✅ Done                     |
-| Documentation (generated from in-code)    | ⏳ In progress              |
+| Documentation (generated from in-code)    | ✅ Done                     |
 | Documentation (standalone)                | ✅ Done                     |
+| RPC Net_ filters                          | ⏳ In progress              |
 | Wallet (pk .json)                         | ⚠️ Planned as separate lib |
 
 ### A Note on JSON Keystore
 
-Due to performance constraints with scrypt in PHP, JSON keystore support is planned as a separate library. [Learn More](docs/jsonkeystore.md)
+Due to performance constraints with scrypt in PHP, JSON keystore support is planned as a separate library.
+[Learn More](https://m8b-dev.github.io/ether-binder/jsonkeystore.md)
 
 ## 📜 License
 Mozilla Public License 2.0
