@@ -14,9 +14,19 @@ then
     exit 1
 fi
 
-doxygen .doxygen
-docker run --rm -v $(pwd):/data phpdoc/phpdoc:3 run -d ./src -t ./ref/phpdoc -i ./src/Test --defaultpackagename \\M8B\\EtherBinder
+rm -rf docs/ref
 
-mv ref/doxygen ref/doxygen.tmp
-mv ref/doxygen.tmp/html ref/doxygen
-rm -rf ref/doxygen.tmp
+mkdir -p docs/ref/doxygen
+mkdir -p docs/ref/phpdoc
+
+doxygen .doxygen
+docker run -u $(id -u ${USER}):$(id -g ${USER}) \
+ --rm -v $(pwd):/data phpdoc/phpdoc:3 \
+  run -d ./src -t ./docs/ref/phpdoc -i ./src/Test --defaultpackagename \\M8B\\EtherBinder
+
+
+mv docs/ref/doxygen docs/ref/doxygen.tmp
+mv docs/ref/doxygen.tmp/html docs/ref/doxygen
+rm -rf docs/ref/doxygen.tmp
+
+git add docs
