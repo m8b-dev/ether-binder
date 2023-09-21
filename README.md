@@ -48,7 +48,7 @@ composer require m8b/ether-binder:v0.0.3-alpha
 | Contract bindings (akin to abigen)        | ✅ Done                     |
 | RPC Net_ filters                          | ⏳ In progress              |
 | Documentation (in-code)                   | ✅ Done                     |
-| Documentation (generated from in-code)    | 🚫 Planned                 |
+| Documentation (generated from in-code)    | ⏳ In progress              |
 | Documentation (standalone)                | ✅ Done                     |
 | Wallet (pk .json)                         | ⚠️ Planned as separate lib |
 
