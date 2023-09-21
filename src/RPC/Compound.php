@@ -27,7 +27,7 @@ use M8B\EtherBinder\Utils\WeiFormatter;
  */
 abstract class Compound extends Web3
 {
-	const DEFAULT_TIP_WEI = 1;
+	private const DEFAULT_TIP_WEI = 1;
 	private ?bool $seemsLondon = null;
 
 	/**
