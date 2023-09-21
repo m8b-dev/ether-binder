@@ -14,6 +14,7 @@ use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Common\Receipt;
 use M8B\EtherBinder\Common\Transaction;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
@@ -295,6 +296,7 @@ abstract class Eth extends Debug
 	 * @throws RPCInvalidResponseParamException
 	 * @throws RPCNotFoundException
 	 * @throws UnexpectedUnsignedException
+	 * @throws EthBinderArgumentException
 	 */
 	public function ethSendRawTransaction(Transaction $signedTransaction): Hash
 	{

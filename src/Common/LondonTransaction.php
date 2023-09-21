@@ -54,7 +54,7 @@ class LondonTransaction extends Transaction
 		$value       = $this->value->toString(true);
 		$data        = $this->dataHex();
 		$gasFeeTip   = $this->gasFeeTip->toString(true);
-		$chainId     = "0x".dechex($this->chainId);
+		$chainId     = $this->chainId === null ? null : "0x".dechex($this->chainId);
 		$accessList  = $this->accessList;
 		$v           = $this->v()->toString(true);
 		$r           = $this->r()->toString(true);

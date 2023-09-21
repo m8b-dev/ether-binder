@@ -49,6 +49,39 @@ class ABIGen
 // If you need to edit this class, extend it.
 HDC;
 
+	protected const throwsCommentDeploy = <<<HDC
+/**
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderArgumentException
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderLogicException
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderRuntimeException
+	 * @throws \M8B\EtherBinder\Exceptions\InvalidLengthException
+	 * @throws \M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException
+	 * @throws \M8B\EtherBinder\Exceptions\UnexpectedUnsignedException
+	 * @throws \M8B\EtherBinder\Exceptions\RPCGeneralException
+	 * @throws \M8B\EtherBinder\Exceptions\RPCNotFoundException
+	 */
+HDC;
+
+	protected const throwsCommentCall = <<<HDC
+/**
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderLogicException
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderRuntimeException
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderArgumentException
+	 * @throws \M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException
+	 */
+HDC;
+
+	protected const throwsCommentTransact = <<<HDC
+/**
+	 * @throws \M8B\EtherBinder\Exceptions\UnexpectedUnsignedException
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderLogicException
+	 * @throws \M8B\EtherBinder\Exceptions\InvalidLengthException
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderRuntimeException
+	 * @throws \M8B\EtherBinder\Exceptions\EthBinderArgumentException
+	 * @throws \M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException
+	 */
+HDC;
+
 	/**
 	 * @throws EthBinderArgumentException
 	 */
@@ -195,12 +228,14 @@ HDC;
 			$retSignature = $this->buildMethodParams($fname, $outs, $bld)["signature"];
 
 			if($abstractCall === "mkCall") {
+				$throwsComment = static::throwsCommentCall;
 				$retType = $this->getPhpTypingFromOutputs($outs);
 				// getPhpTypingFromOutputs will be set only on this branch, second branch means the Transaction will be
 				// returned by binding function. That's because in case of bug that the retPostProcessMeta is used when
 				// not needed, the php generated warning will be useful notification something went wrong
 				$retPostProcessMeta = $this->prepareOutputTupleInfo($outs, $namespace);
 			} else {
+				$throwsComment = static::throwsCommentTransact;
 				$retType = "\\".Transaction::class;
 			}
 
@@ -209,6 +244,7 @@ HDC;
 			// CONTRACT constructor (NOT PHP constructor) is called statically and needs RPC and PrivateKey for the
 			// transaction. These are always first 2 params.
 			if($fType === "constructor") {
+				$throwsComment = static::throwsCommentDeploy;
 				array_unshift($paramsBuilt, $bld
 					->param("privateKey")
 					->setType("\\" . Key::class)
@@ -261,7 +297,8 @@ HDC;
 				->addParams($paramsBuilt)
 				->addStmts($validators)
 				->setReturnType($retType)
-				->addStmt($functionInternal);
+				->addStmt($functionInternal)
+				->setDocComment($throwsComment);
 			if($fType === "constructor")
 				$method = $method->makeStatic();
 			$class->addStmt($method);

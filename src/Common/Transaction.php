@@ -13,6 +13,7 @@ use kornrunner\Keccak;
 use M8B\EtherBinder\Crypto\Key;
 use M8B\EtherBinder\Crypto\Signature;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
+use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\HexBlobNotEvenException;
@@ -51,13 +52,40 @@ abstract class Transaction implements BinarySerializableInterface
 	protected OOGmp $s;
 	protected ?int $chainId = null;
 
+	/**
+	 * @throws EthBinderArgumentException
+	 */
 	abstract public    function encodeBin(): string;
+
+	/**
+	 * @throws EthBinderArgumentException
+	 */
 	abstract public    function encodeBinForSigning(?int $chainId): string;
 	abstract public    function transactionType(): TransactionType;
+
+	/**
+	 * @throws EthBinderRuntimeException
+	 * @throws EthBinderLogicException
+	 * @throws InvalidLengthException
+	 */
 	abstract public    function ecRecover(): Address;
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws EthBinderLogicException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderRuntimeException
+	 */
 	abstract public    function useRpcEstimatesWithBump(
 		AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static;
 	abstract protected function blanksFromRPCArr(array $rpcArr): void;
+	/**
+	 * @throws BadAddressChecksumException
+	 * @throws EthBinderLogicException
+	 * @throws InvalidHexLengthException
+	 * @throws InvalidHexException
+	 * @throws EthBinderRuntimeException
+	 */
 	abstract protected function setInnerFromRLPValues(array $rlpValues): void;
 
 
@@ -75,8 +103,12 @@ abstract class Transaction implements BinarySerializableInterface
 	 *
 	 * @param string $rlp The RLP-encoded transaction as a hexadecimal string.
 	 * @return static The decoded Transaction object.
-	 * @throws NotSupportedException
+	 * @throws BadAddressChecksumException
 	 * @throws EthBinderLogicException
+	 * @throws EthBinderRuntimeException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 * @throws NotSupportedException
 	 */
 	public static function decodeHex(string $rlp): static
 	{
@@ -90,8 +122,12 @@ abstract class Transaction implements BinarySerializableInterface
 	 *
 	 * @param string $rlp The RLP-encoded transaction as a binary string.
 	 * @return static The decoded Transaction object.
-	 * @throws NotSupportedException
+	 * @throws BadAddressChecksumException
 	 * @throws EthBinderLogicException
+	 * @throws EthBinderRuntimeException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 * @throws NotSupportedException
 	 */
 	public static function decodeBin(string $rlp): static
 	{
@@ -117,7 +153,11 @@ abstract class Transaction implements BinarySerializableInterface
 	 * @see static::decodeHex()
 	 * @param string $hex
 	 * @return static
+	 * @throws BadAddressChecksumException
 	 * @throws EthBinderLogicException
+	 * @throws EthBinderRuntimeException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
 	 * @throws NotSupportedException
 	 */
 	public static function fromHex(string $hex): static
@@ -129,7 +169,11 @@ abstract class Transaction implements BinarySerializableInterface
 	 * @see static::decodeBin()
 	 * @param string $bin
 	 * @return static
+	 * @throws BadAddressChecksumException
 	 * @throws EthBinderLogicException
+	 * @throws EthBinderRuntimeException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
 	 * @throws NotSupportedException
 	 */
 	public static function fromBin(string $bin): static
@@ -138,8 +182,9 @@ abstract class Transaction implements BinarySerializableInterface
 	/**
 	 * Alias function for encodeBin()
 	 *
-	 * @see static::encodeBin()
 	 * @return string
+	 * @throws EthBinderArgumentException
+	 * @see static::encodeBin()
 	 */
 	public function toBin(): string
 	{ return $this->encodeBin(); }
@@ -149,6 +194,7 @@ abstract class Transaction implements BinarySerializableInterface
 	 *
 	 * @see static::encodeHex()
 	 * @return string
+	 * @throws EthBinderArgumentException
 	 */
 	public function toHex(): string
 	{ return $this->encodeHex(); }
@@ -159,6 +205,7 @@ abstract class Transaction implements BinarySerializableInterface
 	 *
 	 * @param ?int $chainId The chain ID for the transaction.
 	 * @return string The hexadecimal encoded transaction.
+	 * @throws EthBinderArgumentException
 	 */
 	public function encodeHexForSigning(?int $chainId): string
 	{
@@ -169,6 +216,7 @@ abstract class Transaction implements BinarySerializableInterface
 	 * Encodes the transaction into a hexadecimal string.
 	 *
 	 * @return string The hexadecimal encoded transaction.
+	 * @throws EthBinderArgumentException
 	 */
 	public function encodeHex(): string
 	{
@@ -542,6 +590,7 @@ abstract class Transaction implements BinarySerializableInterface
 	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws EthBinderLogicException
+	 * @throws EthBinderRuntimeException
 	 */
 	public function useRpcEstimates(AbstractRPC $rpc, Address $from): static
 	{

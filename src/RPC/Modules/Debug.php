@@ -13,6 +13,7 @@ use M8B\EtherBinder\Common\Receipt;
 use M8B\EtherBinder\Common\Transaction;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
@@ -78,11 +79,17 @@ abstract class Debug extends AbstractModule
 	}
 
 	/**
+	 * @param Hash $h
+	 * @return Transaction
+	 * @throws BadAddressChecksumException
 	 * @throws EthBinderLogicException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
 	 * @throws NotSupportedException
 	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws RPCNotFoundException
+	 * @throws EthBinderRuntimeException
 	 */
 	public function debugGetRawTransaction(Hash $h): Transaction
 	{

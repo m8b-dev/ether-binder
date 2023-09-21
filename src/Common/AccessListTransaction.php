@@ -2,7 +2,6 @@
 
 namespace M8B\EtherBinder\Common;
 
-use M8B\EtherBinder\Common\Transaction;
 use M8B\EtherBinder\Crypto\EC;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
@@ -13,7 +12,6 @@ use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 use M8B\EtherBinder\RLP\Encoder;
-use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\Functions;
 use M8B\EtherBinder\Utils\OOGmp;
 
