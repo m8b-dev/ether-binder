@@ -23,9 +23,15 @@ use M8B\EtherBinder\Utils\OOGmp;
 use PhpParser\Builder\Param;
 use PhpParser\BuilderFactory;
 use PhpParser\Node\Attribute;
+use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayDimFetch;
+use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\Assign;
+use PhpParser\Node\Expr\Cast\Int_;
+use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Return_;
@@ -81,6 +87,20 @@ HDC;
 	 * @throws \M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException
 	 */
 HDC;
+	protected const throwsCommentFilterFetch = <<<HDC
+/**
+	* @throws \M8B\EtherBinder\Exceptions\EthBinderLogicException
+	* @throws \M8B\EtherBinder\Exceptions\RPCGeneralException
+	* @throws \M8B\EtherBinder\Exceptions\EthBinderRuntimeException
+	* @throws \M8B\EtherBinder\Exceptions\BadAddressChecksumException
+	* @throws \M8B\EtherBinder\Exceptions\InvalidHexLengthException
+	* @throws \M8B\EtherBinder\Exceptions\RPCNotFoundException
+	* @throws \M8B\EtherBinder\Exceptions\InvalidHexException
+	* @throws \M8B\EtherBinder\Exceptions\EthBinderArgumentException
+	* @throws \M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException
+	*/
+HDC;
+
 
 	/**
 	 * @throws EthBinderArgumentException
@@ -313,7 +333,7 @@ HDC;
 		// Later down the line to be able to parse events we will need to enumerate them, to check against known events
 		// for the contract, so a registry needs to be constructed
 		$eventsRegistry = [];
-		foreach(array_keys($eventsGen) AS $eventName) {
+		foreach(array_keys($eventsGen["events"]) AS $eventName) {
 			$eventsRegistry[] = $bld->classConstFetch($eventName,"class");
 		}
 
@@ -340,7 +360,7 @@ HDC;
 		}
 		return [
 			"contract" => (new Standard())->prettyPrintFile($nodes),
-			"events"   => $eventsGen,
+			"events"   => array_merge($eventsGen["events"], $eventsGen["filters"]),
 			"tuples"   => $tuplesGen
 		];
 	}
@@ -353,10 +373,49 @@ HDC;
 	{
 		$o = [];
 		foreach($this->abiEvents AS $event) {
-			$className      = $this->className . "Event" . ucfirst($event["name"]);
-			$bld            = new BuilderFactory();
-			$eventAsFnPrms  = $this->buildMethodParams($event["name"], $event["inputs"], $bld);
-			$rawSignatureID = Keccak::hash($eventAsFnPrms["signature"], 256, true);
+			$className       = $this->className . "Event" . ucfirst($event["name"]);
+			$filterClassName = $this->className . "Filter" . ucfirst($event["name"]);
+			$bld             = new BuilderFactory();
+			$eventAsFnPrms   = $this->buildMethodParams($event["name"], $event["inputs"], $bld);
+			$rawSignatureID  = Keccak::hash($eventAsFnPrms["signature"], 256, true);
+
+			$filterClass = $bld->class($filterClassName)
+				->extend("\\".AbstractEventFilter::class)
+				->addStmt($bld->method("eventClassName")
+					->makePublic()
+					->makeStatic()
+					->setReturnType("string")
+					->addStmt(new Return_($bld->val($namespace."\\".$className))))
+				->addStmt($bld->method("fetchNext")
+					->makePublic()
+					->setReturnType("?".$namespace."\\".$className)
+					->addStmt(new Return_(new MethodCall(
+						new Variable("this"),
+						new Identifier("parseFetchNext")
+					)))
+					->setDocComment(static::throwsCommentFilterFetch));
+
+			$filterClassConstructor = $bld->method("__construct")
+				->makePublic()
+				->addParam(
+					$bld->param("rpc")
+						->setType("\\".AbstractRPC::class))
+				->addParam(
+					$bld->param("target")
+						->setType("\\".Address::class))
+				->addStmt(new Assign(
+						new PropertyFetch(
+							new Variable("this"),
+							new Identifier("rpc")),
+					new Variable("rpc")
+				))
+				->addStmt(new Assign(
+						new PropertyFetch(
+							new Variable("this"),
+							new Identifier("target")),
+					new Variable("target")
+				));
+			$filterIndexedPhpTypes = [];
 
 			$class = $bld->class($className)
 				->extend("\\".AbstractEvent::class)
@@ -402,8 +461,23 @@ HDC;
 
 				$reference = new ArrayDimFetch(new Variable("this"),
 					new String_(($indexed?"topic-".$offsetIndexed:"data-".$offsetNonIndexed)));
+
+				$phpEventFieldType = $this->getPhpTypingFromType($type, $internalType);
+
 				if($indexed) {
 					$evInputsIndexed[] = $eventInputs;
+
+					$filterClassConstructor
+						->addParam($bld->param("ev".ucfirst($name))->setType($phpEventFieldType."|array|null"))
+						->addStmt(new Assign(
+							new ArrayDimFetch(
+								new PropertyFetch(
+									new Variable("this"),
+									new Identifier("filterParams")),
+								$bld->val($offsetIndexed)),
+							new Variable("ev".ucfirst($name))
+						));
+					$filterIndexedPhpTypes[] = new ArrayItem(new String_(ltrim($phpEventFieldType, "?")));
 					$offsetIndexed++;
 				} else {
 					$evInputsData[] = $eventInputs;
@@ -414,7 +488,7 @@ HDC;
 				// specific event for ABIEncoder.
 				$class->addStmt($bld->method("get".ucfirst($name))
 					->makePublic()
-					->setReturnType($this->getPhpTypingFromType($type, $internalType))
+					->setReturnType($phpEventFieldType)
 					->addStmt(
 						new Return_($reference)
 					)
@@ -423,12 +497,20 @@ HDC;
 					->makePublic()
 					->addParam(
 						$bld->param("value")
-							->setType($this->getPhpTypingFromType($type, $internalType)))
+							->setType($phpEventFieldType))
 					->addStmt(
 						new Assign($reference, $bld->var("value"))
 					)
 				);
 			}
+
+			$filterClass->addStmt(
+				$bld
+					->method("validatorTypes")
+					->makeProtected()
+					->makeStatic()
+					->setReturnType("array")
+					->addStmt(new Return_(new Array_($filterIndexedPhpTypes))));
 
 			$indexedSig = empty($evInputsData)
 				? null : $this->buildMethodParams("boundEvent", $evInputsData, $bld)["signature"];
@@ -457,6 +539,8 @@ HDC;
 				)))
 			);
 
+			$filterClass->addStmt($filterClassConstructor);
+
 			if(!empty(ltrim($namespace, "\\"))) {
 				$nodes = [
 					$bld->namespace(ltrim($namespace, "\\"))
@@ -464,11 +548,20 @@ HDC;
 						->addStmt($class)
 						->getNode()
 				];
+				$nodesFilter = [
+					$bld->namespace(ltrim($namespace, "\\"))
+						->setDocComment(static::autogenWarning)
+						->addStmt($filterClass)
+						->getNode()
+				];
 			} else {
 				$class->setDocComment(static::autogenWarning);
 				$nodes = [$class->getNode()];
+				$filterClass->setDocComment(static::autogenWarning);
+				$nodesFilter = [$filterClass->getNode()];
 			}
-			$o[$className] = (new Standard())->prettyPrintFile($nodes);
+			$o["events"][$className] = (new Standard())->prettyPrintFile($nodes);
+			$o["filters"][$filterClassName] = (new Standard())->prettyPrintFile($nodesFilter);
 		}
 		return $o;
 	}

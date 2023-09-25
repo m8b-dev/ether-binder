@@ -11,8 +11,11 @@ namespace M8B\EtherBinder\RPC\Modules;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Block;
 use M8B\EtherBinder\Common\Hash;
+use M8B\EtherBinder\Common\HashSerializable;
+use M8B\EtherBinder\Common\Log;
 use M8B\EtherBinder\Common\Receipt;
 use M8B\EtherBinder\Common\Transaction;
+use M8B\EtherBinder\Contract\AbstractEvent;
 use M8B\EtherBinder\Exceptions\BadAddressChecksumException;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
@@ -491,7 +494,173 @@ abstract class Eth extends Debug
 		)[0]);
 	}
 
-	/* todo: add filters */
+	/**
+	 * Installs event filterer on rpc node and returns ID of the filter. Accepts few types, but bear in mind that string
+	 * type is always considered to be binary blob.
+	 *
+	 * @param int|BlockParam|null $fromBlock
+	 * @param int|BlockParam|null $toBlock
+	 * @param Address|Address[] $address
+	 * @param string|bool|HashSerializable|string[]|bool[]|HashSerializable[] $topic0
+	 * @param null|string|bool|HashSerializable|string[]|bool[]|HashSerializable[] $topic1
+	 * @param null|string|bool|HashSerializable|string[]|bool[]|HashSerializable[] $topic2
+	 * @param null|string|bool|HashSerializable|string[]|bool[]|HashSerializable[] $topic3
+	 * @return OOGmp
+	 * @throws EthBinderArgumentException
+	 * @throws RPCGeneralException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
+	 */
+	public function ethNewFilter(
+		Address|array $address,
+		null|int|BlockParam $fromBlock,
+		null|int|BlockParam $toBlock,
+		string|bool|HashSerializable|array $topic0,
+		null|string|bool|HashSerializable|array $topic1 = null,
+		null|string|bool|HashSerializable|array $topic2 = null,
+		null|string|bool|HashSerializable|array $topic3 = null
+	): OOGmp {
+		$prms = $this->parseFilterInput($address, $fromBlock, $toBlock, null, $topic0, $topic1, $topic2, $topic3);
+		return new OOGmp($this->runRpc("eth_newFilter", [$prms])[0]);
+	}
+
+	/**
+	 * @param Address|array $address
+	 * @param int|BlockParam|null $fromBlock if $blockHash not null, it MUST be null
+	 * @param int|BlockParam|null $toBlock if $blockHash not null, it MUST be null
+	 * @param Hash|null $blockHash if $fromBlock and/or $toBlock is not null, it MUST be null
+	 * @param string|bool|HashSerializable|array $topic0
+	 * @param string|bool|HashSerializable|array|null $topic1
+	 * @param string|bool|HashSerializable|array|null $topic2
+	 * @param string|bool|HashSerializable|array|null $topic3
+	 * @return Log[]
+	 * @throws BadAddressChecksumException
+	 * @throws EthBinderArgumentException
+	 * @throws EthBinderLogicException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 * @throws RPCGeneralException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
+	 */
+	public function ethGetLogs(
+		Address|array $address,
+		null|int|BlockParam $fromBlock,
+		null|int|BlockParam $toBlock,
+		null|Hash $blockHash,
+		string|bool|HashSerializable|array $topic0,
+		null|string|bool|HashSerializable|array $topic1 = null,
+		null|string|bool|HashSerializable|array $topic2 = null,
+		null|string|bool|HashSerializable|array $topic3 = null
+	): array {
+		$prms = $this->parseFilterInput($address, $fromBlock, $toBlock, $blockHash, $topic0, $topic1, $topic2, $topic3);
+		$o = [];
+		foreach($this->runRpc("eth_getLogs", [$prms]) AS $log) {
+			$o[] = Log::fromRPCArr($log);
+		}
+		return $o;
+	}
+
+	/**
+	 * @throws RPCGeneralException
+	 * @throws RPCNotFoundException
+	 * @throws RPCInvalidResponseParamException
+	 */
+	public function ethGetFilterChanges(OOGmp $filterId): array
+	{
+		return $this->runRpc("eth_getFilterChanges", [$filterId->toString(true)]);
+	}
+
+	/**
+	 * @param OOGmp $filterId
+	 * @return Log[]
+	 * @throws BadAddressChecksumException
+	 * @throws EthBinderLogicException
+	 * @throws InvalidHexException
+	 * @throws InvalidHexLengthException
+	 * @throws RPCGeneralException
+	 * @throws RPCInvalidResponseParamException
+	 * @throws RPCNotFoundException
+	 */
+	public function ethGetFilterLogs(OOGmp $filterId): array
+	{
+		$d = $this->runRpc("eth_getFilterLogs", [$filterId->toString(true)]);
+		$o = [];
+		foreach($d AS $itm) {
+			$o[] = Log::fromRPCArr($itm);
+		}
+		return $o;
+	}
+
+	protected function parseFilterInput(
+		Address|array $address,
+		null|int|BlockParam $fromBlock,
+		null|int|BlockParam $toBlock,
+		null|Hash $blockHash,
+		string|bool|HashSerializable|array $topic0,
+		null|string|bool|HashSerializable|array $topic1 = null,
+		null|string|bool|HashSerializable|array $topic2 = null,
+		null|string|bool|HashSerializable|array $topic3 = null
+	): array
+	{
+		$prms = [];
+		$filters = [null, null, null, null];
+		$inputs = [$topic0, $topic1, $topic2, $topic3];
+
+		/**
+		 * @throws EthBinderArgumentException
+		 */
+		$parseTopic = function(string|bool|HashSerializable $topic): string {
+			if($topic instanceof HashSerializable)
+				return Functions::lPadHex($topic->toHex(), 64, false);
+			if(is_string($topic) && strlen($topic) <= 32)
+				return Functions::lPadHex("0x".bin2hex($topic), 64, false);
+			if($topic === true)
+				return "0x".str_repeat("0", 63)."1";
+			if($topic === false)
+				return "0x".str_repeat("0", 64);
+			throw new EthBinderArgumentException("string is too long. Expected 32 byte binary blob.");
+		};
+
+		foreach($inputs AS $k => $v) {
+			if($v === null)
+				continue;
+			if(!is_array($v)) {
+				$filters[$k] = $parseTopic($v);
+				continue;
+			}
+			$filters[$k] = [];
+			foreach($v AS $subV) {
+				$filters[$k][] = $parseTopic($subV);
+			}
+		}
+
+		while (end($filters) === null || end($filters) === []) {
+			array_pop($filters);
+		}
+		$prms["topics"] = $filters;
+
+		if($blockHash === null) {
+			if($fromBlock !== null) {
+				$prms["fromBlock"] = $this->blockParam($fromBlock);
+			}
+
+			if($toBlock !== null) {
+				$prms["toBlock"] = $this->blockParam($toBlock);
+			}
+		} else {
+			$prms["blockHash"] = $blockHash->toHex(true);
+		}
+
+		if(is_array($address)) {
+			$prms["address"] = [];
+			foreach($address AS $addr)
+				$prms["address"][] = Functions::lPadHex($addr->toHex(true), 64, false);
+		} else {
+			$prms["address"] = $address->checksummed();
+		}
+		return $prms;
+	}
 
 	private function transactionToRPCArr(Transaction $txn, ?Address $from, bool $asMessage = false): array
 	{

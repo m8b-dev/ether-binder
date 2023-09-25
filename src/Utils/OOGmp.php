@@ -9,6 +9,7 @@
 namespace M8B\EtherBinder\Utils;
 
 use GMP;
+use M8B\EtherBinder\Common\HashSerializable;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 
 /**
@@ -26,7 +27,7 @@ use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
  *
  * @author DubbaThony
  */
-class OOGmp
+class OOGmp implements HashSerializable
 {
 	private GMP $gmp;
 
@@ -263,5 +264,37 @@ class OOGmp
 		if(is_int($b))
 			$b = gmp_init($b);
 		return new static($b);
+	}
+
+	/**
+	 * Alias to toString() to fulfil HashSerializable interface
+	 *
+	 * @return string
+	 */
+	public function toHex(): string
+	{
+		return $this->toString(true, false);
+	}
+
+	/**
+	 * Static alias to constructor to fulfil HashSerializable interface
+	 *
+	 * @param string $hex
+	 * @return OOGmp
+	 */
+	public static function fromHex(string $hex): static
+	{
+		return new static($hex, 16);
+	}
+
+	/**
+	 * Static alias to constructor to fulfil HashSerializable interface
+	 *
+	 * @param string $bin
+	 * @return OOGmp
+	 */
+	public static function fromBin(string $bin): static
+	{
+		return static::fromHex(bin2hex($bin));
 	}
 }

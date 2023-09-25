@@ -19,7 +19,7 @@ like you would with [geth's abigen](https://geth.ethereum.org/docs/tools/abigen)
 Just use Composer. Install the alpha version for now.
 
 ```shell
-composer require m8b/ether-binder:v0.0.4-alpha
+composer require m8b/ether-binder:v0.0.5-alpha
 ```
 
 ## 📖 Documentation
@@ -49,7 +49,7 @@ composer require m8b/ether-binder:v0.0.4-alpha
 | Documentation (in-code)                   | ✅ Done                     |
 | Documentation (generated from in-code)    | ✅ Done                     |
 | Documentation (standalone)                | ✅ Done                     |
-| RPC Net_ filters                          | ⏳ In progress              |
+| RPC Net_ filters                          | ✅ Done                     |
 | Wallet (pk .json)                         | ⚠️ Planned as separate lib |
 
 ### A Note on JSON Keystore

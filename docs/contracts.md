@@ -193,7 +193,7 @@ params start from second param.
 
 # Reading events
 
-Ether Binder has 2 ways to parse events.
+Ether Binder has 3 ways to parse events.
 
 One way is to parse a specific event from Log
 ```php
@@ -207,13 +207,38 @@ print_r([
 ]);
 ```
 
-Another way is to parse all events from Receipt
+Second way is to parse all events from Receipt
 ```php
 $hash = \M8B\EtherBinder\Common\Hash::fromHex("0x....");
 $receipt = $rpc->ethGetTransactionReceipt($hash);
 $events = \Contracts\ERC20::getEventsFromReceipt($receipt->logs);
 var_dump($events);
 ```
+
+Third way is to use filter binding.
+**NOTE:** After getting constructed, it does not install filter on RPC, and therefore the events listening didn't start
+yet. At this point you can additionally configure the object with `setFromBlock` and `setToBlock` methods to set filter's
+start and end. To install filter either start fetching with `parseFetchNext` or call `installFilter`. Note that after doing
+so, the `setFromBlock` and `setToBlock` methods will throw exceptions. To set new from / to values, instantiate new filter.
+
+The binding for parameters accepts rpc and contract address, and then the indexed params from event. Event dependent
+params can be null (to accept any event) or array (to set up OR filter for this variable). If array is provided, all
+items must be of same type as single item typing, otherwise an exception will be thrown.
+
+`fetchNext()` will return next known event, or null if no more events were found
+ 
+```php
+$recipient = \M8B\EtherBinder\Common\Address::fromHex("0x....");
+$filter = new \M8B\EtherBinder\Test\ERC20FilterTransfer($rpc, $address, $key->toAddress(), null);
+$filter->installFilter();
+$token->transfer($recipient, \M8B\EtherBinder\Utils\WeiFormatter::fromHuman(1));
+
+while(($transfer = $filter->fetchNext()) !== null) {
+	echo "got event ".$transfer->getTo()->checksummed()." => ".$transfer->getFrom()
+		.", val=".WeiFormatter::fromWei($transfer->getValue()->toString(), 5). PHP_EOL;
+}
+```
+
 
 # Influencing gas prices of binding's transactions
 
