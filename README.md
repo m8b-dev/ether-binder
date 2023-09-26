@@ -54,8 +54,9 @@ composer require m8b/ether-binder:v0.1.0-beta
 
 ### A Note on JSON Keystore
 
-Due to performance constraints with scrypt in PHP, JSON keystore support is planned as a separate library.
-[Learn More](https://m8b-dev.github.io/ether-binder/jsonkeystore.md)
+Due to performance constraints with scrypt in PHP, JSON keystore support is a library, which requires `scrypt` pecl extension.
+- [Packagist](https://packagist.org/packages/m8b/ethbnd-keystore)
+- [Github](https://github.com/m8b-dev/ether-binder-json-keystore)
 
 ## 📜 License
 Mozilla Public License 2.0
