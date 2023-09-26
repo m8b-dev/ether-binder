@@ -16,10 +16,10 @@ like you would with [geth's abigen](https://geth.ethereum.org/docs/tools/abigen)
 
 ## 💾 Installation
 
-Just use Composer. Install the alpha version for now.
+Just use Composer. Install the beta version for now.
 
 ```shell
-composer require m8b/ether-binder:v0.0.5-alpha
+composer require m8b/ether-binder:v0.1.0-beta
 ```
 
 ## 📖 Documentation
@@ -29,28 +29,28 @@ composer require m8b/ether-binder:v0.0.5-alpha
 
 ## 🚧 Status
 
-> **Caution**: The library is still in its early stages. Perfect for tinkering but not ready for prime time.
+> **Caution**: The library is still in its pre-release stage. Perfect for tinkering but not ready for prime time.
 
 ### Feature Board
 
-| feature                                   | status                     |
-|-------------------------------------------|----------------------------|
-| RPC HTTP                                  | ✅ Done                     |
-| Transactions, serializing / deserializing | ✅ Done                     |
-| RLP encoder / decoder                     | ✅ Done                     |
-| RPC Eth_                                  | ✅ Done                     |
-| Signing txn                               | ✅ Done                     |
-| RPC Net_                                  | ✅ Done                     |
-| RPC Web3_                                 | ✅ Done                     |
-| Wallet (pk raw)                           | ✅ Done                     |
-| Wallet (pk mnemonic)                      | ✅ Done                     |
-| Signing msg                               | ✅ Done                     |
-| Contract bindings (akin to abigen)        | ✅ Done                     |
-| Documentation (in-code)                   | ✅ Done                     |
-| Documentation (generated from in-code)    | ✅ Done                     |
-| Documentation (standalone)                | ✅ Done                     |
-| RPC Net_ filters                          | ✅ Done                     |
-| Wallet (pk .json)                         | ⚠️ Planned as separate lib |
+| feature                                   | status          |
+|-------------------------------------------|-----------------|
+| RPC HTTP                                  | ✅ Done          |
+| Transactions, serializing / deserializing | ✅ Done          |
+| RLP encoder / decoder                     | ✅ Done          |
+| RPC Eth_                                  | ✅ Done          |
+| Signing txn                               | ✅ Done          |
+| RPC Net_                                  | ✅ Done          |
+| RPC Web3_                                 | ✅ Done          |
+| Wallet (pk raw)                           | ✅ Done          |
+| Wallet (pk mnemonic)                      | ✅ Done          |
+| Signing msg                               | ✅ Done          |
+| Contract bindings (akin to abigen)        | ✅ Done          |
+| Documentation (in-code)                   | ✅ Done          |
+| Documentation (generated from in-code)    | ✅ Done          |
+| Documentation (standalone)                | ✅ Done          |
+| RPC Net_ filters                          | ✅ Done          |
+| Wallet (pk .json)                         | ⚠️ Separate lib |
 
 ### A Note on JSON Keystore
 
