@@ -186,7 +186,7 @@ abstract class Eth extends Debug
 	 * @throws RPCNotFoundException
 	 * @throws RPCInvalidResponseParamException
 	 */
-	public function ethGetTransactionCount(Address $address, int|BlockParam $blockParam = BlockParam::LATEST): OOGmp
+	public function ethGetTransactionCount(Address $address, int|BlockParam $blockParam = BlockParam::PENDING): OOGmp
 	{
 		return new OOGmp($this->runRpc(
 			"eth_getTransactionCount", [$address->toHex(true), $this->blockParam($blockParam)]

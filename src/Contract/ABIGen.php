@@ -113,6 +113,8 @@ HDC;
 
 		foreach($abi AS $abiItem)
 		{
+			if($abiItem["type"] === "receive")
+				continue;
 			$this->{match ($abiItem["type"]){
 				"event"       => "abiEvents",
 				"constructor" => "abiConstructor",
