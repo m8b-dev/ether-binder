@@ -187,7 +187,7 @@ abstract class AbstractContract
 		string                    $constructorParamsSig,
 		#[SensitiveParameter] Key $pk,
 		AbstractRPC               $rpc,
-		array                     $params
+		array                     $params = []
 	): Transaction
 	{
 		$tx = self::getDeployTransaction($constructorParamsSig, $pk, $rpc, $params, null);
@@ -208,7 +208,7 @@ abstract class AbstractContract
 		#[SensitiveParameter] Key $pk,
 		AbstractRPC               $rpc,
 		OOGmp                     $value,
-		array                     $params
+		array                     $params = []
 	): Transaction
 	{
 		$tx = self::getDeployTransaction($constructorParamsSig, $pk, $rpc, $params, $value);
