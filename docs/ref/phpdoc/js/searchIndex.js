@@ -306,6 +306,31 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/M8B-EtherBinder-Common-Hash.html#property_bytes"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\HashSerializable",
+            "name": "HashSerializable",
+            "summary": "Hash\u0020serializable\u0020is\u0020interface\u0020to\u0020mark\u0020classes\u0020that\u0020can\u0020serialize\u0020themselves\u0020into\u0020blob\u0020of\u0020max\u0020size\u0020of\u0020hash\u0020\u0028ie.\u0020fit\nabi\u0020single\u0020slot\u0020that\u0027s\u002032\u0020bytes\u0029",
+            "url": "classes/M8B-EtherBinder-Common-HashSerializable.html"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\HashSerializable\u003A\u003AtoHex\u0028\u0029",
+            "name": "toHex",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-HashSerializable.html#method_toHex"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\HashSerializable\u003A\u003AtoBin\u0028\u0029",
+            "name": "toBin",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-HashSerializable.html#method_toBin"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\HashSerializable\u003A\u003AfromHex\u0028\u0029",
+            "name": "fromHex",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-HashSerializable.html#method_fromHex"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\HashSerializable\u003A\u003AfromBin\u0028\u0029",
+            "name": "fromBin",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-HashSerializable.html#method_fromBin"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Common\\LegacyTransaction",
             "name": "LegacyTransaction",
             "summary": "LegacyTransaction\u0020is\u0020a\u0020class\u0020for\u0020handling\u0020Ethereum\u0020legacy\u0020transactions\u0020\u0028pre\u0020EIP1559\u0029,\u0020with\u0020pre\u0020EIP155\u0020or\u0020post\u0020EIP155\nsupport",
@@ -1721,6 +1746,91 @@ Search.appendIndex(
             "summary": "Parses\u0020an\u0020Ethereum\u0020contract\u0020event\u0020from\u0020a\u0020Log\u0020object\u0020grabbed\u0020from\u0020Receipt.",
             "url": "classes/M8B-EtherBinder-Contract-AbstractEvent.html#method_parseEventFromLog"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter",
+            "name": "AbstractEventFilter",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AeventClassName\u0028\u0029",
+            "name": "eventClassName",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_eventClassName"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AvalidatorTypes\u0028\u0029",
+            "name": "validatorTypes",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_validatorTypes"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AisDone\u0028\u0029",
+            "name": "isDone",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_isDone"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AsetFromBlock\u0028\u0029",
+            "name": "setFromBlock",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_setFromBlock"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AsetToBlock\u0028\u0029",
+            "name": "setToBlock",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_setToBlock"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AinstallFilter\u0028\u0029",
+            "name": "installFilter",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_installFilter"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AparseFetchNext\u0028\u0029",
+            "name": "parseFetchNext",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_parseFetchNext"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AvalidateParams\u0028\u0029",
+            "name": "validateParams",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_validateParams"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003AassertType\u0028\u0029",
+            "name": "assertType",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#method_assertType"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003A\u0024rpc",
+            "name": "rpc",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#property_rpc"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003A\u0024target",
+            "name": "target",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#property_target"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003A\u0024filterParams",
+            "name": "filterParams",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#property_filterParams"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003A\u0024rpcFilter",
+            "name": "rpcFilter",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#property_rpcFilter"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003A\u0024buffer",
+            "name": "buffer",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#property_buffer"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003A\u0024fromBlock",
+            "name": "fromBlock",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#property_fromBlock"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractEventFilter\u003A\u003A\u0024toBlock",
+            "name": "toBlock",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-AbstractEventFilter.html#property_toBlock"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractTuple",
             "name": "AbstractTuple",
             "summary": "Class\u0020that\u0020is\u0020catch\u002Dall\u0020for\u0020all\u0020abi\u0020generated\u0020bindings.\u0020On\u0020its\u0020own\u0020it\u0020has\u0020only\u0020ArrayAccess\u0020store\u0020for\u0020tuple\u0020data,\nbut\u0020its\u0020main\u0020purpose\u0020is\u0020typing.",
@@ -2545,6 +2655,91 @@ Search.appendIndex(
             "name": "web3Sha3KeccakBin",
             "summary": "",
             "url": "classes/M8B-EtherBinder-RPC-Modules-Web3.html#method_web3Sha3KeccakBin"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter",
+            "name": "RPCFilter",
+            "summary": "RPCFilter\u0020is\u0020class\u0020that\u0020represents\u0020installed\u0020filter\u0020on\u0020RPC.\u0020It\u0027s\u0020meant\u0020for\u0020filtering\u0020logs.",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Instantiates\u0020new\u0020RPC\u0020filter.\u0020Uses\u0020same\u0020parameters\u0020as\u0020AbstractRPC\u003A\u003AethNewFilter\u0020and\u0020RPC\u0020instance.",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#method___construct"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003AisDone\u0028\u0029",
+            "name": "isDone",
+            "summary": "If\u0020toBlock\u0020was\u0020defined\u0020to\u0020concrete\u0020block\u0020number,\u0020will\u0020return\u0020false\u0020if\u0020the\u0020last\u0020seen\u0020block\u0020number\u0020is\u0020greater\u0020than\nprovided\u0020toBlock\u0020in\u0020constructor.",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#method_isDone"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003AloadFilterID\u0028\u0029",
+            "name": "loadFilterID",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#method_loadFilterID"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003AfetchNew\u0028\u0029",
+            "name": "fetchNew",
+            "summary": "Fetches\u0020new\u0020logs\u0020from\u0020the\u0020filter",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#method_fetchNew"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003AdoFetchNew\u0028\u0029",
+            "name": "doFetchNew",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#method_doFetchNew"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024lastSeenBlockNumber",
+            "name": "lastSeenBlockNumber",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_lastSeenBlockNumber"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024filterId",
+            "name": "filterId",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_filterId"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024firstPass",
+            "name": "firstPass",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_firstPass"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024rpc",
+            "name": "rpc",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_rpc"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024address",
+            "name": "address",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_address"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024fromBlock",
+            "name": "fromBlock",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_fromBlock"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024toBlock",
+            "name": "toBlock",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_toBlock"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024topic0",
+            "name": "topic0",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_topic0"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024topic1",
+            "name": "topic1",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_topic1"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024topic2",
+            "name": "topic2",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_topic2"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\RPCFilter\u003A\u003A\u0024topic3",
+            "name": "topic3",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-RPCFilter.html#property_topic3"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Utils\\EtherFormats",
             "name": "EtherFormats",

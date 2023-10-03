@@ -10,6 +10,7 @@ var annotated_dup =
           [ "BlockNonce", "classM8B_1_1EtherBinder_1_1Common_1_1BlockNonce.html", "classM8B_1_1EtherBinder_1_1Common_1_1BlockNonce" ],
           [ "Bloom", "classM8B_1_1EtherBinder_1_1Common_1_1Bloom.html", "classM8B_1_1EtherBinder_1_1Common_1_1Bloom" ],
           [ "Hash", "classM8B_1_1EtherBinder_1_1Common_1_1Hash.html", "classM8B_1_1EtherBinder_1_1Common_1_1Hash" ],
+          [ "HashSerializable", "interfaceM8B_1_1EtherBinder_1_1Common_1_1HashSerializable.html", null ],
           [ "LegacyTransaction", "classM8B_1_1EtherBinder_1_1Common_1_1LegacyTransaction.html", "classM8B_1_1EtherBinder_1_1Common_1_1LegacyTransaction" ],
           [ "Log", "classM8B_1_1EtherBinder_1_1Common_1_1Log.html", "classM8B_1_1EtherBinder_1_1Common_1_1Log" ],
           [ "LondonTransaction", "classM8B_1_1EtherBinder_1_1Common_1_1LondonTransaction.html", "classM8B_1_1EtherBinder_1_1Common_1_1LondonTransaction" ],
@@ -38,6 +39,7 @@ var annotated_dup =
           [ "AbstractArrayAccess", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractArrayAccess.html", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractArrayAccess" ],
           [ "AbstractContract", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract" ],
           [ "AbstractEvent", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEvent.html", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEvent" ],
+          [ "AbstractEventFilter", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEventFilter.html", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEventFilter" ],
           [ "AbstractTuple", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractTuple.html", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractTuple" ]
         ] ],
         [ "Crypto", "namespaceM8B_1_1EtherBinder_1_1Crypto.html", [
@@ -86,7 +88,8 @@ var annotated_dup =
           ] ],
           [ "AbstractRPC", "classM8B_1_1EtherBinder_1_1RPC_1_1AbstractRPC.html", "classM8B_1_1EtherBinder_1_1RPC_1_1AbstractRPC" ],
           [ "Compound", "classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html", "classM8B_1_1EtherBinder_1_1RPC_1_1Compound" ],
-          [ "HttpRPC", "classM8B_1_1EtherBinder_1_1RPC_1_1HttpRPC.html", "classM8B_1_1EtherBinder_1_1RPC_1_1HttpRPC" ]
+          [ "HttpRPC", "classM8B_1_1EtherBinder_1_1RPC_1_1HttpRPC.html", "classM8B_1_1EtherBinder_1_1RPC_1_1HttpRPC" ],
+          [ "RPCFilter", "classM8B_1_1EtherBinder_1_1RPC_1_1RPCFilter.html", "classM8B_1_1EtherBinder_1_1RPC_1_1RPCFilter" ]
         ] ],
         [ "Utils", "namespaceM8B_1_1EtherBinder_1_1Utils.html", [
           [ "Functions", "classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html", null ],

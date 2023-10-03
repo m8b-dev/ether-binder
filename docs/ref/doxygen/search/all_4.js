@@ -21,5 +21,6 @@ var searchData=
   ['decoding_20and_20encoding_18',['RLP Decoding and Encoding',['../md_docs_2transactions.html#autotoc_md44',1,'']]],
   ['deployaddress_19',['deployAddress',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#a2c23f6560a8aa5ac716ebdb2ed9750cb',1,'M8B::EtherBinder::Common::Transaction']]],
   ['deploying_20contract_20',['Deploying contract',['../md_docs_2contracts.html#autotoc_md13',1,'']]],
-  ['driver_20class_20tt_20abiencoder_20tt_21',['Using driver class &lt;tt&gt;ABIEncoder&lt;/tt&gt;',['../md_docs_2abi-encoding-internals.html#autotoc_md1',1,'']]]
+  ['dofetchnew_21',['doFetchNew',['../classM8B_1_1EtherBinder_1_1RPC_1_1RPCFilter.html#aa049a5519c5668c77c3737bd913053f5',1,'M8B::EtherBinder::RPC::RPCFilter']]],
+  ['driver_20class_20tt_20abiencoder_20tt_22',['Using driver class &lt;tt&gt;ABIEncoder&lt;/tt&gt;',['../md_docs_2abi-encoding-internals.html#autotoc_md1',1,'']]]
 ];

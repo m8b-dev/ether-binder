@@ -16,11 +16,12 @@ var searchData=
   ['abstractarrayaccess_13',['AbstractArrayAccess',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractArrayAccess.html',1,'M8B::EtherBinder::Contract']]],
   ['abstractcontract_14',['AbstractContract',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html',1,'M8B::EtherBinder::Contract']]],
   ['abstractevent_15',['AbstractEvent',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEvent.html',1,'M8B::EtherBinder::Contract']]],
-  ['abstractmodule_16',['AbstractModule',['../classM8B_1_1EtherBinder_1_1RPC_1_1Modules_1_1AbstractModule.html',1,'M8B::EtherBinder::RPC::Modules']]],
-  ['abstractrpc_17',['AbstractRPC',['../classM8B_1_1EtherBinder_1_1RPC_1_1AbstractRPC.html',1,'M8B::EtherBinder::RPC']]],
-  ['abstractsigningmessage_18',['AbstractSigningMessage',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html',1,'M8B::EtherBinder::Misc']]],
-  ['abstracttuple_19',['AbstractTuple',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractTuple.html',1,'M8B::EtherBinder::Contract']]],
-  ['abstractwallet_20',['AbstractWallet',['../classM8B_1_1EtherBinder_1_1Wallet_1_1AbstractWallet.html',1,'M8B::EtherBinder::Wallet']]],
-  ['accesslisttransaction_21',['AccessListTransaction',['../classM8B_1_1EtherBinder_1_1Common_1_1AccessListTransaction.html',1,'M8B::EtherBinder::Common']]],
-  ['address_22',['Address',['../classM8B_1_1EtherBinder_1_1Common_1_1Address.html',1,'M8B::EtherBinder::Common']]]
+  ['abstracteventfilter_16',['AbstractEventFilter',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEventFilter.html',1,'M8B::EtherBinder::Contract']]],
+  ['abstractmodule_17',['AbstractModule',['../classM8B_1_1EtherBinder_1_1RPC_1_1Modules_1_1AbstractModule.html',1,'M8B::EtherBinder::RPC::Modules']]],
+  ['abstractrpc_18',['AbstractRPC',['../classM8B_1_1EtherBinder_1_1RPC_1_1AbstractRPC.html',1,'M8B::EtherBinder::RPC']]],
+  ['abstractsigningmessage_19',['AbstractSigningMessage',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html',1,'M8B::EtherBinder::Misc']]],
+  ['abstracttuple_20',['AbstractTuple',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractTuple.html',1,'M8B::EtherBinder::Contract']]],
+  ['abstractwallet_21',['AbstractWallet',['../classM8B_1_1EtherBinder_1_1Wallet_1_1AbstractWallet.html',1,'M8B::EtherBinder::Wallet']]],
+  ['accesslisttransaction_22',['AccessListTransaction',['../classM8B_1_1EtherBinder_1_1Common_1_1AccessListTransaction.html',1,'M8B::EtherBinder::Common']]],
+  ['address_23',['Address',['../classM8B_1_1EtherBinder_1_1Common_1_1Address.html',1,'M8B::EtherBinder::Common']]]
 ];

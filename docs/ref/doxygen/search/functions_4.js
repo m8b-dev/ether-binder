@@ -13,5 +13,6 @@ var searchData=
   ['decodehex_10',['decodeHex',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#adf6bba0727461421ece29756ec458010',1,'M8B::EtherBinder::Common::Transaction']]],
   ['decoderlpbin_11',['decodeRLPBin',['../classM8B_1_1EtherBinder_1_1RLP_1_1Decoder.html#a17da9ed888b5b31a9dddc996cfa530ad',1,'M8B::EtherBinder::RLP::Decoder']]],
   ['decoderlphex_12',['decodeRLPHex',['../classM8B_1_1EtherBinder_1_1RLP_1_1Decoder.html#a45418fb21f70b5b4399bd2535e6efffc',1,'M8B::EtherBinder::RLP::Decoder']]],
-  ['deployaddress_13',['deployAddress',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#a2c23f6560a8aa5ac716ebdb2ed9750cb',1,'M8B::EtherBinder::Common::Transaction']]]
+  ['deployaddress_13',['deployAddress',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#a2c23f6560a8aa5ac716ebdb2ed9750cb',1,'M8B::EtherBinder::Common::Transaction']]],
+  ['dofetchnew_14',['doFetchNew',['../classM8B_1_1EtherBinder_1_1RPC_1_1RPCFilter.html#aa049a5519c5668c77c3737bd913053f5',1,'M8B::EtherBinder::RPC::RPCFilter']]]
 ];

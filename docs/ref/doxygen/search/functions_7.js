@@ -2,7 +2,7 @@ var searchData=
 [
   ['gaslimit_0',['gasLimit',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#aef1c9b1963a1e2ab4ee27198a5651175',1,'M8B::EtherBinder::Common::Transaction']]],
   ['gen_1',['gen',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#a5056fa6b2f888f3fba923164efd1d290',1,'M8B::EtherBinder::Contract::ABIGen']]],
-  ['generate_2',['generate',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#a3d907aac842dea6aaeddde26868dc13f',1,'M8B::EtherBinder::Contract::ABIGen']]],
+  ['generate_2',['generate',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#a3d907aac842dea6aaeddde26868dc13f',1,'M8B\EtherBinder\Contract\ABIGen\generate()'],['../classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#a56f2a9c7f2d66507557e5272250700df',1,'M8B\EtherBinder\Crypto\Key\generate()']]],
   ['generateeventclasses_3',['generateEventClasses',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#af761bb47972bb2efd13faf228c77fe8b',1,'M8B::EtherBinder::Contract::ABIGen']]],
   ['generatetuples_4',['generateTuples',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#ac0815c0f14d59bd8d7b5c6a1b6ba1c17',1,'M8B::EtherBinder::Contract::ABIGen']]],
   ['gennew_5',['genNew',['../classM8B_1_1EtherBinder_1_1Wallet_1_1MnemonicWallet.html#adec5e10b49c25d2f78b726ca06427c08',1,'M8B::EtherBinder::Wallet::MnemonicWallet']]],
@@ -15,8 +15,9 @@ var searchData=
   ['getkeyraw_12',['getKeyRaw',['../classM8B_1_1EtherBinder_1_1Wallet_1_1AbstractWallet.html#a55e7827eb2bf62c6a69b50160208f869',1,'M8B::EtherBinder::Wallet::AbstractWallet']]],
   ['getmessage_13',['getMessage',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a26dbb0661f1de746238bd19361299414',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
   ['getnextblockbasefee_14',['getNextBlockBaseFee',['../classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#a6ce90d8912aa993d1811281345f8dcdd',1,'M8B::EtherBinder::Utils::Functions']]],
-  ['getphptypingfromoutputs_15',['getPhpTypingFromOutputs',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#ae9e8e3f7955e69d79842e656ccbe1930',1,'M8B::EtherBinder::Contract::ABIGen']]],
-  ['getphptypingfromtype_16',['getPhpTypingFromType',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#a5740222a32cf81c6fbb45d26b0a7cd1e',1,'M8B::EtherBinder::Contract::ABIGen']]],
-  ['getsignature_17',['getSignature',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a374aa3d2b2148429d2cab5d4a804f1c4',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
-  ['getsigninghash_18',['getSigningHash',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#acb41812fbb3f7ebb1fad576a368efc21',1,'M8B::EtherBinder::Common::Transaction']]]
+  ['getpessimisticblockbasefee_15',['getPessimisticBlockBaseFee',['../classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#abb26f3e22714df50264c030f841013e9',1,'M8B::EtherBinder::Utils::Functions']]],
+  ['getphptypingfromoutputs_16',['getPhpTypingFromOutputs',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#ae9e8e3f7955e69d79842e656ccbe1930',1,'M8B::EtherBinder::Contract::ABIGen']]],
+  ['getphptypingfromtype_17',['getPhpTypingFromType',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#a5740222a32cf81c6fbb45d26b0a7cd1e',1,'M8B::EtherBinder::Contract::ABIGen']]],
+  ['getsignature_18',['getSignature',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a374aa3d2b2148429d2cab5d4a804f1c4',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
+  ['getsigninghash_19',['getSigningHash',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#acb41812fbb3f7ebb1fad576a368efc21',1,'M8B::EtherBinder::Common::Transaction']]]
 ];

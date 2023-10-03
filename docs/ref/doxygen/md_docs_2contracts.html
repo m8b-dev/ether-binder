@@ -194,7 +194,7 @@ Using write functions</h1>
 </div><!-- fragment --><p>If function is payable, first param accepts value wrapped in OOGmp (Ether Binder's big number object), and function params start from second param.</p>
 <h1><a class="anchor" id="autotoc_md17"></a>
 Reading events</h1>
-<p>Ether Binder has 2 ways to parse events.</p>
+<p>Ether Binder has 3 ways to parse events.</p>
 <p>One way is to parse a specific event from Log </p><div class="fragment"><div class="line">$hash = \M8B\EtherBinder\Common\Hash::fromHex(<span class="stringliteral">&quot;0x....&quot;</span>);</div>
 <div class="line">$receipt = $rpc-&gt;ethGetTransactionReceipt($hash);</div>
 <div class="line">$event = \Contracts\ERC20EventTransfer::parseEventFromLog($receipt-&gt;logs[0]);</div>
@@ -203,10 +203,22 @@ Reading events</h1>
 <div class="line">    <span class="stringliteral">&quot;to&quot;</span> =&gt; $event-&gt;getTo()-&gt;checksummed(),</div>
 <div class="line">    <span class="stringliteral">&quot;value&quot;</span> =&gt; $event-&gt;getValue()-&gt;toString()</div>
 <div class="line">]);</div>
-</div><!-- fragment --><p>Another way is to parse all events from Receipt </p><div class="fragment"><div class="line">$hash = \M8B\EtherBinder\Common\Hash::fromHex(<span class="stringliteral">&quot;0x....&quot;</span>);</div>
+</div><!-- fragment --><p>Second way is to parse all events from Receipt </p><div class="fragment"><div class="line">$hash = \M8B\EtherBinder\Common\Hash::fromHex(<span class="stringliteral">&quot;0x....&quot;</span>);</div>
 <div class="line">$receipt = $rpc-&gt;ethGetTransactionReceipt($hash);</div>
 <div class="line">$events = \Contracts\ERC20::getEventsFromReceipt($receipt-&gt;logs);</div>
 <div class="line">var_dump($events);</div>
+</div><!-- fragment --><p>Third way is to use filter binding. <b>NOTE:</b> After getting constructed, it does not install filter on RPC, and therefore the events listening didn't start yet. At this point you can additionally configure the object with <code>setFromBlock</code> and <code>setToBlock</code> methods to set filter's start and end. To install filter either start fetching with <code>parseFetchNext</code> or call <code>installFilter</code>. Note that after doing so, the <code>setFromBlock</code> and <code>setToBlock</code> methods will throw exceptions. To set new from / to values, instantiate new filter.</p>
+<p>The binding for parameters accepts rpc and contract address, and then the indexed params from event. Event dependent params can be null (to accept any event) or array (to set up OR filter for this variable). If array is provided, all items must be of same type as single item typing, otherwise an exception will be thrown.</p>
+<p><code>fetchNext()</code> will return next known event, or null if no more events were found</p>
+<div class="fragment"><div class="line">$recipient = \M8B\EtherBinder\Common\Address::fromHex(<span class="stringliteral">&quot;0x....&quot;</span>);</div>
+<div class="line">$filter = new \M8B\EtherBinder\Test\ERC20FilterTransfer($rpc, $address, $key-&gt;toAddress(), <span class="keyword">null</span>);</div>
+<div class="line">$filter-&gt;installFilter();</div>
+<div class="line">$token-&gt;transfer($recipient, \M8B\EtherBinder\Utils\WeiFormatter::fromHuman(1));</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">while</span>(($transfer = $filter-&gt;fetchNext()) !== <span class="keyword">null</span>) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;got event &quot;</span>.$transfer-&gt;getTo()-&gt;checksummed().<span class="stringliteral">&quot; =&gt; &quot;</span>.$transfer-&gt;getFrom()</div>
+<div class="line">        .<span class="stringliteral">&quot;, val=&quot;</span>.WeiFormatter::fromWei($transfer-&gt;getValue()-&gt;toString(), 5). PHP_EOL;</div>
+<div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md18"></a>
 Influencing gas prices of binding's transactions</h1>
 <p>Binding has static variable <code>AbstractContract::$transactionFeesPercentageBump</code>.</p>

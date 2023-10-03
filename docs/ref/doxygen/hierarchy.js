@@ -19,6 +19,7 @@ var hierarchy =
       ] ]
     ] ],
     [ "M8B\\EtherBinder\\Contract\\AbstractContract", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html", null ],
+    [ "M8B\\EtherBinder\\Contract\\AbstractEventFilter", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEventFilter.html", null ],
     [ "M8B\\EtherBinder\\RPC\\Modules\\AbstractModule", "classM8B_1_1EtherBinder_1_1RPC_1_1Modules_1_1AbstractModule.html", [
       [ "M8B\\EtherBinder\\RPC\\Modules\\Debug", "classM8B_1_1EtherBinder_1_1RPC_1_1Modules_1_1Debug.html", [
         [ "M8B\\EtherBinder\\RPC\\Modules\\Eth", "classM8B_1_1EtherBinder_1_1RPC_1_1Modules_1_1Eth.html", [
@@ -64,10 +65,14 @@ var hierarchy =
     [ "M8B\\EtherBinder\\Misc\\EIP1559Config", "classM8B_1_1EtherBinder_1_1Misc_1_1EIP1559Config.html", null ],
     [ "M8B\\EtherBinder\\RLP\\Encoder", "classM8B_1_1EtherBinder_1_1RLP_1_1Encoder.html", null ],
     [ "M8B\\EtherBinder\\Utils\\Functions", "classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html", null ],
+    [ "M8B\\EtherBinder\\Common\\HashSerializable", "interfaceM8B_1_1EtherBinder_1_1Common_1_1HashSerializable.html", [
+      [ "M8B\\EtherBinder\\Common\\Hash", "classM8B_1_1EtherBinder_1_1Common_1_1Hash.html", null ],
+      [ "M8B\\EtherBinder\\Utils\\OOGmp", "classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html", null ]
+    ] ],
     [ "M8B\\EtherBinder\\Crypto\\Key", "classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html", null ],
     [ "M8B\\EtherBinder\\Common\\Log", "classM8B_1_1EtherBinder_1_1Common_1_1Log.html", null ],
-    [ "M8B\\EtherBinder\\Utils\\OOGmp", "classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html", null ],
     [ "M8B\\EtherBinder\\Common\\Receipt", "classM8B_1_1EtherBinder_1_1Common_1_1Receipt.html", null ],
+    [ "M8B\\EtherBinder\\RPC\\RPCFilter", "classM8B_1_1EtherBinder_1_1RPC_1_1RPCFilter.html", null ],
     [ "M8B\\EtherBinder\\Common\\SolidityFunction", "classM8B_1_1EtherBinder_1_1Common_1_1SolidityFunction.html", null ],
     [ "M8B\\EtherBinder\\Common\\ValidatorWithdrawal", "classM8B_1_1EtherBinder_1_1Common_1_1ValidatorWithdrawal.html", null ],
     [ "M8B\\EtherBinder\\Utils\\WeiFormatter", "classM8B_1_1EtherBinder_1_1Utils_1_1WeiFormatter.html", null ],

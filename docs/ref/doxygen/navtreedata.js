@@ -133,8 +133,8 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "classM8B_1_1EtherBinder_1_1Contract_1_1AbiTypes_1_1AbiBytes.html#a8b2f251197a25325141c4d1c31ff3979",
-"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#af79bf564beea75c7be75315ecc803449",
-"functions_func_w.html"
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#ab15035f8987e760ac007ec4df339407d",
+"classM8B_1_1EtherBinder_1_1Wallet_1_1AbstractWallet.html#a1db886320364abe077b40a7cd8a43cb2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
