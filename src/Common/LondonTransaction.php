@@ -48,7 +48,7 @@ class LondonTransaction extends Transaction
 	private function internalEncodeBin(bool $signing, ?int $signingChainID): string
 	{
 		$nonce       = "0x".dechex($this->nonce);
-		$gasFeePrice = $this->gasPrice->toString(true);
+		$gasFeePrice = $this->gasPrice->add($this->gasFeeTip)->toString(true);
 		$gasLimit    = "0x".dechex($this->gas);
 		$to          = $this->to?->toHex();
 		$value       = $this->value->toString(true);
@@ -133,8 +133,8 @@ class LondonTransaction extends Transaction
 
 		$this->setDataHex($data);
 		$this->nonce             = hexdec($nonce);
-		$this->gasPrice          = new OOGmp($maxFeePerGas);
 		$this->gasFeeTip         = new OOGmp($maxPriorityFeePerGas);
+		$this->gasPrice          = (new OOGmp($maxFeePerGas))->sub($this->gasFeeTip);
 		$this->gas               = hexdec(substr($gasLimit, 2));
 		$this->chainId           = hexdec(substr($chainId, 2));
 		$this->to                = Address::fromHex($destination);
@@ -297,9 +297,9 @@ class LondonTransaction extends Transaction
 			->mul($bumpFeePercentage + 100)->div(100);
 		$tip = $rpc->calcAvgTip()->mul($bumpFeePercentage + 100)->div(100);
 
-		$this->setGasLimit($gas);
-		$this->setBaseFeeCap($base);
-		return $this->setGasFeeTip($tip);
+		return $this->setGasLimit($gas)
+			->setBaseFeeCap($base)
+			->setGasFeeTip($tip);
 	}
 
 	/**
