@@ -125,7 +125,7 @@ class RPCFilter
 			$o = $this->doFetchNew();
 		} catch(RPCGeneralException $e) {
 			if($e->getMessage() == "filter not found") {
-				$this->loadFilterID($this->filterId > 0);
+				$this->loadFilterID($this->filterId->gt(0));
 				$o = $this->doFetchNew();
 			} else {
 				throw $e;
