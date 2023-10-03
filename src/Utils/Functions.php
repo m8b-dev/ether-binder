@@ -104,6 +104,33 @@ abstract class Functions {
 	}
 
 	/**
+	 * Returns worst case scenario base fee for block currentBlock + blocksAhead. Useful for estimating base fee for
+	 * transactions. Since the fee is base fee, it shouldn't matter if it's overestimated, since consensus will prevent
+	 * spending surplus
+	 *
+	 * @param Block $previous
+	 * @param int $blocksAhead
+	 * @param EIP1559Config|null $config
+	 * @return OOGmp
+	 */
+	public static function getPessimisticBlockBaseFee(Block $previous, int $blocksAhead, ?EIP1559Config $config = null): OOGmp
+	{
+		$config = $config ?? EIP1559Config::sepolia();
+		$next = static::getNextBlockBaseFee($previous, $config);
+		if($blocksAhead <= 1)
+			return $next;
+		for($i = 1; $i < $blocksAhead; $i++) {
+			$block                = new Block();
+			$block->number        = $previous->number + $i;
+			$block->gasLimit      = $previous->gasLimit;
+			$block->gasUsed       = $block->gasLimit;
+			$block->baseFeePerGas = $next;
+			$next                 = static::getNextBlockBaseFee($block, $config);
+		}
+		return $next;
+	}
+
+	/**
 	 * Calculates the base fee for the next block in an EIP1559 compatible chain.
 	 *
 	 * @param Block $previous The previous block.

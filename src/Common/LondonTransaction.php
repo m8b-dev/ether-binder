@@ -291,10 +291,10 @@ class LondonTransaction extends Transaction
 	public function useRpcEstimatesWithBump(AbstractRPC $rpc, ?Address $from, int $bumpGasPercentage, int $bumpFeePercentage): static
 	{
 		$gas   = ($rpc->ethEstimateGas($this, $from) * ($bumpFeePercentage + 100)) / 100;
-		$base  = Functions::getNextBlockBaseFee($rpc->ethGetBlockByNumber(), EIP1559Config::sepolia() /* using sepolia as only difference
- 				 for this config is start block, which is 0. This function is expected to be called on London transaction
-                 for London-enabled chains, regardless of starting block */)
-			->mul($bumpFeePercentage + 100)->div(100);
+		$base  = Functions::getPessimisticBlockBaseFee($rpc->ethGetBlockByNumber(), 3, EIP1559Config::sepolia()
+		         /* using sepolia as only difference for this config is start block, which is 0. This function is expected
+		            to be called on London transaction for London-enabled chains, regardless of starting block */
+		)->mul($bumpFeePercentage + 100)->div(100);
 		$tip = $rpc->calcAvgTip()->mul($bumpFeePercentage + 100)->div(100);
 
 		return $this->setGasLimit($gas)
