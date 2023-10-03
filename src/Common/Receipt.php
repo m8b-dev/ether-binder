@@ -33,6 +33,7 @@ class Receipt
 	public OOGmp $effectiveGasPrice;
 	public int $gasUsed;
 	public ?Address $contractAddress = null;
+	/** @var Log[] */
 	public array $logs = [];
 	public Bloom $logsBloom;
 	public TransactionType $type;
