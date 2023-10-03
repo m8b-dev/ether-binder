@@ -120,4 +120,20 @@ class Key
 		$sig->v = new OOGmp($got->recoveryParam);
 		return $sig;
 	}
+
+	/**
+	 * Generates new random key using openssl for random bytes. Triggers E_USER_WARNING if weak entropy was used.
+	 *
+	 * @return static
+	 */
+	public static function generate(): static
+	{
+		$strong = false;
+		$key = openssl_random_pseudo_bytes(32, $strong);
+		if(!$strong) {
+			trigger_error(E_USER_WARNING, "openssl_random_pseudo_bytes() used weak entropy");
+		}
+
+		return new static(bin2hex($key));
+	}
 }
