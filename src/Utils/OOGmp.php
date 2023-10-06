@@ -11,6 +11,7 @@ namespace M8B\EtherBinder\Utils;
 use GMP;
 use M8B\EtherBinder\Common\HashSerializable;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
 
 /**
  * OOGmp is a utility class that wraps PHP's GMP library for working with arbitrary-size integers.
@@ -132,13 +133,11 @@ class OOGmp implements HashSerializable
 	 *
 	 * @param int|null $lpad0 Number of zeros to pad on the left.
 	 * @return string The binary string representation of the GMP number.
+	 * @throws InvalidHexException
 	 */
 	public function toBin(?int $lpad0 = null): string
 	{
-		$hex = $this->toString(true, true);
-		if(strlen($hex) % 2 != 0)
-			$hex = "0".$hex;
-		$bin = hex2bin($hex);
+		$bin = Functions::hex2bin($this->toString(true, true));
 		return $lpad0 === null ? $bin
 			: str_pad($bin, $lpad0, chr(0), STR_PAD_LEFT);
 	}

@@ -9,6 +9,7 @@
 namespace M8B\EtherBinder\Contract\AbiTypes;
 
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**

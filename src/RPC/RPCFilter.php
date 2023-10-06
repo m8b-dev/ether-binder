@@ -29,8 +29,6 @@ class RPCFilter
 	/**
 	 * Instantiates new RPC filter. Uses same parameters as AbstractRPC::ethNewFilter and RPC instance.
 	 *
-	 * @see AbstractRPC::ethNewFilter()
-	 *
 	 * @param AbstractRPC $rpc
 	 * @param Address|array $address
 	 * @param int|BlockParam|null $fromBlock
@@ -43,6 +41,9 @@ class RPCFilter
 	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws RPCNotFoundException
+	 * @throws EthBinderLogicException
+	 * @see AbstractRPC::ethNewFilter()
+	 *
 	 */
 	public function __construct(
 		protected AbstractRPC $rpc,
@@ -75,6 +76,7 @@ class RPCFilter
 	 * @throws RPCNotFoundException
 	 * @throws EthBinderArgumentException
 	 * @throws RPCInvalidResponseParamException
+	 * @throws EthBinderLogicException
 	 */
 	protected function loadFilterID(bool $useInternalCounter = true): void
 	{

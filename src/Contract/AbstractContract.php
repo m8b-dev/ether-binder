@@ -23,6 +23,7 @@ use M8B\EtherBinder\Exceptions\RPCInvalidResponseParamException;
 use M8B\EtherBinder\Exceptions\RPCNotFoundException;
 use M8B\EtherBinder\Exceptions\UnexpectedUnsignedException;
 use M8B\EtherBinder\RPC\AbstractRPC;
+use M8B\EtherBinder\Utils\Functions;
 use M8B\EtherBinder\Utils\OOGmp;
 use SensitiveParameter;
 
@@ -236,7 +237,7 @@ abstract class AbstractContract
 			: new LegacyTransaction();
 		return $tx->setTo(null)
 			->setValue(new OOGmp(0))
-			->setDataBin(hex2bin(static::bytecode()).ABIEncoder::encode($constructorParamsSig, $params, false))
+			->setDataBin(Functions::hex2bin(static::bytecode()).ABIEncoder::encode($constructorParamsSig, $params, false))
 			->setNonce($rpc->ethGetTransactionCount($pk->toAddress())->toInt())
 			->setValue($value ?? new OOGmp(0))
 			->useRpcEstimatesWithBump(
@@ -254,9 +255,7 @@ abstract class AbstractContract
 	 */
 	protected function parseOutput(string $output, string $type, ?array $tupleReplacements = null): mixed
 	{
-		if(str_starts_with($output, "0x"))
-			$output = substr($output, 2);
-		$output = hex2bin($output);
+		$output = Functions::hex2bin($output);
 		$ret    = ABIEncoder::decode($type, $output)->unwrapToPhpFriendlyVals($tupleReplacements);
 		if(!is_array($ret))
 			throw new EthBinderLogicException("got parse output without top level tuple");

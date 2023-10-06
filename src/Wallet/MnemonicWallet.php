@@ -16,8 +16,10 @@ use FurqanSiddiqui\BIP39\Mnemonic;
 use FurqanSiddiqui\BIP39\WordList;
 use M8B\EtherBinder\Crypto\EC;
 use M8B\EtherBinder\Crypto\Key;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\MnemonicWalletInternalException;
 use M8B\EtherBinder\Exceptions\WrongMnemonicPathException;
+use M8B\EtherBinder\Utils\Functions;
 use M8B\EtherBinder\Utils\OOGmp;
 use SensitiveParameter;
 
@@ -41,6 +43,7 @@ class MnemonicWallet extends AbstractWallet
 	 * @param MnemonicLanguage|string $language Language for the mnemonic words.
 	 * @throws WrongMnemonicPathException
 	 * @throws MnemonicWalletInternalException
+	 * @throws InvalidHexException
 	 */
 	public function __construct(
 		#[SensitiveParameter] string|array $words,
@@ -58,7 +61,7 @@ class MnemonicWallet extends AbstractWallet
 			$words = BIP39::Words($words, $language);
 			$seed  = (new Mnemonic(WordList::English(), $words->entropy, $words->binaryChunks))
 				     ->generateSeed($passPhrase);
-			$key   = hex2bin(hash_hmac('sha512', $seed, "Bitcoin seed"));
+			$key   = Functions::hex2bin(hash_hmac('sha512', $seed, "Bitcoin seed"));
 		} catch(WordListException|MnemonicException $e) {
 			throw new MnemonicWalletInternalException($e->getMessage(), $e->getCode(), $e);
 		}
@@ -118,6 +121,9 @@ class MnemonicWallet extends AbstractWallet
 			str_pad($x, 32, "\x0", STR_PAD_LEFT);
 	}
 
+	/**
+	 * @throws InvalidHexException
+	 */
 	private function deriveChild(#[SensitiveParameter] string $privateKeyBin, #[SensitiveParameter]  string $chainCodeBin, int $childNum): array
 	{
 		$keyPair = EC::ec()->keyFromPrivate(bin2hex($privateKeyBin));
@@ -127,7 +133,7 @@ class MnemonicWallet extends AbstractWallet
 			$blob = $this->serializeCurvePoint($keyPair);
 		}
 
-		$blob   .= hex2bin(str_pad(dechex($childNum), 8, "0", STR_PAD_LEFT));
+		$blob   .= Functions::hex2bin(str_pad(dechex($childNum), 8, "0", STR_PAD_LEFT));
 		$hmacOut = hash_hmac('sha512', $blob, $chainCodeBin, true);
 		$l       = substr($hmacOut, 0, 32);
 		$r       = substr($hmacOut, 32);

@@ -12,6 +12,7 @@ use ArrayAccess;
 use M8B\EtherBinder\Contract\AbstractTuple;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**
@@ -89,6 +90,9 @@ class AbiTuple extends AbstractABIValue implements ArrayAccess
 	}
 
 
+	/**
+	 * @throws InvalidHexException
+	 */
 	protected function tail(AbstractABIValue $val): string
 	{
 		if($val->isDynamic()) {
@@ -97,6 +101,9 @@ class AbiTuple extends AbstractABIValue implements ArrayAccess
 		return "";
 	}
 
+	/**
+	 * @throws InvalidHexException
+	 */
 	protected function headLen(AbstractABIValue $val): int
 	{
 		if($val->isDynamic()) {

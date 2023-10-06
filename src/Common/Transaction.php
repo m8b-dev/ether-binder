@@ -28,6 +28,7 @@ use M8B\EtherBinder\RLP\Decoder;
 use M8B\EtherBinder\RLP\Encoder;
 use M8B\EtherBinder\RPC\AbstractRPC;
 use M8B\EtherBinder\Utils\EtherFormats;
+use M8B\EtherBinder\Utils\Functions;
 use M8B\EtherBinder\Utils\OOGmp;
 use M8B\EtherBinder\Utils\WeiFormatter;
 
@@ -112,9 +113,7 @@ abstract class Transaction implements BinarySerializableInterface
 	 */
 	public static function decodeHex(string $rlp): static
 	{
-		if(str_starts_with($rlp, "0x"))
-			$rlp = substr($rlp, 2);
-		return static::decodeBin(hex2bin($rlp));
+		return static::decodeBin(Functions::hex2bin($rlp));
 	}
 
 	/**
@@ -436,6 +435,7 @@ abstract class Transaction implements BinarySerializableInterface
 	 * @param string $dataHex Data in hex format.
 	 * @return static
 	 * @throws HexBlobNotEvenException
+	 * @throws InvalidHexException
 	 */
 	public function setDataHex(string $dataHex): static
 	{
@@ -443,7 +443,7 @@ abstract class Transaction implements BinarySerializableInterface
 			$dataHex = substr($dataHex, 2);
 		if(strlen($dataHex) % 2 !== 0)
 			throw new HexBlobNotEvenException();
-		return $this->setDataBin(hex2bin($dataHex));
+		return $this->setDataBin(Functions::hex2bin($dataHex));
 	}
 
 	/**

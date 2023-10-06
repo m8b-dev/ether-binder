@@ -131,6 +131,26 @@ abstract class Functions {
 	}
 
 	/**
+	 * 0x tolerant, exceptions-compatible hex2bin() drop-in replacement, that never returns false, handles empty strings
+	 * and prefixes "0" if odd amount of characters is spotted.
+	 *
+	 * @param string $hex
+	 * @return string Binary blob
+	 * @throws InvalidHexException
+	 */
+	public static function hex2bin(string $hex): string
+	{
+		$hex = str_starts_with($hex, "0x") ? substr($hex, 2) : $hex;
+		if(strlen($hex) == 0)
+			return "";
+		if(!ctype_xdigit($hex))
+			throw new InvalidHexException("got unexpected character in hex");
+		if(strlen($hex) % 2 != 1)
+			$hex = "0".$hex;
+		return hex2bin($hex);
+	}
+
+	/**
 	 * Calculates the base fee for the next block in an EIP1559 compatible chain.
 	 *
 	 * @param Block $previous The previous block.

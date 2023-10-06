@@ -40,10 +40,7 @@ class Hash implements BinarySerializableInterface, HashSerializable
 	public static function fromHex(string $hex): static
 	{
 		Functions::mustHexLen($hex, static::dataSizeBytes * 2);
-		if(str_starts_with($hex, "0x")) {
-			$hex = substr($hex, 2);
-		}
-		return new static(hex2bin($hex));
+		return new static(Functions::hex2bin($hex));
 	}
 
 	/**

@@ -15,6 +15,7 @@ use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
 use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidHexLengthException;
+use M8B\EtherBinder\Utils\Functions;
 
 /**
  * Log represents an Ethereum log entry, emitted by smart contracts.
@@ -65,10 +66,7 @@ class Log
 		// data is one big blob of 32-bytes segments (aka hash) representing unindexed params. For future convinience
 		//  we will split it
 
-		if(str_starts_with($rpcArr["data"], "0x"))
-			$data = hex2bin(substr($rpcArr["data"], 2));
-		else
-			$data = hex2bin($rpcArr["data"]);
+		$data = Functions::hex2bin($rpcArr["data"]);
 		$static->data = $data;
 		return $static;
 	}

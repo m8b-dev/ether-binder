@@ -9,6 +9,8 @@
 namespace M8B\EtherBinder\Crypto;
 
 use M8B\EtherBinder\Common\BinarySerializableInterface;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
+use M8B\EtherBinder\Utils\Functions;
 use M8B\EtherBinder\Utils\OOGmp;
 
 /**
@@ -51,10 +53,11 @@ class Signature implements BinarySerializableInterface
 	 *
 	 * @param string $hex Hex-encoded signature
 	 * @return static Signature object
+	 * @throws InvalidHexException
 	 */
 	public static function fromHex(string $hex): static
 	{
-		return static::fromBin(hex2bin(
+		return static::fromBin(Functions::hex2bin(
 			str_starts_with($hex, "0x") ? substr($hex, 2) : $hex
 		));
 	}

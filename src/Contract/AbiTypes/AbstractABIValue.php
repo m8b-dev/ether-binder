@@ -11,6 +11,7 @@ namespace M8B\EtherBinder\Contract\AbiTypes;
 use M8B\EtherBinder\Exceptions\EthBinderArgumentException;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
 use M8B\EtherBinder\Exceptions\EthBinderRuntimeException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
 use M8B\EtherBinder\Exceptions\NotSupportedException;
 
@@ -92,6 +93,7 @@ abstract class AbstractABIValue
 	 * Encodes the ABI value to its binary representation (recursive).
 	 *
 	 * @return string The binary-encoded string.
+	 * @throws InvalidHexException
 	 */
 	abstract public function encodeBin(): string;
 

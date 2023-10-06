@@ -510,6 +510,7 @@ abstract class Eth extends Debug
 	 * @throws RPCGeneralException
 	 * @throws RPCInvalidResponseParamException
 	 * @throws RPCNotFoundException
+	 * @throws EthBinderLogicException
 	 */
 	public function ethNewFilter(
 		Address|array $address,
@@ -592,6 +593,10 @@ abstract class Eth extends Debug
 		return $o;
 	}
 
+	/**
+	 * @throws EthBinderLogicException
+	 * @throws EthBinderArgumentException
+	 */
 	protected function parseFilterInput(
 		Address|array $address,
 		null|int|BlockParam $fromBlock,
