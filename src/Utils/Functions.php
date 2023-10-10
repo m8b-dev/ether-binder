@@ -145,7 +145,7 @@ abstract class Functions {
 			return "";
 		if(!ctype_xdigit($hex))
 			throw new InvalidHexException("got unexpected character in hex");
-		if(strlen($hex) % 2 != 1)
+		if(strlen($hex) % 2 == 1)
 			$hex = "0".$hex;
 		return hex2bin($hex);
 	}
