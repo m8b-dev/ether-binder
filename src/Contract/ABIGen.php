@@ -113,7 +113,8 @@ HDC;
 
 		foreach($abi AS $abiItem)
 		{
-			if($abiItem["type"] === "receive")
+			// todo: support for type error reverts in form of thrown bound exceptions.
+			if($abiItem["type"] === "receive" || $abiItem["type"] === "error")
 				continue;
 			$this->{match ($abiItem["type"]){
 				"event"       => "abiEvents",

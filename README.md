@@ -19,7 +19,7 @@ like you would with [geth's abigen](https://geth.ethereum.org/docs/tools/abigen)
 Just use Composer. Install the beta version for now.
 
 ```shell
-composer require m8b/ether-binder:v0.1.2-beta
+composer require m8b/ether-binder:v0.1.3-beta
 ```
 
 ## 📖 Documentation
