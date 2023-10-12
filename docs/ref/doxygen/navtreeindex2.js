@@ -1,5 +1,13 @@
 var NAVTREEINDEX2 =
 {
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#a94822f2f33f92e664cf1b659c287247b":[12,0,0,0,6,2,30],
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#a97911883d29e22dce567265ce3111c8c":[12,0,0,0,6,2,24],
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#a9e9428318ba3574467d4085e1a3605fa":[12,0,0,0,6,2,29],
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#aa0665afc74ee9eb98aa3ce2397a6b165":[12,0,0,0,6,2,26],
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#aa57df6ad659633d1899f60f5d9e34c7f":[12,0,0,0,6,2,25],
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#aa59d8ecb4287e4f45c8a7c16c1f78ea9":[12,0,0,0,6,2,20],
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#aab3ea12dcc77bc0f700f1f3e1676685f":[12,0,0,0,6,2,4],
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#ab14b344d88fc3f1dc66dd15dcb9e265b":[12,0,0,0,6,2,42],
 "classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#ab15035f8987e760ac007ec4df339407d":[12,0,0,0,6,2,22],
 "classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#ab4c6c1023a174aac1cf70a99871a4edc":[12,0,0,0,6,2,10],
 "classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#ac211e612f5f471708f9fe10672777dfc":[12,0,0,0,6,2,46],
@@ -241,13 +249,5 @@ var NAVTREEINDEX2 =
 "classM8B_1_1EtherBinder_1_1RPC_1_1RPCFilter.html#aa894f08ee366e056e75cc7da73e62399":[12,0,0,0,6,4,2],
 "classM8B_1_1EtherBinder_1_1RPC_1_1RPCFilter.html#acffdd9d00685268835e3e3991b5f1142":[12,0,0,0,6,4,3],
 "classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html":[12,0,0,0,7,0],
-"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html":[12,0,0,0,7,1],
-"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html#a19ad41ead12ef80ea13e372f638b7f09":[12,0,0,0,7,1,2],
-"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html#a3113152f9fcd7aae6fcdfd5abcced3aa":[12,0,0,0,7,1,0],
-"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html#a8803fb24b9ed9b847e4cea61da09e6df":[12,0,0,0,7,1,3],
-"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html#a9f50e4da76480bad6232872b5cd14c1f":[12,0,0,0,7,1,1],
-"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html#ac6cb24f1abf635684bb5f9ea153957cb":[12,0,0,0,7,1,4],
-"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html#add4f75d5345851963153b033a1ca1f7d":[12,0,0,0,7,1,5],
-"classM8B_1_1EtherBinder_1_1Utils_1_1WeiFormatter.html":[12,0,0,0,7,2],
-"classM8B_1_1EtherBinder_1_1Wallet_1_1AbstractWallet.html":[12,0,0,0,8,0]
+"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html":[12,0,0,0,7,1]
 };

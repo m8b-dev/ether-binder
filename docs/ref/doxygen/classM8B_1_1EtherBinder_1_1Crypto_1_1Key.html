@@ -103,6 +103,10 @@ $(document).ready(function(){initNavTree('classM8B_1_1EtherBinder_1_1Crypto_1_1K
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1717e506637a39c70b1b562b79b46dfd" id="r_a1717e506637a39c70b1b562b79b46dfd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#a1717e506637a39c70b1b562b79b46dfd">toHex</a> ()</td></tr>
 <tr class="separator:a1717e506637a39c70b1b562b79b46dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae49a542b35c8b053776e4c5b42438c62" id="r_ae49a542b35c8b053776e4c5b42438c62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#ae49a542b35c8b053776e4c5b42438c62">getPublicHex</a> (bool $with0x=true)</td></tr>
+<tr class="separator:ae49a542b35c8b053776e4c5b42438c62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa54966a01850cfc0e366c215ff2ea306" id="r_aa54966a01850cfc0e366c215ff2ea306"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#aa54966a01850cfc0e366c215ff2ea306">getPublicBin</a> ()</td></tr>
+<tr class="separator:aa54966a01850cfc0e366c215ff2ea306"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa32f5c1c43dfaa47df05434a0891a6b5" id="r_aa32f5c1c43dfaa47df05434a0891a6b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#aa32f5c1c43dfaa47df05434a0891a6b5">toAddress</a> ()</td></tr>
 <tr class="separator:aa32f5c1c43dfaa47df05434a0891a6b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4dbd0632938d20d51d37410aec92cb0" id="r_ae4dbd0632938d20d51d37410aec92cb0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#ae4dbd0632938d20d51d37410aec92cb0">toBin</a> ()</td></tr>
@@ -252,6 +256,57 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Generates new random key using openssl for random bytes. Triggers E_USER_WARNING if weak entropy was used.</p>
 <dl class="section return"><dt>Returns</dt><dd>static </dd></dl>
+
+</div>
+</div>
+<a id="aa54966a01850cfc0e366c215ff2ea306" name="aa54966a01850cfc0e366c215ff2ea306"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa54966a01850cfc0e366c215ff2ea306">&#9670;&#160;</a></span>getPublicBin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">M8B\EtherBinder\Crypto\Key::getPublicBin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns binary blob of public key associated with this private key</p>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidHexException</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae49a542b35c8b053776e4c5b42438c62" name="ae49a542b35c8b053776e4c5b42438c62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae49a542b35c8b053776e4c5b42438c62">&#9670;&#160;</a></span>getPublicHex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">M8B\EtherBinder\Crypto\Key::getPublicHex </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>$with0x</em> = <code>true</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns hex-encoded public key associated with this private key. Does not contain initial "04" prefix.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">bool</td><td class="paramname">$with0x</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
 </div>
 </div>

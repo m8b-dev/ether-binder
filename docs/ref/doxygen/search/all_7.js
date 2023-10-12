@@ -21,7 +21,9 @@ var searchData=
   ['getpessimisticblockbasefee_18',['getPessimisticBlockBaseFee',['../classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#abb26f3e22714df50264c030f841013e9',1,'M8B::EtherBinder::Utils::Functions']]],
   ['getphptypingfromoutputs_19',['getPhpTypingFromOutputs',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#ae9e8e3f7955e69d79842e656ccbe1930',1,'M8B::EtherBinder::Contract::ABIGen']]],
   ['getphptypingfromtype_20',['getPhpTypingFromType',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#a5740222a32cf81c6fbb45d26b0a7cd1e',1,'M8B::EtherBinder::Contract::ABIGen']]],
-  ['getsignature_21',['getSignature',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a374aa3d2b2148429d2cab5d4a804f1c4',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
-  ['getsigninghash_22',['getSigningHash',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#acb41812fbb3f7ebb1fad576a368efc21',1,'M8B::EtherBinder::Common::Transaction']]],
-  ['getting_20data_23',['Getting data',['../md_docs_2utils.html#autotoc_md60',1,'']]]
+  ['getpublicbin_21',['getPublicBin',['../classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#aa54966a01850cfc0e366c215ff2ea306',1,'M8B::EtherBinder::Crypto::Key']]],
+  ['getpublichex_22',['getPublicHex',['../classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#ae49a542b35c8b053776e4c5b42438c62',1,'M8B::EtherBinder::Crypto::Key']]],
+  ['getsignature_23',['getSignature',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a374aa3d2b2148429d2cab5d4a804f1c4',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
+  ['getsigninghash_24',['getSigningHash',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#acb41812fbb3f7ebb1fad576a368efc21',1,'M8B::EtherBinder::Common::Transaction']]],
+  ['getting_20data_25',['Getting data',['../md_docs_2utils.html#autotoc_md60',1,'']]]
 ];

@@ -109,6 +109,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a42b82ea5a70724167864b0a83dfbf111"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb26f3e22714df50264c030f841013e9" id="r_abb26f3e22714df50264c030f841013e9"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#abb26f3e22714df50264c030f841013e9">getPessimisticBlockBaseFee</a> (<a class="el" href="classM8B_1_1EtherBinder_1_1Common_1_1Block.html">Block</a> $previous, int $blocksAhead, ?<a class="el" href="classM8B_1_1EtherBinder_1_1Misc_1_1EIP1559Config.html">EIP1559Config</a> $config=null)</td></tr>
 <tr class="separator:abb26f3e22714df50264c030f841013e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf8e122733c04aaf975d628f854cf50a" id="r_abf8e122733c04aaf975d628f854cf50a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#abf8e122733c04aaf975d628f854cf50a">hex2bin</a> (string $hex)</td></tr>
+<tr class="separator:abf8e122733c04aaf975d628f854cf50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ce90d8912aa993d1811281345f8dcdd" id="r_a6ce90d8912aa993d1811281345f8dcdd"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#a6ce90d8912aa993d1811281345f8dcdd">getNextBlockBaseFee</a> (<a class="el" href="classM8B_1_1EtherBinder_1_1Common_1_1Block.html">Block</a> $previous, <a class="el" href="classM8B_1_1EtherBinder_1_1Misc_1_1EIP1559Config.html">EIP1559Config</a> $config)</td></tr>
 <tr class="separator:a6ce90d8912aa993d1811281345f8dcdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a771d75fda13c53ab3801966b4ceaca80" id="r_a771d75fda13c53ab3801966b4ceaca80"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#a771d75fda13c53ab3801966b4ceaca80">waitForTxReceipt</a> (<a class="el" href="classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html">Transaction</a>|<a class="el" href="classM8B_1_1EtherBinder_1_1Common_1_1Hash.html">Hash</a> $txHash, <a class="el" href="classM8B_1_1EtherBinder_1_1RPC_1_1AbstractRPC.html">AbstractRPC</a> $rpc, int $timeoutSeconds=60, int $intervalMS=500)</td></tr>
@@ -212,6 +214,46 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>OOGmp </dd></dl>
+
+</div>
+</div>
+<a id="abf8e122733c04aaf975d628f854cf50a" name="abf8e122733c04aaf975d628f854cf50a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf8e122733c04aaf975d628f854cf50a">&#9670;&#160;</a></span>hex2bin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static M8B\EtherBinder\Utils\Functions::hex2bin </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>$hex</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>0x tolerant, exceptions-compatible hex2bin() drop-in replacement, that never returns false, handles empty strings and prefixes "0" if odd amount of characters is spotted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$hex</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string Binary blob </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidHexException</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

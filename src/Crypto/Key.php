@@ -14,7 +14,9 @@ use kornrunner\Keccak;
 use M8B\EtherBinder\Common\Address;
 use M8B\EtherBinder\Common\Hash;
 use M8B\EtherBinder\Exceptions\EthBinderLogicException;
+use M8B\EtherBinder\Exceptions\InvalidHexException;
 use M8B\EtherBinder\Exceptions\InvalidLengthException;
+use M8B\EtherBinder\Utils\Functions;
 use M8B\EtherBinder\Utils\OOGmp;
 use SensitiveParameter;
 
@@ -59,6 +61,28 @@ class Key
 	public function toHex(): string
 	{
 		return "0x".$this->keyHex;
+	}
+
+	/**
+	 * Returns hex-encoded public key associated with this private key. Does not contain initial "04" prefix.
+	 *
+	 * @param bool $with0x
+	 * @return string
+	 */
+	public function getPublicHex(bool $with0x = true): string
+	{
+		return ($with0x?"0x":"").substr($this->key->getPublic(false, "hex"), 2);
+	}
+
+	/**
+	 * Returns binary blob of public key associated with this private key
+	 *
+	 * @return string
+	 * @throws InvalidHexException
+	 */
+	public function getPublicBin(): string
+	{
+		return Functions::hex2bin($this->getPublicHex(false));
 	}
 
 	/**

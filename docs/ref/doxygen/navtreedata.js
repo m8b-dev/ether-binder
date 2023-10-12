@@ -132,9 +132,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classM8B_1_1EtherBinder_1_1Contract_1_1AbiTypes_1_1AbiBytes.html#a8b2f251197a25325141c4d1c31ff3979",
-"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#ab15035f8987e760ac007ec4df339407d",
-"classM8B_1_1EtherBinder_1_1Wallet_1_1AbstractWallet.html#a1db886320364abe077b40a7cd8a43cb2"
+"classM8B_1_1EtherBinder_1_1Contract_1_1AbiTypes_1_1AbiBool.html#a7170021048e9dee91955fb58ceb08280",
+"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#a94822f2f33f92e664cf1b659c287247b",
+"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html#a19ad41ead12ef80ea13e372f638b7f09"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
