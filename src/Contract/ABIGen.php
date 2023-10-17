@@ -674,7 +674,7 @@ HDC;
 				}
 				$validators [] = new Assign(
 					$bld->var($name),
-					$bld->methodCall($bld->var("this"), $arr ? "expectIntArrOfSize" : "expectIntOfSize", [
+					$bld->staticCall("self", $arr ? "expectIntArrOfSize" : "expectIntOfSize", [
 						$bld->val($type[0] === "u"),
 						$bld->var($name),
 						$bld->val($bitsCount)])

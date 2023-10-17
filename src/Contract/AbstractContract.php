@@ -343,7 +343,7 @@ abstract class AbstractContract
 	/**
 	 * @throws EthBinderArgumentException
 	 */
-	protected function expectBinarySizeNormalizeString(string $binOrHex, int $length): string
+	protected static function expectBinarySizeNormalizeString(string $binOrHex, int $length): string
 	{
 		if($length == 0 && str_starts_with($binOrHex, "0x") && ctype_xdigit(substr($binOrHex, 2)))
 			return hex2bin(substr($binOrHex, 2));
@@ -361,7 +361,7 @@ abstract class AbstractContract
 	/**
 	 * @throws EthBinderArgumentException
 	 */
-	protected function expectIntOfSize(bool $unsigned, int|OOGmp $value, int $bits): OOGmp
+	protected static function expectIntOfSize(bool $unsigned, int|OOGmp $value, int $bits): OOGmp
 	{
 		if(is_int($value))
 			$value = new OOGmp($value);
@@ -380,7 +380,7 @@ abstract class AbstractContract
 	/**
 	 * @throws EthBinderArgumentException
 	 */
-	protected function expectIntArrOfSize(bool $unsigned, array $value, int $bits): array
+	protected static function expectIntArrOfSize(bool $unsigned, array $value, int $bits): array
 	{
 		$o = [];
 		foreach($value AS $itm) {
