@@ -302,13 +302,13 @@ abstract class AbstractContract
 	 * @throws RPCInvalidResponseParamException
 	 * @throws EthBinderRuntimeException
 	 */
-	private function _mkTxn(string $signature, array $params, bool $careAboutEstims, bool $trimmedSignature = false): Transaction
+	private function _mkTxn(string $signature, array $params, bool $careAboutEstims, bool $trimmedSignature = false, ?OOGmp $value = null): Transaction
 	{
 		$tx = $this->rpc->isLookingLikeLondon() ?
 			new LondonTransaction()
 			: new LegacyTransaction();
 		$tx->setTo($this->contractAddress)
-			->setValue(new OOGmp(0))
+			->setValue($value ?? new OOGmp(0))
 			->setDataBin(ABIEncoder::encode($signature, $params, !$trimmedSignature));
 		return !$careAboutEstims ? $tx : $tx->setNonce(
 			$this->rpc->ethGetTransactionCount($this->getFromAddress())
@@ -330,8 +330,7 @@ abstract class AbstractContract
 	 */
 	protected function mkPayableTxn(string $signature, OOGmp $value, array $params): Transaction
 	{
-		$txn = $this->_mkTxn($signature, $params, true);
-		$txn->setValue($value);
+		$txn = $this->_mkTxn($signature, $params, true, false, $value);
 		if($this->key === null)
 			return $txn;
 		$txn->sign($this->key, $this->rpc->ethChainID());
