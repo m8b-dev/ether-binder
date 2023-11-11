@@ -695,6 +695,10 @@ HDC;
 				$param->setType("\\".SolidityFunction4BytesSignature::class);
 			} elseif($type == "bytes32") {
 				$param->setType("\\".Hash::class);
+				$validators [] = new Assign(
+					$bld->var($name),
+					$bld->methodCall($name, "toBin", [])
+				);
 			} elseif($type == "string") {
 				$param->setType("string");
 			} elseif(str_starts_with($type, "bytes")) {
