@@ -697,7 +697,7 @@ HDC;
 				$param->setType("\\".Hash::class);
 				$validators [] = new Assign(
 					$bld->var($name),
-					$bld->methodCall($name, "toBin", [])
+					$bld->methodCall($bld->var($name), "toBin", [])
 				);
 			} elseif($type == "string") {
 				$param->setType("string");
