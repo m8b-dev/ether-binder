@@ -45,7 +45,7 @@ class LondonTransaction extends Transaction
 	/**
 	 * @throws EthBinderArgumentException
 	 */
-	private function internalEncodeBin(bool $signing, ?int $signingChainID): string
+	protected function internalEncodeBin(bool $signing, ?int $signingChainID): string
 	{
 		$nonce       = "0x".dechex($this->nonce);
 		$gasFeePrice = $this->gasPrice->add($this->gasFeeTip)->toString(true);
@@ -114,6 +114,13 @@ class LondonTransaction extends Transaction
 
 	protected function blanksFromRPCArr(array $rpcArr): void
 	{
+		// RPCs mix up a bit receipt with transaction - by presenting gasPrice it's possible to get actual gas price
+		// that should be in receipt, not "raw" transaction itself (as during creation of transaction, that block didn't exist yet)
+		// if maxFeePerGas field exists, we know that's the case.
+		if(!empty($rpcArr["maxFeePerGas"])) {
+			$this->gasPrice = new OOGmp($rpcArr["maxFeePerGas"]);
+			$this->gasPrice = $this->gasPrice->sub(new OOGmp($rpcArr["maxPriorityFeePerGas"]));
+		}
 		$this->gasFeeTip  = new OOGmp($rpcArr["maxPriorityFeePerGas"]);
 		$this->chainId    = hexdec(substr($rpcArr["chainId"], 2));
 		$this->accessList = $rpcArr["accessList"];
@@ -191,7 +198,7 @@ class LondonTransaction extends Transaction
 	 */
 	public function setAccessList(array $accessList): static
 	{
-		if($this->accessList == $accessList) {
+		if($this->accessList != $accessList) {
 			$this->signed = false;
 			$this->accessList = $accessList;
 		}
