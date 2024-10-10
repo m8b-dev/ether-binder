@@ -31,6 +31,7 @@ class Block
 	public Hash $transactionsRoot;
 	public Hash $stateRoot;
 	public Hash $receiptsRoot;
+	public ?Hash $parentBeaconBlockRoot;
 	public Address $miner;
 	public OOGmp $difficulty;
 	public OOGmp $totalDifficulty;
@@ -39,6 +40,8 @@ class Block
 	public ?OOGMP $baseFeePerGas;
 	public int $gasLimit;
 	public int $gasUsed;
+	public ?int $blobGasUsed;
+	public ?int $excessBlobGas;
 	public int $timestamp;
 	/** @var Transaction[]|Hash[] */
 	public array $transactions;
@@ -46,6 +49,7 @@ class Block
 	public array $uncles;
 	/** @var ValidatorWithdrawal[] */
 	public array $validatorWithdrawals;
+	public ?Hash $validatorWithdrawalsRoot;
 
 	/**
 	 * Constructs a Block object from an array received through RPC.
@@ -61,23 +65,30 @@ class Block
 	public static function fromRPCArr(array $rpcArr): static
 	{
 		$block = new static();
-		$block->number           = hexdec($rpcArr["number"]);
-		$block->hash             = Hash::fromHex($rpcArr["hash"]);
-		$block->parentHash       = Hash::fromHex($rpcArr["parentHash"]);
-		$block->nonce            = BlockNonce::fromHex($rpcArr["nonce"]);
-		$block->sha3Uncles       = Hash::fromHex($rpcArr["sha3Uncles"]);
-		$block->logsBloom        = Bloom::fromHex($rpcArr["logsBloom"]);
-		$block->transactionsRoot = Hash::fromHex($rpcArr["transactionsRoot"]);
-		$block->stateRoot        = Hash::fromHex($rpcArr["stateRoot"]);
-		$block->receiptsRoot     = Hash::fromHex($rpcArr["receiptsRoot"]);
-		$block->miner            = Address::fromHex($rpcArr["miner"]);
-		$block->difficulty       = new OOGmp($rpcArr["difficulty"], 16);
-		$block->totalDifficulty  = new OOGmp($rpcArr["totalDifficulty"], 16);
-		$block->extraData        = $rpcArr["extraData"];
-		$block->size             =  hexdec($rpcArr["size"]);
-		$block->gasLimit         =  hexdec($rpcArr["gasLimit"]);
-		$block->gasUsed          =  hexdec($rpcArr["gasUsed"]);
-		$block->timestamp        =  hexdec($rpcArr["timestamp"]);
+		$block->number                   = hexdec($rpcArr["number"]);
+		$block->hash                     = Hash::fromHex($rpcArr["hash"]);
+		$block->parentHash               = Hash::fromHex($rpcArr["parentHash"]);
+		$block->nonce                    = BlockNonce::fromHex($rpcArr["nonce"]);
+		$block->sha3Uncles               = Hash::fromHex($rpcArr["sha3Uncles"]);
+		$block->logsBloom                = Bloom::fromHex($rpcArr["logsBloom"]);
+		$block->transactionsRoot         = Hash::fromHex($rpcArr["transactionsRoot"]);
+		$block->stateRoot                = Hash::fromHex($rpcArr["stateRoot"]);
+		$block->receiptsRoot             = Hash::fromHex($rpcArr["receiptsRoot"]);
+		$block->miner                    = Address::fromHex($rpcArr["miner"]);
+		$block->difficulty               = new OOGmp($rpcArr["difficulty"] ?? 0, 16);
+		$block->totalDifficulty          = new OOGmp($rpcArr["totalDifficulty"] ?? 0, 16);
+		$block->extraData                = $rpcArr["extraData"];
+		$block->parentBeaconBlockRoot    = isset($rpcArr["parentBeaconBlockRoot"])
+											? Hash::fromHex($rpcArr["parentBeaconBlockRoot"]) : null;
+		$block->blobGasUsed              = isset($rpcArr["blobGasUsed"]) ? hexdec($rpcArr["blobGasUsed"]) : null;
+		$block->excessBlobGas            = isset($rpcArr["excessBlobGas"]) ? hexdec($rpcArr["excessBlobGas"]) : null;
+		$block->size                     = hexdec($rpcArr["size"]);
+		$block->gasLimit                 = hexdec($rpcArr["gasLimit"]);
+		$block->gasUsed                  = hexdec($rpcArr["gasUsed"]);
+		$block->timestamp                = hexdec($rpcArr["timestamp"]);
+		$block->validatorWithdrawalsRoot = isset($rpcArr["withdrawalsRoot"])
+											? Hash::fromHex($rpcArr["withdrawalsRoot"]) : null;
+
 		if(empty($rpcArr["transactions"])) {
 			$block->transactions = [];
 		} else {
@@ -111,5 +122,16 @@ class Block
 	public function isEIP1559(): bool
 	{
 		return $this->baseFeePerGas !== null;
+	}
+
+	/**
+	 * Checks if the block looks like coming from EIP-4844 enabled chain by looking if blob fees are defined
+	 * @see https://eips.ethereum.org/EIPS/eip-4844#header-extension
+	 *
+	 * @return bool
+	 */
+	public function isEIP4844(): bool
+	{
+		return $this->blobGasUsed !== null;
 	}
 }
