@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/m8b.html" class="">M8B</a>
@@ -67,7 +67,7 @@
             </ul>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/M8B.html" class="">M8B</a>
@@ -81,14 +81,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -129,11 +129,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Wallet/MnemonicWallet.php"><a href="files/src-wallet-mnemonicwallet.html"><abbr title="src/Wallet/MnemonicWallet.php">MnemonicWallet.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
             <p class="phpdocumentor-summary">MnemonicWallet extends the AbstractWallet to create a wallet from a mnemonic phrase.</p>
+
 
     <section class="phpdocumentor-description"><p>It handles the derivation and management of keys using BIP39 and HD Wallet standards.</p>
 </section>
@@ -158,6 +159,8 @@
 
 
 
+
+
 <h3 id="toc">
     Table of Contents
     <a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
@@ -177,7 +180,7 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -private">
-    <a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#constant_offset">offset</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#constant_offset">offset</a>
     <span>
         &nbsp;= 0x80000000                            </span>
 </dt>
@@ -192,7 +195,7 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#property_key">$key</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#property_key">$key</a>
     <span>
                         &nbsp;: <a href="classes/M8B-EtherBinder-Crypto-Key.html"><abbr title="\M8B\EtherBinder\Crypto\Key">Key</abbr></a>            </span>
 </dt>
@@ -206,60 +209,59 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method___construct">__construct()</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Constructor to create a MnemonicWallet from words. While constructing, the words are processed into private key.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_genNew">genNew()</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_genNew">genNew()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Generates a new mnemonic phrase. If you don&#039;t have reason, use defaults.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getAddress">getAddress()</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getAddress">getAddress()</a>
     <span>
                                 &nbsp;: <a href="classes/M8B-EtherBinder-Common-Address.html"><abbr title="\M8B\EtherBinder\Common\Address">Address</abbr></a>    </span>
 </dt>
 <dd>Returns the wallet&#039;s associated Ethereum address.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getKeyRaw">getKeyRaw()</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getKeyRaw">getKeyRaw()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Returns the raw private key in binary or hexadecimal format.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_key">key()</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_key">key()</a>
     <span>
                                 &nbsp;: <a href="classes/M8B-EtherBinder-Crypto-Key.html"><abbr title="\M8B\EtherBinder\Crypto\Key">Key</abbr></a>    </span>
 </dt>
 <dd>Returns the underlying private key object stored in the wallet.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_deriveChild">deriveChild()</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_deriveChild">deriveChild()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_parsePath">parsePath()</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_parsePath">parsePath()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_serializeCurvePoint">serializeCurvePoint()</a>
+    <a class="" href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_serializeCurvePoint">serializeCurvePoint()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 
     </dl>
-
 
 
 
@@ -280,10 +282,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Wallet/MnemonicWallet.php"><a href="files/src-wallet-mnemonicwallet.html"><abbr title="src/Wallet/MnemonicWallet.php">MnemonicWallet.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">private</span>
@@ -295,6 +298,8 @@
 
     
     
+    
+
     
 
 </article>
@@ -329,6 +334,7 @@
     </aside>
 
     
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type"><a href="classes/M8B-EtherBinder-Crypto-Key.html"><abbr title="\M8B\EtherBinder\Crypto\Key">Key</abbr></a></span>
@@ -337,6 +343,8 @@
 
     
     
+    
+
     
 
 </article>
@@ -362,7 +370,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Wallet/MnemonicWallet.php"><a href="files/src-wallet-mnemonicwallet.html"><abbr title="src/Wallet/MnemonicWallet.php">MnemonicWallet.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -374,6 +382,7 @@
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -439,7 +448,17 @@ and there is no way of knowing if passphrase matched other than checking returni
                                                             
                                              
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-InvalidHexException.html"><abbr title="\M8B\EtherBinder\Exceptions\InvalidHexException">InvalidHexException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
                                             </dl>
+
+    
 
     
 </article>
@@ -457,7 +476,7 @@ and there is no way of knowing if passphrase matched other than checking returni
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Wallet/MnemonicWallet.php"><a href="files/src-wallet-mnemonicwallet.html"><abbr title="src/Wallet/MnemonicWallet.php">MnemonicWallet.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -469,6 +488,7 @@ and there is no way of knowing if passphrase matched other than checking returni
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -509,6 +529,8 @@ and there is no way of knowing if passphrase matched other than checking returni
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -548,6 +570,7 @@ and there is no way of knowing if passphrase matched other than checking returni
     
     
     
+    
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
         <a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getAddress#tags" class="headerlink"><i class="fas fa-link"></i></a>
@@ -565,6 +588,8 @@ and there is no way of knowing if passphrase matched other than checking returni
 
                                     </dd>
                                             </dl>
+
+    
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -603,6 +628,7 @@ and there is no way of knowing if passphrase matched other than checking returni
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -615,6 +641,8 @@ and there is no way of knowing if passphrase matched other than checking returni
 
             </dd>
             </dl>
+
+    
 
     
 
@@ -657,6 +685,9 @@ and there is no way of knowing if passphrase matched other than checking returni
     
     
     
+    
+
+    
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -682,7 +713,7 @@ and there is no way of knowing if passphrase matched other than checking returni
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Wallet/MnemonicWallet.php"><a href="files/src-wallet-mnemonicwallet.html"><abbr title="src/Wallet/MnemonicWallet.php">MnemonicWallet.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -693,6 +724,7 @@ and there is no way of knowing if passphrase matched other than checking returni
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -720,6 +752,23 @@ and there is no way of knowing if passphrase matched other than checking returni
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_deriveChild#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-InvalidHexException.html"><abbr title="\M8B\EtherBinder\Exceptions\InvalidHexException">InvalidHexException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -741,7 +790,7 @@ and there is no way of knowing if passphrase matched other than checking returni
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Wallet/MnemonicWallet.php"><a href="files/src-wallet-mnemonicwallet.html"><abbr title="src/Wallet/MnemonicWallet.php">MnemonicWallet.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -752,6 +801,7 @@ and there is no way of knowing if passphrase matched other than checking returni
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -781,6 +831,8 @@ and there is no way of knowing if passphrase matched other than checking returni
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -801,7 +853,7 @@ and there is no way of knowing if passphrase matched other than checking returni
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Wallet/MnemonicWallet.php"><a href="files/src-wallet-mnemonicwallet.html"><abbr title="src/Wallet/MnemonicWallet.php">MnemonicWallet.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
@@ -813,6 +865,7 @@ and there is no way of knowing if passphrase matched other than checking returni
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -823,6 +876,8 @@ and there is no way of knowing if passphrase matched other than checking returni
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -945,28 +1000,28 @@ and there is no way of knowing if passphrase matched other than checking returni
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#constant_offset">offset</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#constant_offset">offset</a></li>
                                             </ul>
                 </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#property_key">$key<a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html"></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#property_key">$key</a></li>
                                             </ul>
                 </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method___construct">__construct()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_genNew">genNew()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getAddress">getAddress()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getKeyRaw">getKeyRaw()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_key">key()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_deriveChild">deriveChild()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_parsePath">parsePath()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_serializeCurvePoint">serializeCurvePoint()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_genNew">genNew()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getAddress">getAddress()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_getKeyRaw">getKeyRaw()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Wallet-AbstractWallet.html#method_key">key()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_deriveChild">deriveChild()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_parsePath">parsePath()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Wallet-MnemonicWallet.html#method_serializeCurvePoint">serializeCurvePoint()</a></li>
                                     </ul>
             </li>
                     </ul>

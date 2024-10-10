@@ -13,13 +13,14 @@ var searchData=
   ['getcontractaddress_10',['getContractAddress',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html#a6ba513a56e10739855f42a29e843edd4',1,'M8B::EtherBinder::Contract::AbstractContract']]],
   ['getgasfeetip_11',['getGasFeeTip',['../classM8B_1_1EtherBinder_1_1Common_1_1LondonTransaction.html#aa6128212cbcaf5a7374ca800692f1c0d',1,'M8B::EtherBinder::Common::LondonTransaction']]],
   ['getkeyraw_12',['getKeyRaw',['../classM8B_1_1EtherBinder_1_1Wallet_1_1AbstractWallet.html#a55e7827eb2bf62c6a69b50160208f869',1,'M8B::EtherBinder::Wallet::AbstractWallet']]],
-  ['getmessage_13',['getMessage',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a26dbb0661f1de746238bd19361299414',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
-  ['getnextblockbasefee_14',['getNextBlockBaseFee',['../classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#a6ce90d8912aa993d1811281345f8dcdd',1,'M8B::EtherBinder::Utils::Functions']]],
-  ['getpessimisticblockbasefee_15',['getPessimisticBlockBaseFee',['../classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#abb26f3e22714df50264c030f841013e9',1,'M8B::EtherBinder::Utils::Functions']]],
-  ['getphptypingfromoutputs_16',['getPhpTypingFromOutputs',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#ae9e8e3f7955e69d79842e656ccbe1930',1,'M8B::EtherBinder::Contract::ABIGen']]],
-  ['getphptypingfromtype_17',['getPhpTypingFromType',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#a5740222a32cf81c6fbb45d26b0a7cd1e',1,'M8B::EtherBinder::Contract::ABIGen']]],
-  ['getpublicbin_18',['getPublicBin',['../classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#aa54966a01850cfc0e366c215ff2ea306',1,'M8B::EtherBinder::Crypto::Key']]],
-  ['getpublichex_19',['getPublicHex',['../classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#ae49a542b35c8b053776e4c5b42438c62',1,'M8B::EtherBinder::Crypto::Key']]],
-  ['getsignature_20',['getSignature',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a374aa3d2b2148429d2cab5d4a804f1c4',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
-  ['getsigninghash_21',['getSigningHash',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#acb41812fbb3f7ebb1fad576a368efc21',1,'M8B::EtherBinder::Common::Transaction']]]
+  ['getmaxfeeperblobgas_13',['getMaxFeePerBlobGas',['../classM8B_1_1EtherBinder_1_1Common_1_1CancunTransaction.html#af7e983ed38f7b81dda45ce9b521b6cfe',1,'M8B::EtherBinder::Common::CancunTransaction']]],
+  ['getmessage_14',['getMessage',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a26dbb0661f1de746238bd19361299414',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
+  ['getnextblockbasefee_15',['getNextBlockBaseFee',['../classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#a6ce90d8912aa993d1811281345f8dcdd',1,'M8B::EtherBinder::Utils::Functions']]],
+  ['getpessimisticblockbasefee_16',['getPessimisticBlockBaseFee',['../classM8B_1_1EtherBinder_1_1Utils_1_1Functions.html#abb26f3e22714df50264c030f841013e9',1,'M8B::EtherBinder::Utils::Functions']]],
+  ['getphptypingfromoutputs_17',['getPhpTypingFromOutputs',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#ae9e8e3f7955e69d79842e656ccbe1930',1,'M8B::EtherBinder::Contract::ABIGen']]],
+  ['getphptypingfromtype_18',['getPhpTypingFromType',['../classM8B_1_1EtherBinder_1_1Contract_1_1ABIGen.html#a5740222a32cf81c6fbb45d26b0a7cd1e',1,'M8B::EtherBinder::Contract::ABIGen']]],
+  ['getpublicbin_19',['getPublicBin',['../classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#aa54966a01850cfc0e366c215ff2ea306',1,'M8B::EtherBinder::Crypto::Key']]],
+  ['getpublichex_20',['getPublicHex',['../classM8B_1_1EtherBinder_1_1Crypto_1_1Key.html#ae49a542b35c8b053776e4c5b42438c62',1,'M8B::EtherBinder::Crypto::Key']]],
+  ['getsignature_21',['getSignature',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html#a374aa3d2b2148429d2cab5d4a804f1c4',1,'M8B::EtherBinder::Misc::AbstractSigningMessage']]],
+  ['getsigninghash_22',['getSigningHash',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#acb41812fbb3f7ebb1fad576a368efc21',1,'M8B::EtherBinder::Common::Transaction']]]
 ];

@@ -9,6 +9,7 @@ var annotated_dup =
           [ "Block", "classM8B_1_1EtherBinder_1_1Common_1_1Block.html", "classM8B_1_1EtherBinder_1_1Common_1_1Block" ],
           [ "BlockNonce", "classM8B_1_1EtherBinder_1_1Common_1_1BlockNonce.html", "classM8B_1_1EtherBinder_1_1Common_1_1BlockNonce" ],
           [ "Bloom", "classM8B_1_1EtherBinder_1_1Common_1_1Bloom.html", "classM8B_1_1EtherBinder_1_1Common_1_1Bloom" ],
+          [ "CancunTransaction", "classM8B_1_1EtherBinder_1_1Common_1_1CancunTransaction.html", "classM8B_1_1EtherBinder_1_1Common_1_1CancunTransaction" ],
           [ "Hash", "classM8B_1_1EtherBinder_1_1Common_1_1Hash.html", "classM8B_1_1EtherBinder_1_1Common_1_1Hash" ],
           [ "HashSerializable", "interfaceM8B_1_1EtherBinder_1_1Common_1_1HashSerializable.html", null ],
           [ "LegacyTransaction", "classM8B_1_1EtherBinder_1_1Common_1_1LegacyTransaction.html", "classM8B_1_1EtherBinder_1_1Common_1_1LegacyTransaction" ],

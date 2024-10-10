@@ -28,13 +28,14 @@ var searchData=
   ['abstractsigningmessage_25',['AbstractSigningMessage',['../classM8B_1_1EtherBinder_1_1Misc_1_1AbstractSigningMessage.html',1,'M8B::EtherBinder::Misc']]],
   ['abstracttuple_26',['AbstractTuple',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractTuple.html',1,'M8B::EtherBinder::Contract']]],
   ['abstractwallet_27',['AbstractWallet',['../classM8B_1_1EtherBinder_1_1Wallet_1_1AbstractWallet.html',1,'M8B::EtherBinder::Wallet']]],
-  ['accesslist_28',['accesslist',['../classM8B_1_1EtherBinder_1_1Common_1_1LondonTransaction.html#ae06f0f4f4d717577f0135261bddc00e8',1,'M8B\EtherBinder\Common\LondonTransaction\accessList()'],['../classM8B_1_1EtherBinder_1_1Common_1_1AccessListTransaction.html#abd3dc5004ffcd9d0c30c3ffdd00f22f7',1,'M8B\EtherBinder\Common\AccessListTransaction\accessList()']]],
+  ['accesslist_28',['accessList',['../classM8B_1_1EtherBinder_1_1Common_1_1AccessListTransaction.html#abd3dc5004ffcd9d0c30c3ffdd00f22f7',1,'M8B\EtherBinder\Common\AccessListTransaction\accessList()'],['../classM8B_1_1EtherBinder_1_1Common_1_1LondonTransaction.html#ae06f0f4f4d717577f0135261bddc00e8',1,'M8B\EtherBinder\Common\LondonTransaction\accessList()']]],
   ['accesslisttransaction_29',['AccessListTransaction',['../classM8B_1_1EtherBinder_1_1Common_1_1AccessListTransaction.html',1,'M8B::EtherBinder::Common']]],
   ['adding_20more_20supported_20protocols_30',['Adding more supported protocols',['../md_docs_2rpc.html#autotoc_md38',1,'']]],
-  ['address_31',['address',['../classM8B_1_1EtherBinder_1_1Common_1_1Address.html',1,'M8B\EtherBinder\Common\Address'],['../md_docs_2types.html#autotoc_md49',1,'Address']]],
-  ['already_20parsed_20data_32',['From already parsed data',['../md_docs_2messages.html#autotoc_md28',1,'']]],
-  ['and_20encoding_33',['RLP Decoding and Encoding',['../md_docs_2transactions.html#autotoc_md44',1,'']]],
-  ['arithmetic_20functions_3a_34',['Arithmetic Functions:',['../md_docs_2utils.html#autotoc_md58',1,'']]],
-  ['assert_20hex_20size_35',['assert hex size',['../md_docs_2utils.html#autotoc_md65',1,'']]],
-  ['asserttype_36',['assertType',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEventFilter.html#a632f808761161a94ee8e7c0e0c83cac2',1,'M8B::EtherBinder::Contract::AbstractEventFilter']]]
+  ['address_31',['Address',['../classM8B_1_1EtherBinder_1_1Common_1_1Address.html',1,'M8B\EtherBinder\Common\Address'],['../md_docs_2types.html#autotoc_md49',1,'Address']]],
+  ['addversionedhash_32',['addVersionedHash',['../classM8B_1_1EtherBinder_1_1Common_1_1CancunTransaction.html#aa83e8ba57e010fd165dc84115870687e',1,'M8B::EtherBinder::Common::CancunTransaction']]],
+  ['already_20parsed_20data_33',['From already parsed data',['../md_docs_2messages.html#autotoc_md28',1,'']]],
+  ['and_20encoding_34',['RLP Decoding and Encoding',['../md_docs_2transactions.html#autotoc_md44',1,'']]],
+  ['arithmetic_20functions_3a_35',['Arithmetic Functions:',['../md_docs_2utils.html#autotoc_md58',1,'']]],
+  ['assert_20hex_20size_36',['assert hex size',['../md_docs_2utils.html#autotoc_md65',1,'']]],
+  ['asserttype_37',['assertType',['../classM8B_1_1EtherBinder_1_1Contract_1_1AbstractEventFilter.html#a632f808761161a94ee8e7c0e0c83cac2',1,'M8B::EtherBinder::Contract::AbstractEventFilter']]]
 ];

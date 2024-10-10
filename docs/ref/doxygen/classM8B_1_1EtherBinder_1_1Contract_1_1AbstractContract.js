@@ -1,9 +1,6 @@
 var classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract =
 [
     [ "__construct", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html#a4c3ad343fda354fe625d0b4f930a595e", null ],
-    [ "expectBinarySizeNormalizeString", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html#a328faee53d6bae777e0cecb87f87a8f8", null ],
-    [ "expectIntArrOfSize", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html#ab63454ae289caad37603bc3a1d534824", null ],
-    [ "expectIntOfSize", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html#a7f84ac2ef131d685918301e14a99421b", null ],
     [ "getContractAddress", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html#a6ba513a56e10739855f42a29e843edd4", null ],
     [ "loadPrivK", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html#a2ad6a2be66b8f5468f8ac4b756424341", null ],
     [ "mkCall", "classM8B_1_1EtherBinder_1_1Contract_1_1AbstractContract.html#ab866ff880f0b0b8bdb0e631103e0d9cc", null ],

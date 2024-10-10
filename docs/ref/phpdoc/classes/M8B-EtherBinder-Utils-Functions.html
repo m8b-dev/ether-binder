@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/m8b.html" class="">M8B</a>
@@ -67,7 +67,7 @@
             </ul>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/M8B.html" class="">M8B</a>
@@ -81,14 +81,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -136,6 +136,7 @@
 
 
 
+
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
         <a href="classes/M8B-EtherBinder-Utils-Functions.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
@@ -152,6 +153,8 @@
 
                                     </dd>
                                             </dl>
+
+
 
 
 
@@ -177,49 +180,65 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_getNextBlockBaseFee">getNextBlockBaseFee()</a>
+    <a class="" href="classes/M8B-EtherBinder-Utils-Functions.html#method_getNextBlockBaseFee">getNextBlockBaseFee()</a>
     <span>
                                 &nbsp;: <a href="classes/M8B-EtherBinder-Utils-OOGmp.html"><abbr title="\M8B\EtherBinder\Utils\OOGmp">OOGmp</abbr></a>    </span>
 </dt>
 <dd>Calculates the base fee for the next block in an EIP1559 compatible chain.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_hex2int">hex2int()</a>
+    <a class="" href="classes/M8B-EtherBinder-Utils-Functions.html#method_getPessimisticBlockBaseFee">getPessimisticBlockBaseFee()</a>
+    <span>
+                                &nbsp;: <a href="classes/M8B-EtherBinder-Utils-OOGmp.html"><abbr title="\M8B\EtherBinder\Utils\OOGmp">OOGmp</abbr></a>    </span>
+</dt>
+<dd>Returns worst case scenario base fee for block currentBlock + blocksAhead. Useful for estimating base fee for
+transactions. Since the fee is base fee, it shouldn&#039;t matter if it&#039;s overestimated, since consensus will prevent
+spending surplus</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/M8B-EtherBinder-Utils-Functions.html#method_hex2bin">hex2bin()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>0x tolerant, exceptions-compatible hex2bin() drop-in replacement, that never returns false, handles empty strings
+and prefixes &quot;0&quot; if odd amount of characters is spotted.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/M8B-EtherBinder-Utils-Functions.html#method_hex2int">hex2int()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
 <dd>Converts hex string to integer</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_int2hex">int2hex()</a>
+    <a class="" href="classes/M8B-EtherBinder-Utils-Functions.html#method_int2hex">int2hex()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Converts an integer to a hex string.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_lPadHex">lPadHex()</a>
+    <a class="" href="classes/M8B-EtherBinder-Utils-Functions.html#method_lPadHex">lPadHex()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Left-pads a hex string to a specific length.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_mustHexLen">mustHexLen()</a>
+    <a class="" href="classes/M8B-EtherBinder-Utils-Functions.html#method_mustHexLen">mustHexLen()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Validates the length of a hexadecimal string. In case the length is invalid, exception is risen.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_waitForTxReceipt">waitForTxReceipt()</a>
+    <a class="" href="classes/M8B-EtherBinder-Utils-Functions.html#method_waitForTxReceipt">waitForTxReceipt()</a>
     <span>
                                 &nbsp;: <a href="classes/M8B-EtherBinder-Common-Receipt.html"><abbr title="\M8B\EtherBinder\Common\Receipt">Receipt</abbr></a>    </span>
 </dt>
 <dd>This function will wait and block until the transaction is confirmed via repetatively checking receipt</dd>
 
     </dl>
-
 
 
 
@@ -247,7 +266,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Functions.php"><a href="files/src-utils-functions.html"><abbr title="src/Utils/Functions.php">Functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">160</span>
 
     </aside>
 
@@ -259,6 +278,7 @@
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -284,11 +304,147 @@
 
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/M8B-EtherBinder-Utils-OOGmp.html"><abbr title="\M8B\EtherBinder\Utils\OOGmp">OOGmp</abbr></a></span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The calculated base fee.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getPessimisticBlockBaseFee">
+        getPessimisticBlockBaseFee()
+        <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_getPessimisticBlockBaseFee" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Functions.php"><a href="files/src-utils-functions.html"><abbr title="src/Utils/Functions.php">Functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">116</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns worst case scenario base fee for block currentBlock + blocksAhead. Useful for estimating base fee for
+transactions. Since the fee is base fee, it shouldn&#039;t matter if it&#039;s overestimated, since consensus will prevent
+spending surplus</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getPessimisticBlockBaseFee</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/M8B-EtherBinder-Common-Block.html"><abbr title="\M8B\EtherBinder\Common\Block">Block</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$previous</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$blocksAhead</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\M8B\EtherBinder\Misc\EIP1559Config">EIP1559Config</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$config</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/M8B-EtherBinder-Utils-OOGmp.html"><abbr title="\M8B\EtherBinder\Utils\OOGmp">OOGmp</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$previous</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/M8B-EtherBinder-Common-Block.html"><abbr title="\M8B\EtherBinder\Common\Block">Block</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$blocksAhead</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$config</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\M8B\EtherBinder\Misc\EIP1559Config">EIP1559Config</abbr>|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/M8B-EtherBinder-Utils-OOGmp.html"><abbr title="\M8B\EtherBinder\Utils\OOGmp">OOGmp</abbr></a></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_hex2bin">
+        hex2bin()
+        <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_hex2bin" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Functions.php"><a href="files/src-utils-functions.html"><abbr title="src/Utils/Functions.php">Functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">141</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">0x tolerant, exceptions-compatible hex2bin() drop-in replacement, that never returns false, handles empty strings
+and prefixes &quot;0&quot; if odd amount of characters is spotted.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">hex2bin</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hex</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$hex</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/M8B-EtherBinder-Utils-Functions.html#method_hex2bin#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-InvalidHexException.html"><abbr title="\M8B\EtherBinder\Exceptions\InvalidHexException">InvalidHexException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Binary blob</p>
 </section>
 
             </section>
@@ -321,6 +477,7 @@
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -352,6 +509,8 @@
 
                                     </dd>
                                             </dl>
+
+    
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -390,6 +549,7 @@
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -411,6 +571,8 @@
 
             </dd>
             </dl>
+
+    
 
     
 
@@ -451,6 +613,7 @@
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -481,6 +644,8 @@
 
             </dd>
             </dl>
+
+    
 
     
 
@@ -520,6 +685,7 @@
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -569,6 +735,8 @@
                                             </dl>
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -584,7 +752,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Functions.php"><a href="files/src-utils-functions.html"><abbr title="src/Utils/Functions.php">Functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">206</span>
 
     </aside>
 
@@ -596,6 +764,7 @@
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -671,6 +840,8 @@
                                              
                                     </dd>
                                             </dl>
+
+    
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -795,12 +966,14 @@
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_getNextBlockBaseFee">getNextBlockBaseFee()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_hex2int">hex2int()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_int2hex">int2hex()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_lPadHex">lPadHex()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_mustHexLen">mustHexLen()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_waitForTxReceipt">waitForTxReceipt()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_getNextBlockBaseFee">getNextBlockBaseFee()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_getPessimisticBlockBaseFee">getPessimisticBlockBaseFee()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_hex2bin">hex2bin()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_hex2int">hex2int()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_int2hex">int2hex()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_lPadHex">lPadHex()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_mustHexLen">mustHexLen()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Utils-Functions.html#method_waitForTxReceipt">waitForTxReceipt()</a></li>
                                     </ul>
             </li>
                     </ul>

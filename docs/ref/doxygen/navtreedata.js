@@ -27,7 +27,7 @@ var NAVTREE =
   [ "Ether Binder", "index.html", [
     [ "Abi Binder", "index.html", null ],
     [ "ABI Encoding", "md_docs_2abi-encoding-internals.html", [
-      [ "Using driver class <tt>ABIEncoder</tt>", "md_docs_2abi-encoding-internals.html#autotoc_md1", [
+      [ "Using driver class ABIEncoder", "md_docs_2abi-encoding-internals.html#autotoc_md1", [
         [ "Encoding", "md_docs_2abi-encoding-internals.html#autotoc_md2", null ],
         [ "Decoding", "md_docs_2abi-encoding-internals.html#autotoc_md3", null ]
       ] ],
@@ -132,9 +132,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classM8B_1_1EtherBinder_1_1Contract_1_1AbiTypes_1_1AbiBool.html#a7170021048e9dee91955fb58ceb08280",
-"classM8B_1_1EtherBinder_1_1RPC_1_1Compound.html#a94822f2f33f92e664cf1b659c287247b",
-"classM8B_1_1EtherBinder_1_1Utils_1_1OOGmp.html#a19ad41ead12ef80ea13e372f638b7f09"
+"classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#acb41812fbb3f7ebb1fad576a368efc21",
+"classM8B_1_1EtherBinder_1_1RPC_1_1AbstractRPC.html#a9e9428318ba3574467d4085e1a3605fa",
+"classM8B_1_1EtherBinder_1_1RPC_1_1Modules_1_1Web3.html#a252459da9503129c98c7b19864556233"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

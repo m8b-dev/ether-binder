@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/m8b.html" class="">M8B</a>
@@ -67,7 +67,7 @@
             </ul>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/M8B.html" class="">M8B</a>
@@ -81,14 +81,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -126,12 +126,13 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
             <p class="phpdocumentor-summary">Key is a representation for raw Ethereum private key. It contains essential utilities for its usage and is used in
 EthBinder as raw private key.</p>
+
 
 
 
@@ -151,6 +152,8 @@ EthBinder as raw private key.</p>
 
                                     </dd>
                                             </dl>
+
+
 
 
 
@@ -175,19 +178,19 @@ EthBinder as raw private key.</p>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#property_addr">$addr</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#property_addr">$addr</a>
     <span>
                         &nbsp;: <a href="classes/M8B-EtherBinder-Common-Address.html"><abbr title="\M8B\EtherBinder\Common\Address">Address</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#property_key">$key</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#property_key">$key</a>
     <span>
                         &nbsp;: <abbr title="\Elliptic\EC\KeyPair">KeyPair</abbr>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#property_keyHex">$keyHex</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#property_keyHex">$keyHex</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
@@ -201,55 +204,75 @@ EthBinder as raw private key.</p>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_fromBin">fromBin()</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_fromBin">fromBin()</a>
     <span>
                                 &nbsp;: static    </span>
 </dt>
 <dd>Initializes from binary of the key.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_fromHex">fromHex()</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_fromHex">fromHex()</a>
     <span>
                                 &nbsp;: static    </span>
 </dt>
 <dd>Initializes from a hexadecimal string.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_sign">sign()</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_generate">generate()</a>
+    <span>
+                                &nbsp;: static    </span>
+</dt>
+<dd>Generates new random key using openssl for random bytes. Triggers E_USER_WARNING if weak entropy was used.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicBin">getPublicBin()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Returns binary blob of public key associated with this private key</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicHex">getPublicHex()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Returns hex-encoded public key associated with this private key. Does not contain initial &quot;04&quot; prefix.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_sign">sign()</a>
     <span>
                                 &nbsp;: <a href="classes/M8B-EtherBinder-Crypto-Signature.html"><abbr title="\M8B\EtherBinder\Crypto\Signature">Signature</abbr></a>    </span>
 </dt>
 <dd>Signs arbitrary hash using the private key.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toAddress">toAddress()</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_toAddress">toAddress()</a>
     <span>
                                 &nbsp;: <a href="classes/M8B-EtherBinder-Common-Address.html"><abbr title="\M8B\EtherBinder\Common\Address">Address</abbr></a>    </span>
 </dt>
 <dd>Generates an Ethereum Address based on the key. Internally caches the address to avoid wasting time on hashing.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toBin">toBin()</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_toBin">toBin()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Returns the binary of the key.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toHex">toHex()</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method_toHex">toHex()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Returns the hexadecimal representation of the key, prefixed with &#039;0x&#039;.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Crypto-Key.html#method___construct">__construct()</a>
+    <a class="" href="classes/M8B-EtherBinder-Crypto-Key.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 
     </dl>
-
 
 
 
@@ -279,10 +302,11 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
@@ -292,6 +316,8 @@ EthBinder as raw private key.</p>
 
     
     
+    
+
     
 
 </article>
@@ -312,10 +338,11 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
@@ -325,6 +352,8 @@ EthBinder as raw private key.</p>
 
     
     
+    
+
     
 
 </article>
@@ -345,10 +374,11 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
@@ -359,6 +389,19 @@ EthBinder as raw private key.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/M8B-EtherBinder-Crypto-Key.html#property_keyHex#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\SensitiveParameter">SensitiveParameter</abbr>]
+    </dt>
+    </dl>
+            </section>
 
 </article>
             </section>
@@ -383,7 +426,7 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -395,6 +438,7 @@ EthBinder as raw private key.</p>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -408,6 +452,8 @@ EthBinder as raw private key.</p>
 
             </dd>
             </dl>
+
+    
 
     
 
@@ -431,7 +477,7 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -443,6 +489,7 @@ EthBinder as raw private key.</p>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -456,6 +503,8 @@ EthBinder as raw private key.</p>
 
             </dd>
             </dl>
+
+    
 
     
 
@@ -473,6 +522,148 @@ EthBinder as raw private key.</p>
         class="phpdocumentor-element
             -method
             -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_generate">
+        generate()
+        <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_generate" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">153</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Generates new random key using openssl for random bytes. Triggers E_USER_WARNING if weak entropy was used.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">generate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">static</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getPublicBin">
+        getPublicBin()
+        <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicBin" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">83</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns binary blob of public key associated with this private key</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getPublicBin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicBin#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-InvalidHexException.html"><abbr title="\M8B\EtherBinder\Exceptions\InvalidHexException">InvalidHexException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getPublicHex">
+        getPublicHex()
+        <a href="classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicHex" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns hex-encoded public key associated with this private key. Does not contain initial &quot;04&quot; prefix.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getPublicHex</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$with0x</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$with0x</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_sign">
@@ -483,7 +674,7 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -495,6 +686,7 @@ EthBinder as raw private key.</p>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -508,6 +700,8 @@ EthBinder as raw private key.</p>
 
             </dd>
             </dl>
+
+    
 
     
 
@@ -535,7 +729,7 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -547,6 +741,7 @@ EthBinder as raw private key.</p>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
     
     
@@ -565,6 +760,8 @@ EthBinder as raw private key.</p>
                                              
                                     </dd>
                                             </dl>
+
+    
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -590,7 +787,7 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -604,6 +801,9 @@ EthBinder as raw private key.</p>
         </div>
     
     
+    
+    
+
     
 
             <section>
@@ -630,7 +830,7 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -644,6 +844,9 @@ EthBinder as raw private key.</p>
         </div>
     
     
+    
+    
+
     
 
             <section>
@@ -670,7 +873,7 @@ EthBinder as raw private key.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Crypto/Key.php"><a href="files/src-crypto-key.html"><abbr title="src/Crypto/Key.php">Key.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -681,6 +884,7 @@ EthBinder as raw private key.</p>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -694,6 +898,8 @@ EthBinder as raw private key.</p>
 
             </dd>
             </dl>
+
+    
 
     
 
@@ -812,22 +1018,25 @@ EthBinder as raw private key.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#property_addr">$addr<a href="classes/M8B-EtherBinder-Crypto-Key.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#property_key">$key<a href="classes/M8B-EtherBinder-Crypto-Key.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#property_keyHex">$keyHex<a href="classes/M8B-EtherBinder-Crypto-Key.html"></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#property_addr">$addr</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#property_key">$key</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#property_keyHex">$keyHex</a></li>
                                             </ul>
                 </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_fromBin">fromBin()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_fromHex">fromHex()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_sign">sign()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toAddress">toAddress()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toBin">toBin()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toHex">toHex()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Crypto-Key.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_fromBin">fromBin()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_fromHex">fromHex()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_generate">generate()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicBin">getPublicBin()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicHex">getPublicHex()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_sign">sign()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toAddress">toAddress()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toBin">toBin()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method_toHex">toHex()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Crypto-Key.html#method___construct">__construct()</a></li>
                                     </ul>
             </li>
                     </ul>

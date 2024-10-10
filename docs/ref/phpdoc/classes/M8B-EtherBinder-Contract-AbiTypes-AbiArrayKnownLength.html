@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/m8b.html" class="">M8B</a>
@@ -67,7 +67,7 @@
             </ul>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/M8B.html" class="">M8B</a>
@@ -81,14 +81,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -134,7 +134,9 @@
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Base class for encoding and decoding ABI (Application Binary Interface) types for Ethereum contracts.</p>
+
+
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -165,6 +167,8 @@
 
 
 
+
+
 <h3 id="toc">
     Table of Contents
     <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
@@ -186,19 +190,19 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#property_emptyType">$emptyType</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#property_emptyType">$emptyType</a>
     <span>
-                        &nbsp;: <abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>|null            </span>
+                        &nbsp;: <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#property_inner">$inner</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#property_inner">$inner</a>
     <span>
-                        &nbsp;: array&lt;string|int, <abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>&gt;            </span>
+                        &nbsp;: array&lt;string|int, <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#property_length">$length</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#property_length">$length</a>
     <span>
                         &nbsp;: int            </span>
 </dt>
@@ -212,85 +216,105 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method___clone">__clone()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method___clone">__clone()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___construct">__construct()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___toString">__toString()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___toString">__toString()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Returns string representation of structure, for known sized arrays with prefix k, for unknown size u,
+works recursively. The stringified representation purpose is debugging - to see what data and structure was
+created by bindings etc. It&#039;s often more useful representation than print_r or var_dump (with or without XDebug).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_decodeBin">decodeBin()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_decodeBin">decodeBin()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
+<dd>Decodes the binary data and updates the object(recursive).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_encodeBin">encodeBin()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_encodeBin">encodeBin()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Encodes the ABI value to its binary representation (recursive).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_isDynamic">isDynamic()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_isDynamic">isDynamic()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Checks whether the ABI value is dynamic or not.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetExists">offsetExists()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetExists">offsetExists()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetGet">offsetGet()</a>
     <span>
-                                &nbsp;: bool    </span>
+                                &nbsp;: <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetGet">offsetGet()</a>
-    <span>
-                                &nbsp;: <abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetSet">offsetSet()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetSet">offsetSet()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetUnset">offsetUnset()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetUnset">offsetUnset()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method_unwrapToPhpFriendlyVals">unwrapToPhpFriendlyVals()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_parseValue">parseValue()</a>
+    <span>
+                                &nbsp;: <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>    </span>
+</dt>
+<dd>Parse the ABI type and value and returns the corresponding AbstractABIValue object.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_splitTypeBits">splitTypeBits()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>Splits the ABI type into its type and bit-length components. Also works for amount of bytes for non-dynamic bytes.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method_unwrapToPhpFriendlyVals">unwrapToPhpFriendlyVals()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Transforms the ABI value into a more PHP-friendly types, such as Common\Address, OOGmp, and such (recursive).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_headLen">headLen()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_headLen">headLen()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_tail">tail()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_tail">tail()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 
     </dl>
-
 
 
 
@@ -325,14 +349,17 @@
     </aside>
 
     
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>|null</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$emptyType</span>
     </code>
 
     
     
+    
+
     
 
 </article>
@@ -353,19 +380,22 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
     
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, <abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>&gt;</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$inner</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
     
+    
+
     
 
 </article>
@@ -391,6 +421,7 @@
     </aside>
 
     
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">int</span>
@@ -399,6 +430,8 @@
 
     
     
+    
+
     
 
 </article>
@@ -424,7 +457,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -437,6 +470,9 @@
         </div>
     
     
+    
+    
+
     
 
     
@@ -462,10 +498,11 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$length</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$children</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$length</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$children</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -478,12 +515,14 @@
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$children</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -507,13 +546,17 @@
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Returns string representation of structure, for known sized arrays with prefix k, for unknown size u,
+works recursively. The stringified representation purpose is debugging - to see what data and structure was
+created by bindings etc. It&#039;s often more useful representation than print_r or var_dump (with or without XDebug).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__toString</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
     
     
@@ -532,9 +575,15 @@
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>stringified structure, for example (u[k[123,0xabcd],k[456,0x1234]],256)</p>
+</section>
+
             </section>
 
 </article>
@@ -552,17 +601,19 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Decodes the binary data and updates the object(recursive).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">decodeBin</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$dataBin</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$globalOffset</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -571,14 +622,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The binary data to be decoded.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$globalOffset</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The global offset in the binary data.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -606,9 +661,15 @@
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The new global offset.</p>
+</section>
+
             </section>
 
 </article>
@@ -626,17 +687,19 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Encodes the ABI value to its binary representation (recursive).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">encodeBin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
     
     
@@ -655,9 +718,15 @@
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The binary-encoded string.</p>
+</section>
+
             </section>
 
 </article>
@@ -675,17 +744,19 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks whether the ABI value is dynamic or not.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isDynamic</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
     
     
@@ -704,9 +775,15 @@
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True if dynamic, false otherwise.</p>
+</section>
+
             </section>
 
 </article>
@@ -724,7 +801,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">153</span>
+    <span class="phpdocumentor-element-found-in__line">160</span>
 
     </aside>
 
@@ -735,6 +812,7 @@
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -763,6 +841,8 @@
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
@@ -783,17 +863,18 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">offsetGet</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$offset</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">offsetGet</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$offset</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -822,9 +903,11 @@
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a></span>
             </section>
 
 </article>
@@ -842,7 +925,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -853,6 +936,7 @@
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -897,6 +981,8 @@
                                             </dl>
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -912,7 +998,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">195</span>
 
     </aside>
 
@@ -923,6 +1009,7 @@
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -952,6 +1039,154 @@
                                             </dl>
 
     
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_parseValue">
+        parseValue()
+        <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_parseValue" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbstractABIValue.php"><a href="files/src-contract-abitypes-abstractabivalue.html"><abbr title="src/Contract/AbiTypes/AbstractABIValue.php">AbstractABIValue.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">36</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Parse the ABI type and value and returns the corresponding AbstractABIValue object.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">parseValue</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$type</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The ABI type.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$value</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The value to be parsed.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_parseValue#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-NotSupportedException.html"><abbr title="\M8B\EtherBinder\Exceptions\NotSupportedException">NotSupportedException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-EthBinderLogicException.html"><abbr title="\M8B\EtherBinder\Exceptions\EthBinderLogicException">EthBinderLogicException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-EthBinderArgumentException.html"><abbr title="\M8B\EtherBinder\Exceptions\EthBinderArgumentException">EthBinderArgumentException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>An instance of the parsed ABI type.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_splitTypeBits">
+        splitTypeBits()
+        <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_splitTypeBits" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbstractABIValue.php"><a href="files/src-contract-abitypes-abstractabivalue.html"><abbr title="src/Contract/AbiTypes/AbstractABIValue.php">AbstractABIValue.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Splits the ABI type into its type and bit-length components. Also works for amount of bytes for non-dynamic bytes.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">splitTypeBits</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$type</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The ABI type.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -971,13 +1206,15 @@
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Transforms the ABI value into a more PHP-friendly types, such as Common\Address, OOGmp, and such (recursive).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">unwrapToPhpFriendlyVals</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tuplerData</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">unwrapToPhpFriendlyVals</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tuplerData</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -986,7 +1223,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Data structure for wanted tuples, tightly related to ABIGen logic. Always null-safe.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1006,9 +1245,15 @@
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The PHP-friendly value.</p>
+</section>
+
             </section>
 
 </article>
@@ -1026,28 +1271,46 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">headLen</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$val</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+                    <span class="phpdocumentor-signature__name">headLen</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$val</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$val</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
             </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_headLen#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-InvalidHexException.html"><abbr title="\M8B\EtherBinder\Exceptions\InvalidHexException">InvalidHexException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1071,28 +1334,46 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/AbiTypes/AbiTuple.php"><a href="files/src-contract-abitypes-abituple.html"><abbr title="src/Contract/AbiTypes/AbiTuple.php">AbiTuple.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">tail</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$val</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">tail</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$val</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$val</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"><abbr title="\M8B\EtherBinder\Contract\AbiTypes\AbstractABIValue">AbstractABIValue</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
             </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_tail#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/M8B-EtherBinder-Exceptions-InvalidHexException.html"><abbr title="\M8B\EtherBinder\Exceptions\InvalidHexException">InvalidHexException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1215,28 +1496,30 @@
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#property_emptyType">$emptyType<a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#property_inner">$inner<a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#property_length">$length<a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html"></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#property_emptyType">$emptyType</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#property_inner">$inner</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#property_length">$length</a></li>
                                             </ul>
                 </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method___clone">__clone()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___construct">__construct()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___toString">__toString()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_decodeBin">decodeBin()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_encodeBin">encodeBin()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_isDynamic">isDynamic()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetExists">offsetExists()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetGet">offsetGet()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetSet">offsetSet()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetUnset">offsetUnset()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method_unwrapToPhpFriendlyVals">unwrapToPhpFriendlyVals()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_headLen">headLen()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_tail">tail()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method___clone">__clone()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___toString">__toString()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_decodeBin">decodeBin()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_encodeBin">encodeBin()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_isDynamic">isDynamic()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetExists">offsetExists()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetGet">offsetGet()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetSet">offsetSet()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_offsetUnset">offsetUnset()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_parseValue">parseValue()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_splitTypeBits">splitTypeBits()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method_unwrapToPhpFriendlyVals">unwrapToPhpFriendlyVals()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_headLen">headLen()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_tail">tail()</a></li>
                                     </ul>
             </li>
                     </ul>

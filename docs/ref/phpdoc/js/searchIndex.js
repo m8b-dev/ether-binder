@@ -23,7 +23,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Common\\AccessListTransaction\u003A\u003AcalculateV\u0028\u0029",
             "name": "calculateV",
-            "summary": "",
+            "summary": "Calculates\u0020the\u0020recovery\u0020id\u0020\u0028v\u0029\u0020for\u0020signature\u0020accounting\u0020for\u0020EIP155\u0020\u0028replay\u0020protection\u0029.",
             "url": "classes/M8B-EtherBinder-Common-AccessListTransaction.html#method_calculateV"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Common\\AccessListTransaction\u003A\u003AecRecover\u0028\u0029",
@@ -126,6 +126,11 @@ Search.appendIndex(
             "summary": "Checks\u0020if\u0020the\u0020block\u0020looks\u0020like\u0020coming\u0020from\u0020EIP\u002D1559\u0020enabled\u0020chain\u0020by\u0020looking\u0020if\u0020base\u0020fee\u0020is\u0020defined.",
             "url": "classes/M8B-EtherBinder-Common-Block.html#method_isEIP1559"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\Block\u003A\u003AisEIP4844\u0028\u0029",
+            "name": "isEIP4844",
+            "summary": "Checks\u0020if\u0020the\u0020block\u0020looks\u0020like\u0020coming\u0020from\u0020EIP\u002D4844\u0020enabled\u0020chain\u0020by\u0020looking\u0020if\u0020blob\u0020fees\u0020are\u0020defined",
+            "url": "classes/M8B-EtherBinder-Common-Block.html#method_isEIP4844"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Common\\Block\u003A\u003A\u0024number",
             "name": "number",
             "summary": "",
@@ -171,6 +176,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/M8B-EtherBinder-Common-Block.html#property_receiptsRoot"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\Block\u003A\u003A\u0024parentBeaconBlockRoot",
+            "name": "parentBeaconBlockRoot",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-Block.html#property_parentBeaconBlockRoot"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Common\\Block\u003A\u003A\u0024miner",
             "name": "miner",
             "summary": "",
@@ -211,6 +221,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/M8B-EtherBinder-Common-Block.html#property_gasUsed"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\Block\u003A\u003A\u0024blobGasUsed",
+            "name": "blobGasUsed",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-Block.html#property_blobGasUsed"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\Block\u003A\u003A\u0024excessBlobGas",
+            "name": "excessBlobGas",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-Block.html#property_excessBlobGas"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Common\\Block\u003A\u003A\u0024timestamp",
             "name": "timestamp",
             "summary": "",
@@ -231,6 +251,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/M8B-EtherBinder-Common-Block.html#property_validatorWithdrawals"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\Block\u003A\u003A\u0024validatorWithdrawalsRoot",
+            "name": "validatorWithdrawalsRoot",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-Block.html#property_validatorWithdrawalsRoot"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Common\\BlockNonce",
             "name": "BlockNonce",
             "summary": "BlockNonce\u0020represents\u0020Ethereum\u0020block\u0020nonces.",
@@ -250,6 +275,66 @@ Search.appendIndex(
             "name": "dataSizeBytes",
             "summary": "",
             "url": "classes/M8B-EtherBinder-Common-Bloom.html#constant_dataSizeBytes"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction",
+            "name": "CancunTransaction",
+            "summary": "DencunTransaction\u0020is\u0020transaction\u0020type\u00203,\u0020enabled\u0020in\u0020Proto\u002DDankSharding\u0020ethereum\u0020upgrade,\u0020defined\u0020by\u0020EIP\u00204844",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method___construct"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003AinternalEncodeBin\u0028\u0029",
+            "name": "internalEncodeBin",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method_internalEncodeBin"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003AtransactionType\u0028\u0029",
+            "name": "transactionType",
+            "summary": "Returns\u0020the\u0020transaction\u0020type\u0020enum.",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method_transactionType"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003AblanksFromRPCArr\u0028\u0029",
+            "name": "blanksFromRPCArr",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method_blanksFromRPCArr"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003AsetInnerFromRLPValues\u0028\u0029",
+            "name": "setInnerFromRLPValues",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method_setInnerFromRLPValues"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003AaddVersionedHash\u0028\u0029",
+            "name": "addVersionedHash",
+            "summary": "Adds\u0020a\u0020versioned\u0020hash\u0020to\u0020the\u0020blobVersionedHashes\u0020array.",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method_addVersionedHash"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003AversionedHashes\u0028\u0029",
+            "name": "versionedHashes",
+            "summary": "Returns\u0020an\u0020array\u0020of\u0020versioned\u0020hashes.",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method_versionedHashes"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003AgetMaxFeePerBlobGas\u0028\u0029",
+            "name": "getMaxFeePerBlobGas",
+            "summary": "Returns\u0020the\u0020maximum\u0020fee\u0020per\u0020blob\u0020gas.",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method_getMaxFeePerBlobGas"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003AsetMaxFeePerBlobGas\u0028\u0029",
+            "name": "setMaxFeePerBlobGas",
+            "summary": "Sets\u0020the\u0020maximum\u0020fee\u0020per\u0020blob\u0020gas.\u0020Note\u0020that\u0020this\u0020value\u0020is\u0020not\u0020serviced\u0020by\u0020estimations.",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#method_setMaxFeePerBlobGas"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003A\u0024maxFeePerBlobGas",
+            "name": "maxFeePerBlobGas",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#property_maxFeePerBlobGas"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Common\\CancunTransaction\u003A\u003A\u0024blobVersionedHashes",
+            "name": "blobVersionedHashes",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Common-CancunTransaction.html#property_blobVersionedHashes"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Common\\Hash",
             "name": "Hash",
@@ -1126,6 +1211,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentTransact"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\ABIGen\u003A\u003AthrowsCommentFilterFetch",
+            "name": "throwsCommentFilterFetch",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentFilterFetch"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\ABIGen\u003A\u003A\u0024abiFunctions",
             "name": "abiFunctions",
             "summary": "",
@@ -1158,7 +1248,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiAddress",
             "name": "AbiAddress",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiAddress.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiAddress\u003A\u003A__construct\u0028\u0029",
@@ -1168,27 +1258,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiAddress\u003A\u003AisDynamic\u0028\u0029",
             "name": "isDynamic",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020the\u0020ABI\u0020value\u0020is\u0020dynamic\u0020or\u0020not.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiAddress.html#method_isDynamic"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiAddress\u003A\u003AencodeBin\u0028\u0029",
             "name": "encodeBin",
-            "summary": "",
+            "summary": "Encodes\u0020the\u0020ABI\u0020value\u0020to\u0020its\u0020binary\u0020representation\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiAddress.html#method_encodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiAddress\u003A\u003AdecodeBin\u0028\u0029",
             "name": "decodeBin",
-            "summary": "",
+            "summary": "Decodes\u0020the\u0020binary\u0020data\u0020and\u0020updates\u0020the\u0020object\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiAddress.html#method_decodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiAddress\u003A\u003AunwrapToPhpFriendlyVals\u0028\u0029",
             "name": "unwrapToPhpFriendlyVals",
-            "summary": "",
+            "summary": "Transforms\u0020the\u0020ABI\u0020value\u0020into\u0020a\u0020more\u0020PHP\u002Dfriendly\u0020types,\u0020such\u0020as\u0020Common\\Address,\u0020OOGmp,\u0020and\u0020such\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiAddress.html#method_unwrapToPhpFriendlyVals"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiAddress\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiAddress.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiAddress\u003A\u003A\u0024data",
@@ -1198,7 +1288,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayKnownLength",
             "name": "AbiArrayKnownLength",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayKnownLength\u003A\u003A__construct\u0028\u0029",
@@ -1208,12 +1298,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayKnownLength\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayKnownLength\u003A\u003AunwrapToPhpFriendlyVals\u0028\u0029",
             "name": "unwrapToPhpFriendlyVals",
-            "summary": "",
+            "summary": "Transforms\u0020the\u0020ABI\u0020value\u0020into\u0020a\u0020more\u0020PHP\u002Dfriendly\u0020types,\u0020such\u0020as\u0020Common\\Address,\u0020OOGmp,\u0020and\u0020such\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayKnownLength.html#method_unwrapToPhpFriendlyVals"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayKnownLength\u003A\u003A\u0024emptyType",
@@ -1228,7 +1318,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayUnknownLength",
             "name": "AbiArrayUnknownLength",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayUnknownLength.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayUnknownLength\u003A\u003A__construct\u0028\u0029",
@@ -1238,27 +1328,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayUnknownLength\u003A\u003AisDynamic\u0028\u0029",
             "name": "isDynamic",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020the\u0020ABI\u0020value\u0020is\u0020dynamic\u0020or\u0020not.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayUnknownLength.html#method_isDynamic"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayUnknownLength\u003A\u003AencodeBin\u0028\u0029",
             "name": "encodeBin",
-            "summary": "",
+            "summary": "Encodes\u0020the\u0020ABI\u0020value\u0020to\u0020its\u0020binary\u0020representation\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayUnknownLength.html#method_encodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayUnknownLength\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayUnknownLength.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiArrayUnknownLength\u003A\u003AdecodeBin\u0028\u0029",
             "name": "decodeBin",
-            "summary": "",
+            "summary": "Decodes\u0020the\u0020binary\u0020data\u0020and\u0020updates\u0020the\u0020object\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiArrayUnknownLength.html#method_decodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBool",
             "name": "AbiBool",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBool.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBool\u003A\u003A__construct\u0028\u0029",
@@ -1268,27 +1358,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBool\u003A\u003AisDynamic\u0028\u0029",
             "name": "isDynamic",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020the\u0020ABI\u0020value\u0020is\u0020dynamic\u0020or\u0020not.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBool.html#method_isDynamic"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBool\u003A\u003AdecodeBin\u0028\u0029",
             "name": "decodeBin",
-            "summary": "",
+            "summary": "Decodes\u0020the\u0020binary\u0020data\u0020and\u0020updates\u0020the\u0020object\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBool.html#method_decodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBool\u003A\u003AencodeBin\u0028\u0029",
             "name": "encodeBin",
-            "summary": "",
+            "summary": "Encodes\u0020the\u0020ABI\u0020value\u0020to\u0020its\u0020binary\u0020representation\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBool.html#method_encodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBool\u003A\u003AunwrapToPhpFriendlyVals\u0028\u0029",
             "name": "unwrapToPhpFriendlyVals",
-            "summary": "",
+            "summary": "Transforms\u0020the\u0020ABI\u0020value\u0020into\u0020a\u0020more\u0020PHP\u002Dfriendly\u0020types,\u0020such\u0020as\u0020Common\\Address,\u0020OOGmp,\u0020and\u0020such\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBool.html#method_unwrapToPhpFriendlyVals"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBool\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBool.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBool\u003A\u003A\u0024val",
@@ -1298,7 +1388,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBytes",
             "name": "AbiBytes",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBytes.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBytes\u003A\u003A__construct\u0028\u0029",
@@ -1308,27 +1398,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBytes\u003A\u003AisDynamic\u0028\u0029",
             "name": "isDynamic",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020the\u0020ABI\u0020value\u0020is\u0020dynamic\u0020or\u0020not.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBytes.html#method_isDynamic"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBytes\u003A\u003AdecodeBin\u0028\u0029",
             "name": "decodeBin",
-            "summary": "",
+            "summary": "Decodes\u0020the\u0020binary\u0020data\u0020and\u0020updates\u0020the\u0020object\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBytes.html#method_decodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBytes\u003A\u003AencodeBin\u0028\u0029",
             "name": "encodeBin",
-            "summary": "",
+            "summary": "Encodes\u0020the\u0020ABI\u0020value\u0020to\u0020its\u0020binary\u0020representation\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBytes.html#method_encodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBytes\u003A\u003AunwrapToPhpFriendlyVals\u0028\u0029",
             "name": "unwrapToPhpFriendlyVals",
-            "summary": "",
+            "summary": "Transforms\u0020the\u0020ABI\u0020value\u0020into\u0020a\u0020more\u0020PHP\u002Dfriendly\u0020types,\u0020such\u0020as\u0020Common\\Address,\u0020OOGmp,\u0020and\u0020such\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBytes.html#method_unwrapToPhpFriendlyVals"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBytes\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiBytes.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiBytes\u003A\u003A\u0024dynamic",
@@ -1348,7 +1438,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiFunction",
             "name": "AbiFunction",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiFunction.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiFunction\u003A\u003A__construct\u0028\u0029",
@@ -1358,27 +1448,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiFunction\u003A\u003AisDynamic\u0028\u0029",
             "name": "isDynamic",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020the\u0020ABI\u0020value\u0020is\u0020dynamic\u0020or\u0020not.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiFunction.html#method_isDynamic"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiFunction\u003A\u003AencodeBin\u0028\u0029",
             "name": "encodeBin",
-            "summary": "",
+            "summary": "Encodes\u0020the\u0020ABI\u0020value\u0020to\u0020its\u0020binary\u0020representation\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiFunction.html#method_encodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiFunction\u003A\u003AdecodeBin\u0028\u0029",
             "name": "decodeBin",
-            "summary": "",
+            "summary": "Decodes\u0020the\u0020binary\u0020data\u0020and\u0020updates\u0020the\u0020object\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiFunction.html#method_decodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiFunction\u003A\u003AunwrapToPhpFriendlyVals\u0028\u0029",
             "name": "unwrapToPhpFriendlyVals",
-            "summary": "",
+            "summary": "Transforms\u0020the\u0020ABI\u0020value\u0020into\u0020a\u0020more\u0020PHP\u002Dfriendly\u0020types,\u0020such\u0020as\u0020Common\\Address,\u0020OOGmp,\u0020and\u0020such\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiFunction.html#method_unwrapToPhpFriendlyVals"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiFunction\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiFunction.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiFunction\u003A\u003A\u0024val",
@@ -1388,7 +1478,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiInt",
             "name": "AbiInt",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiInt.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiInt\u003A\u003A__construct\u0028\u0029",
@@ -1398,7 +1488,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiInt\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiInt.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiInt\u003A\u003A\u0024maxBits",
@@ -1408,7 +1498,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiString",
             "name": "AbiString",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiString.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiString\u003A\u003A__construct\u0028\u0029",
@@ -1418,27 +1508,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiString\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiString.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple",
             "name": "AbiTuple",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple\u003A\u003AisDynamic\u0028\u0029",
             "name": "isDynamic",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020the\u0020ABI\u0020value\u0020is\u0020dynamic\u0020or\u0020not.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_isDynamic"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple\u003A\u003AencodeBin\u0028\u0029",
             "name": "encodeBin",
-            "summary": "",
+            "summary": "Encodes\u0020the\u0020ABI\u0020value\u0020to\u0020its\u0020binary\u0020representation\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_encodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple\u003A\u003AdecodeBin\u0028\u0029",
             "name": "decodeBin",
-            "summary": "",
+            "summary": "Decodes\u0020the\u0020binary\u0020data\u0020and\u0020updates\u0020the\u0020object\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_decodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple\u003A\u003Atail\u0028\u0029",
@@ -1453,7 +1543,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple\u003A\u003A__clone\u0028\u0029",
@@ -1463,7 +1553,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple\u003A\u003AunwrapToPhpFriendlyVals\u0028\u0029",
             "name": "unwrapToPhpFriendlyVals",
-            "summary": "",
+            "summary": "Transforms\u0020the\u0020ABI\u0020value\u0020into\u0020a\u0020more\u0020PHP\u002Dfriendly\u0020types,\u0020such\u0020as\u0020Common\\Address,\u0020OOGmp,\u0020and\u0020such\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiTuple.html#method_unwrapToPhpFriendlyVals"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiTuple\u003A\u003AoffsetExists\u0028\u0029",
@@ -1493,7 +1583,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiUint",
             "name": "AbiUint",
-            "summary": "",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiUint.html"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiUint\u003A\u003A__construct\u0028\u0029",
@@ -1503,27 +1593,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiUint\u003A\u003AdecodeBin\u0028\u0029",
             "name": "decodeBin",
-            "summary": "",
+            "summary": "Decodes\u0020the\u0020binary\u0020data\u0020and\u0020updates\u0020the\u0020object\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiUint.html#method_decodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiUint\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiUint.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiUint\u003A\u003AisDynamic\u0028\u0029",
             "name": "isDynamic",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020the\u0020ABI\u0020value\u0020is\u0020dynamic\u0020or\u0020not.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiUint.html#method_isDynamic"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiUint\u003A\u003AencodeBin\u0028\u0029",
             "name": "encodeBin",
-            "summary": "",
+            "summary": "Encodes\u0020the\u0020ABI\u0020value\u0020to\u0020its\u0020binary\u0020representation\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiUint.html#method_encodeBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiUint\u003A\u003AunwrapToPhpFriendlyVals\u0028\u0029",
             "name": "unwrapToPhpFriendlyVals",
-            "summary": "",
+            "summary": "Transforms\u0020the\u0020ABI\u0020value\u0020into\u0020a\u0020more\u0020PHP\u002Dfriendly\u0020types,\u0020such\u0020as\u0020Common\\Address,\u0020OOGmp,\u0020and\u0020such\u0020\u0028recursive\u0029.",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiUint.html#method_unwrapToPhpFriendlyVals"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbiUint\u003A\u003A\u0024value",
@@ -1535,6 +1625,46 @@ Search.appendIndex(
             "name": "maxBits",
             "summary": "",
             "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbiUint.html#property_maxBits"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbstractABIValue",
+            "name": "AbstractABIValue",
+            "summary": "Base\u0020class\u0020for\u0020encoding\u0020and\u0020decoding\u0020ABI\u0020\u0028Application\u0020Binary\u0020Interface\u0029\u0020types\u0020for\u0020Ethereum\u0020contracts.",
+            "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbstractABIValue\u003A\u003AparseValue\u0028\u0029",
+            "name": "parseValue",
+            "summary": "Parse\u0020the\u0020ABI\u0020type\u0020and\u0020value\u0020and\u0020returns\u0020the\u0020corresponding\u0020AbstractABIValue\u0020object.",
+            "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_parseValue"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbstractABIValue\u003A\u003AsplitTypeBits\u0028\u0029",
+            "name": "splitTypeBits",
+            "summary": "Splits\u0020the\u0020ABI\u0020type\u0020into\u0020its\u0020type\u0020and\u0020bit\u002Dlength\u0020components.\u0020Also\u0020works\u0020for\u0020amount\u0020of\u0020bytes\u0020for\u0020non\u002Ddynamic\u0020bytes.",
+            "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_splitTypeBits"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbstractABIValue\u003A\u003AisDynamic\u0028\u0029",
+            "name": "isDynamic",
+            "summary": "Checks\u0020whether\u0020the\u0020ABI\u0020value\u0020is\u0020dynamic\u0020or\u0020not.",
+            "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_isDynamic"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbstractABIValue\u003A\u003AencodeBin\u0028\u0029",
+            "name": "encodeBin",
+            "summary": "Encodes\u0020the\u0020ABI\u0020value\u0020to\u0020its\u0020binary\u0020representation\u0020\u0028recursive\u0029.",
+            "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_encodeBin"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbstractABIValue\u003A\u003AdecodeBin\u0028\u0029",
+            "name": "decodeBin",
+            "summary": "Decodes\u0020the\u0020binary\u0020data\u0020and\u0020updates\u0020the\u0020object\u0028recursive\u0029.",
+            "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_decodeBin"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbstractABIValue\u003A\u003AunwrapToPhpFriendlyVals\u0028\u0029",
+            "name": "unwrapToPhpFriendlyVals",
+            "summary": "Transforms\u0020the\u0020ABI\u0020value\u0020into\u0020a\u0020more\u0020PHP\u002Dfriendly\u0020types,\u0020such\u0020as\u0020Common\\Address,\u0020OOGmp,\u0020and\u0020such\u0020\u0028recursive\u0029.",
+            "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method_unwrapToPhpFriendlyVals"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Contract\\AbiTypes\\AbstractABIValue\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Returns\u0020string\u0020representation\u0020of\u0020structure,\u0020for\u0020known\u0020sized\u0020arrays\u0020with\u0020prefix\u0020k,\u0020for\u0020unknown\u0020size\u0020u,\nworks\u0020recursively.\u0020The\u0020stringified\u0020representation\u0020purpose\u0020is\u0020debugging\u0020\u002D\u0020to\u0020see\u0020what\u0020data\u0020and\u0020structure\u0020was\ncreated\u0020by\u0020bindings\u0020etc.\u0020It\u0027s\u0020often\u0020more\u0020useful\u0020representation\u0020than\u0020print_r\u0020or\u0020var_dump\u0020\u0028with\u0020or\u0020without\u0020XDebug\u0029.",
+            "url": "classes/M8B-EtherBinder-Contract-AbiTypes-AbstractABIValue.html#method___toString"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Contract\\AbstractArrayAccess",
             "name": "AbstractArrayAccess",
@@ -1886,6 +2016,16 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020hexadecimal\u0020representation\u0020of\u0020the\u0020key,\u0020prefixed\u0020with\u0020\u00270x\u0027.",
             "url": "classes/M8B-EtherBinder-Crypto-Key.html#method_toHex"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Crypto\\Key\u003A\u003AgetPublicHex\u0028\u0029",
+            "name": "getPublicHex",
+            "summary": "Returns\u0020hex\u002Dencoded\u0020public\u0020key\u0020associated\u0020with\u0020this\u0020private\u0020key.\u0020Does\u0020not\u0020contain\u0020initial\u0020\u002204\u0022\u0020prefix.",
+            "url": "classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicHex"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Crypto\\Key\u003A\u003AgetPublicBin\u0028\u0029",
+            "name": "getPublicBin",
+            "summary": "Returns\u0020binary\u0020blob\u0020of\u0020public\u0020key\u0020associated\u0020with\u0020this\u0020private\u0020key",
+            "url": "classes/M8B-EtherBinder-Crypto-Key.html#method_getPublicBin"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Crypto\\Key\u003A\u003AtoAddress\u0028\u0029",
             "name": "toAddress",
             "summary": "Generates\u0020an\u0020Ethereum\u0020Address\u0020based\u0020on\u0020the\u0020key.\u0020Internally\u0020caches\u0020the\u0020address\u0020to\u0020avoid\u0020wasting\u0020time\u0020on\u0020hashing.",
@@ -1905,6 +2045,11 @@ Search.appendIndex(
             "name": "sign",
             "summary": "Signs\u0020arbitrary\u0020hash\u0020using\u0020the\u0020private\u0020key.",
             "url": "classes/M8B-EtherBinder-Crypto-Key.html#method_sign"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Crypto\\Key\u003A\u003Agenerate\u0028\u0029",
+            "name": "generate",
+            "summary": "Generates\u0020new\u0020random\u0020key\u0020using\u0020openssl\u0020for\u0020random\u0020bytes.\u0020Triggers\u0020E_USER_WARNING\u0020if\u0020weak\u0020entropy\u0020was\u0020used.",
+            "url": "classes/M8B-EtherBinder-Crypto-Key.html#method_generate"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Crypto\\Key\u003A\u003A\u0024addr",
             "name": "addr",
@@ -2606,6 +2751,31 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/M8B-EtherBinder-RPC-Modules-Eth.html#method_ethMaxPriorityFeePerGas"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\Modules\\Eth\u003A\u003AethNewFilter\u0028\u0029",
+            "name": "ethNewFilter",
+            "summary": "Installs\u0020event\u0020filterer\u0020on\u0020rpc\u0020node\u0020and\u0020returns\u0020ID\u0020of\u0020the\u0020filter.\u0020Accepts\u0020few\u0020types,\u0020but\u0020bear\u0020in\u0020mind\u0020that\u0020string\ntype\u0020is\u0020always\u0020considered\u0020to\u0020be\u0020binary\u0020blob.",
+            "url": "classes/M8B-EtherBinder-RPC-Modules-Eth.html#method_ethNewFilter"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\Modules\\Eth\u003A\u003AethGetLogs\u0028\u0029",
+            "name": "ethGetLogs",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-Modules-Eth.html#method_ethGetLogs"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\Modules\\Eth\u003A\u003AethGetFilterChanges\u0028\u0029",
+            "name": "ethGetFilterChanges",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-Modules-Eth.html#method_ethGetFilterChanges"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\Modules\\Eth\u003A\u003AethGetFilterLogs\u0028\u0029",
+            "name": "ethGetFilterLogs",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-Modules-Eth.html#method_ethGetFilterLogs"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\RPC\\Modules\\Eth\u003A\u003AparseFilterInput\u0028\u0029",
+            "name": "parseFilterInput",
+            "summary": "",
+            "url": "classes/M8B-EtherBinder-RPC-Modules-Eth.html#method_parseFilterInput"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\RPC\\Modules\\Eth\u003A\u003AtransactionToRPCArr\u0028\u0029",
             "name": "transactionToRPCArr",
             "summary": "",
@@ -2846,6 +3016,16 @@ Search.appendIndex(
             "summary": "Converts\u0020hex\u0020string\u0020to\u0020integer",
             "url": "classes/M8B-EtherBinder-Utils-Functions.html#method_hex2int"
         },                {
+            "fqsen": "\\M8B\\EtherBinder\\Utils\\Functions\u003A\u003AgetPessimisticBlockBaseFee\u0028\u0029",
+            "name": "getPessimisticBlockBaseFee",
+            "summary": "Returns\u0020worst\u0020case\u0020scenario\u0020base\u0020fee\u0020for\u0020block\u0020currentBlock\u0020\u002B\u0020blocksAhead.\u0020Useful\u0020for\u0020estimating\u0020base\u0020fee\u0020for\ntransactions.\u0020Since\u0020the\u0020fee\u0020is\u0020base\u0020fee,\u0020it\u0020shouldn\u0027t\u0020matter\u0020if\u0020it\u0027s\u0020overestimated,\u0020since\u0020consensus\u0020will\u0020prevent\nspending\u0020surplus",
+            "url": "classes/M8B-EtherBinder-Utils-Functions.html#method_getPessimisticBlockBaseFee"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Utils\\Functions\u003A\u003Ahex2bin\u0028\u0029",
+            "name": "hex2bin",
+            "summary": "0x\u0020tolerant,\u0020exceptions\u002Dcompatible\u0020hex2bin\u0028\u0029\u0020drop\u002Din\u0020replacement,\u0020that\u0020never\u0020returns\u0020false,\u0020handles\u0020empty\u0020strings\nand\u0020prefixes\u0020\u00220\u0022\u0020if\u0020odd\u0020amount\u0020of\u0020characters\u0020is\u0020spotted.",
+            "url": "classes/M8B-EtherBinder-Utils-Functions.html#method_hex2bin"
+        },                {
             "fqsen": "\\M8B\\EtherBinder\\Utils\\Functions\u003A\u003AgetNextBlockBaseFee\u0028\u0029",
             "name": "getNextBlockBaseFee",
             "summary": "Calculates\u0020the\u0020base\u0020fee\u0020for\u0020the\u0020next\u0020block\u0020in\u0020an\u0020EIP1559\u0020compatible\u0020chain.",
@@ -2985,6 +3165,21 @@ Search.appendIndex(
             "name": "inNormalize",
             "summary": "",
             "url": "classes/M8B-EtherBinder-Utils-OOGmp.html#method_inNormalize"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Utils\\OOGmp\u003A\u003AtoHex\u0028\u0029",
+            "name": "toHex",
+            "summary": "Alias\u0020to\u0020toString\u0028\u0029\u0020to\u0020fulfil\u0020HashSerializable\u0020interface",
+            "url": "classes/M8B-EtherBinder-Utils-OOGmp.html#method_toHex"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Utils\\OOGmp\u003A\u003AfromHex\u0028\u0029",
+            "name": "fromHex",
+            "summary": "Static\u0020alias\u0020to\u0020constructor\u0020to\u0020fulfil\u0020HashSerializable\u0020interface",
+            "url": "classes/M8B-EtherBinder-Utils-OOGmp.html#method_fromHex"
+        },                {
+            "fqsen": "\\M8B\\EtherBinder\\Utils\\OOGmp\u003A\u003AfromBin\u0028\u0029",
+            "name": "fromBin",
+            "summary": "Static\u0020alias\u0020to\u0020constructor\u0020to\u0020fulfil\u0020HashSerializable\u0020interface",
+            "url": "classes/M8B-EtherBinder-Utils-OOGmp.html#method_fromBin"
         },                {
             "fqsen": "\\M8B\\EtherBinder\\Utils\\OOGmp\u003A\u003A\u0024gmp",
             "name": "gmp",

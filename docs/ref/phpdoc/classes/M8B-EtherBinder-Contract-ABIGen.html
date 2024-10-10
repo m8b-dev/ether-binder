@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/m8b.html" class="">M8B</a>
@@ -67,7 +67,7 @@
             </ul>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/M8B.html" class="">M8B</a>
@@ -81,14 +81,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -126,11 +126,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
             <p class="phpdocumentor-summary">Core class for generating ABI bindings.</p>
+
 
 
 
@@ -153,6 +154,8 @@
 
 
 
+
+
 <h3 id="toc">
     Table of Contents
     <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
@@ -172,18 +175,17 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_autogenWarning">autogenWarning</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_autogenWarning">autogenWarning</a>
     <span>
         &nbsp;= &lt;&lt;&lt;HDC
 // Code auto generated - DO NOT EDIT.
 // This file is a generated binding and any manual changes will be lost.
 // If you need to edit this class, extend it.
-HDC
-                            </span>
+HDC                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentCall">throwsCommentCall</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentCall">throwsCommentCall</a>
     <span>
         &nbsp;= &lt;&lt;&lt;HDC
 /**
@@ -192,12 +194,11 @@ HDC
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderArgumentException
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\RPCInvalidResponseParamException
 \t */
-HDC
-                            </span>
+HDC                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentDeploy">throwsCommentDeploy</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentDeploy">throwsCommentDeploy</a>
     <span>
         &nbsp;= &lt;&lt;&lt;HDC
 /**
@@ -210,12 +211,29 @@ HDC
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\RPCGeneralException
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\RPCNotFoundException
 \t */
-HDC
-                            </span>
+HDC                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentTransact">throwsCommentTransact</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentFilterFetch">throwsCommentFilterFetch</a>
+    <span>
+        &nbsp;= &lt;&lt;&lt;HDC
+/**
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderLogicException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\RPCGeneralException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderRuntimeException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\BadAddressChecksumException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\InvalidHexLengthException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\RPCNotFoundException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\InvalidHexException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderArgumentException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\RPCInvalidResponseParamException
+\t*/
+HDC                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentTransact">throwsCommentTransact</a>
     <span>
         &nbsp;= &lt;&lt;&lt;HDC
 /**
@@ -226,8 +244,7 @@ HDC
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderArgumentException
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\RPCInvalidResponseParamException
 \t */
-HDC
-                            </span>
+HDC                            </span>
 </dt>
 
     </dl>
@@ -240,37 +257,37 @@ HDC
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiConstructor">$abiConstructor</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiConstructor">$abiConstructor</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiEvents">$abiEvents</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiEvents">$abiEvents</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiFunctions">$abiFunctions</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiFunctions">$abiFunctions</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_className">$className</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_className">$className</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_compiledBlob">$compiledBlob</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_compiledBlob">$compiledBlob</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_tuplesRegistry">$tuplesRegistry</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_tuplesRegistry">$tuplesRegistry</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -284,92 +301,91 @@ HDC
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generate">generate()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generate">generate()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>This function returns array of generated bindings code. Bindings include tuples, events and contract.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method___construct">__construct()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_buildMethodParams">buildMethodParams()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_buildMethodParams">buildMethodParams()</a>
     <span>
                                 &nbsp;: <abbr title="array{params: \PhpParser\Builder\Param[], names: string[], validators: \PhpParser\Node\Expr\Assign[], signature: string}">Assign[], signature: string}</abbr>    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_buildTupleSignatureFromTuple">buildTupleSignatureFromTuple()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_buildTupleSignatureFromTuple">buildTupleSignatureFromTuple()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_gen">gen()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_gen">gen()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generateEventClasses">generateEventClasses()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generateEventClasses">generateEventClasses()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generateTuples">generateTuples()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generateTuples">generateTuples()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_getPhpTypingFromOutputs">getPhpTypingFromOutputs()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_getPhpTypingFromOutputs">getPhpTypingFromOutputs()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_getPhpTypingFromType">getPhpTypingFromType()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_getPhpTypingFromType">getPhpTypingFromType()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_innerPrepareOutputTupleInfo">innerPrepareOutputTupleInfo()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_innerPrepareOutputTupleInfo">innerPrepareOutputTupleInfo()</a>
     <span>
                                 &nbsp;: null|array&lt;string|int, mixed&gt;    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_prepareOutputTupleInfo">prepareOutputTupleInfo()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_prepareOutputTupleInfo">prepareOutputTupleInfo()</a>
     <span>
                                 &nbsp;: null|array&lt;string|int, mixed&gt;    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_registerTuple">registerTuple()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_registerTuple">registerTuple()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_tupleInternalTypeToType">tupleInternalTypeToType()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_tupleInternalTypeToType">tupleInternalTypeToType()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_emptyr">emptyr()</a>
+    <a class="" href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_emptyr">emptyr()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 
     </dl>
-
 
 
 
@@ -390,10 +406,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -403,13 +420,14 @@ HDC
 // Code auto generated - DO NOT EDIT.
 // This file is a generated binding and any manual changes will be lost.
 // If you need to edit this class, extend it.
-HDC
-</span>
+HDC</span>
 </code>
 
 
     
     
+    
+
     
 
 </article>
@@ -423,10 +441,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -439,13 +458,14 @@ HDC
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderArgumentException
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\RPCInvalidResponseParamException
 \t */
-HDC
-</span>
+HDC</span>
 </code>
 
 
     
     
+    
+
     
 
 </article>
@@ -459,10 +479,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -479,13 +500,57 @@ HDC
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\RPCGeneralException
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\RPCNotFoundException
 \t */
-HDC
-</span>
+HDC</span>
 </code>
 
 
     
     
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -protected ">
+    <h4 class="phpdocumentor-element__name" id="constant_throwsCommentFilterFetch">
+        throwsCommentFilterFetch
+        <a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentFilterFetch" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">90</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">throwsCommentFilterFetch</span>
+    = <span class="phpdocumentor-signature__default-value">&lt;&lt;&lt;HDC
+/**
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderLogicException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\RPCGeneralException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderRuntimeException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\BadAddressChecksumException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\InvalidHexLengthException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\RPCNotFoundException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\InvalidHexException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderArgumentException
+\t* @throws \\M8B\\EtherBinder\\Exceptions\\RPCInvalidResponseParamException
+\t*/
+HDC</span>
+</code>
+
+
+    
+    
+    
+
     
 
 </article>
@@ -499,10 +564,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -517,13 +583,14 @@ HDC
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\EthBinderArgumentException
 \t * @throws \\M8B\\EtherBinder\\Exceptions\\RPCInvalidResponseParamException
 \t */
-HDC
-</span>
+HDC</span>
 </code>
 
 
     
     
+    
+
     
 
 </article>
@@ -553,10 +620,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -566,6 +634,8 @@ HDC
 
     
     
+    
+
     
 
 </article>
@@ -586,10 +656,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -599,6 +670,8 @@ HDC
 
     
     
+    
+
     
 
 </article>
@@ -619,10 +692,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -632,6 +706,8 @@ HDC
 
     
     
+    
+
     
 
 </article>
@@ -652,10 +728,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -665,6 +742,8 @@ HDC
 
     
     
+    
+
     
 
 </article>
@@ -685,10 +764,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -698,6 +778,8 @@ HDC
 
     
     
+    
+
     
 
 </article>
@@ -718,10 +800,11 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -731,6 +814,8 @@ HDC
 
     
     
+    
+
     
 
 </article>
@@ -756,7 +841,7 @@ HDC
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">155</span>
 
     </aside>
 
@@ -768,6 +853,7 @@ HDC
 
     <div class="phpdocumentor-label-line">
         </div>
+    
         <section class="phpdocumentor-description"><p>Output array shape is:
 [
 &quot;contract&quot; =&gt; &quot;&lt;?php root source code&quot;,
@@ -838,6 +924,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -858,7 +946,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
@@ -869,6 +957,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -906,6 +995,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                                             </dl>
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -921,7 +1012,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">537</span>
+    <span class="phpdocumentor-element-found-in__line">633</span>
 
     </aside>
 
@@ -932,6 +1023,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -975,6 +1067,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="array{params: \PhpParser\Builder\Param[], names: string[], validators: \PhpParser\Node\Expr\Assign[], signature: string}">Assign[], signature: string}</abbr></span>
@@ -995,7 +1089,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">625</span>
+    <span class="phpdocumentor-element-found-in__line">725</span>
 
     </aside>
 
@@ -1007,6 +1101,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1017,6 +1112,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1040,7 +1137,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -1051,6 +1148,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1088,6 +1186,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -1108,7 +1208,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">352</span>
+    <span class="phpdocumentor-element-found-in__line">375</span>
 
     </aside>
 
@@ -1119,6 +1219,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1156,6 +1257,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -1176,7 +1279,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">479</span>
+    <span class="phpdocumentor-element-found-in__line">575</span>
 
     </aside>
 
@@ -1187,6 +1290,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1216,6 +1320,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -1236,7 +1342,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">729</span>
+    <span class="phpdocumentor-element-found-in__line">829</span>
 
     </aside>
 
@@ -1247,6 +1353,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1276,6 +1383,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
@@ -1296,7 +1405,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">653</span>
+    <span class="phpdocumentor-element-found-in__line">753</span>
 
     </aside>
 
@@ -1307,6 +1416,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1343,6 +1453,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
@@ -1363,7 +1475,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">696</span>
+    <span class="phpdocumentor-element-found-in__line">796</span>
 
     </aside>
 
@@ -1374,6 +1486,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1392,6 +1505,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1415,7 +1530,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">675</span>
+    <span class="phpdocumentor-element-found-in__line">775</span>
 
     </aside>
 
@@ -1426,6 +1541,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
 
     <div class="phpdocumentor-label-line">
         </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1444,6 +1560,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1467,7 +1585,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">751</span>
+    <span class="phpdocumentor-element-found-in__line">851</span>
 
     </aside>
 
@@ -1479,6 +1597,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1489,6 +1608,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1508,7 +1629,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">745</span>
+    <span class="phpdocumentor-element-found-in__line">845</span>
 
     </aside>
 
@@ -1520,6 +1641,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1530,6 +1652,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1553,7 +1677,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Contract/ABIGen.php"><a href="files/src-contract-abigen.html"><abbr title="src/Contract/ABIGen.php">ABIGen.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">714</span>
+    <span class="phpdocumentor-element-found-in__line">814</span>
 
     </aside>
 
@@ -1565,6 +1689,7 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
     <div class="phpdocumentor-label-line">
         </div>
     
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1575,6 +1700,8 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1697,42 +1824,43 @@ OK to remove the event from ABI JSON manually, but of course, such events will n
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_autogenWarning">autogenWarning</a></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentCall">throwsCommentCall</a></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentDeploy">throwsCommentDeploy</a></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentTransact">throwsCommentTransact</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_autogenWarning">autogenWarning</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentCall">throwsCommentCall</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentDeploy">throwsCommentDeploy</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentFilterFetch">throwsCommentFilterFetch</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#constant_throwsCommentTransact">throwsCommentTransact</a></li>
                                             </ul>
                 </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiConstructor">$abiConstructor<a href="classes/M8B-EtherBinder-Contract-ABIGen.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiEvents">$abiEvents<a href="classes/M8B-EtherBinder-Contract-ABIGen.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiFunctions">$abiFunctions<a href="classes/M8B-EtherBinder-Contract-ABIGen.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_className">$className<a href="classes/M8B-EtherBinder-Contract-ABIGen.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_compiledBlob">$compiledBlob<a href="classes/M8B-EtherBinder-Contract-ABIGen.html"></li>
-                                                    <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_tuplesRegistry">$tuplesRegistry<a href="classes/M8B-EtherBinder-Contract-ABIGen.html"></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiConstructor">$abiConstructor</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiEvents">$abiEvents</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_abiFunctions">$abiFunctions</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_className">$className</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_compiledBlob">$compiledBlob</a></li>
+                                                    <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#property_tuplesRegistry">$tuplesRegistry</a></li>
                                             </ul>
                 </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generate">generate()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method___construct">__construct()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_buildMethodParams">buildMethodParams()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_buildTupleSignatureFromTuple">buildTupleSignatureFromTuple()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_gen">gen()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generateEventClasses">generateEventClasses()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generateTuples">generateTuples()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_getPhpTypingFromOutputs">getPhpTypingFromOutputs()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_getPhpTypingFromType">getPhpTypingFromType()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_innerPrepareOutputTupleInfo">innerPrepareOutputTupleInfo()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_prepareOutputTupleInfo">prepareOutputTupleInfo()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_registerTuple">registerTuple()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_tupleInternalTypeToType">tupleInternalTypeToType()</a></li>
-                                            <li><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_emptyr">emptyr()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generate">generate()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_buildMethodParams">buildMethodParams()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_buildTupleSignatureFromTuple">buildTupleSignatureFromTuple()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_gen">gen()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generateEventClasses">generateEventClasses()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_generateTuples">generateTuples()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_getPhpTypingFromOutputs">getPhpTypingFromOutputs()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_getPhpTypingFromType">getPhpTypingFromType()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_innerPrepareOutputTupleInfo">innerPrepareOutputTupleInfo()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_prepareOutputTupleInfo">prepareOutputTupleInfo()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_registerTuple">registerTuple()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_tupleInternalTypeToType">tupleInternalTypeToType()</a></li>
+                                            <li class=""><a href="classes/M8B-EtherBinder-Contract-ABIGen.html#method_emptyr">emptyr()</a></li>
                                     </ul>
             </li>
                     </ul>

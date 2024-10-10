@@ -7,5 +7,6 @@ var searchData=
   ['validator_20withdrawal_4',['Validator Withdrawal',['../md_docs_2types.html#autotoc_md52',1,'']]],
   ['validatorwithdrawal_5',['ValidatorWithdrawal',['../classM8B_1_1EtherBinder_1_1Common_1_1ValidatorWithdrawal.html',1,'M8B::EtherBinder::Common']]],
   ['value_6',['value',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#a12b89999e1b260e2706fd5b5bb4a00eb',1,'M8B::EtherBinder::Common::Transaction']]],
-  ['valuefmt_7',['valueFmt',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#a4c043bf7ea4fd626c606655fef3be3df',1,'M8B::EtherBinder::Common::Transaction']]]
+  ['valuefmt_7',['valueFmt',['../classM8B_1_1EtherBinder_1_1Common_1_1Transaction.html#a4c043bf7ea4fd626c606655fef3be3df',1,'M8B::EtherBinder::Common::Transaction']]],
+  ['versionedhashes_8',['versionedHashes',['../classM8B_1_1EtherBinder_1_1Common_1_1CancunTransaction.html#aee078948da47ec0e7486baebf1720853',1,'M8B::EtherBinder::Common::CancunTransaction']]]
 ];
