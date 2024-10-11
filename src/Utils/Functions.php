@@ -167,7 +167,7 @@ abstract class Functions {
 			return new OOGmp(EIP1559Config::INITIAL_BASE_FEE);
 		}
 
-		$parentGasTarget = $previous->gasLimit / EIP1559Config::ELASTICITY_MULTIPLIER;
+		$parentGasTarget = (int)floor($previous->gasLimit / EIP1559Config::ELASTICITY_MULTIPLIER);
 		if($parentGasTarget == $previous->gasUsed) {
 			return $previous->baseFeePerGas;
 		}
